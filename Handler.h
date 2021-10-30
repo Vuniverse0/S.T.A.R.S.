@@ -5,15 +5,24 @@
 #pragma once
 
 #include "typedefs_and_globals.h"
-
+#include "Entry.h"
 
 struct Handler {
 private:
     sf::RenderWindow& window;
-    double_t x,y;
+    sf::Time time_per_frame;
+    bool paused = false;
 public:
-    explicit Handler(sf::RenderWindow& window, sf::VideoMode mode);
-    void setFramesPerSecond();
+    static std::vector<Entry*> entry_list;
+    static std::vector<Entry*> gui_list;
+    mutable double_t x_ratio, y_ratio;
+    Handler(sf::RenderWindow&, sf::VideoMode);
+
+    void pause_switch();
+    void handle();
+    void update();
+    void render();
+    void set_fps(frames);
     void input(sf::Keyboard::Key key, bool isPressed);
 
 };

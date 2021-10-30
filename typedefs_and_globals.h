@@ -13,6 +13,7 @@
 
 #define GAME_MAKER_SCREEN_WIDTH 1366.0
 #define GAME_MAKER_SCREEN_HEIGHT 768.0
+#define DEFAULT_FPS 60
 
 typedef uint8_t  frames;
 typedef uint16_t pixels;

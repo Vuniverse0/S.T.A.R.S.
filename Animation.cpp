@@ -21,14 +21,22 @@ Animation::Animation(const std::vector<std::string>& init_list, sf::Sprite& spri
 
 Animation::Animation(transformator transform_funk, sf::Sprite& sprite_p):
     sprite{sprite_p},
-    transform{transform_funk}
+    transform{transform_funk},
+    frames_list(1)//costilation for .size empty check
+{
+}
+
+Animation::Animation():
+        sprite(sprite),//fuck this
+        transform{none_transformator},
+        frames_list(1)//costilation for .size empty check
 {
 }
 
 Animation::Animation(const std::string& sheet, sf::Sprite& sprite_p, pixels size, frames count):
     sprite{sprite_p},
     frames_list(count),
-    transform{standart_tansformator}
+    transform{default_tansformator}
 {
     for(frames i = 0; i<count; i++){
         frames_list[i] = generateTextureX(sheet, size, i);
@@ -39,7 +47,7 @@ Animation::Animation(const std::string& sheet, sf::Sprite& sprite_p, pixels size
 Animation::Animation(const Animation& other):
     frames_list(other.frames_list),
     sprite{other.sprite},
-    transform{standart_tansformator}
+    transform{default_tansformator}
 {
 }
 
@@ -51,8 +59,10 @@ Animation::Animation(const std::string& sheet, sf::Sprite& sprite_p, pixels, fra
 
 }
 
+Animation::~Animation()
+= default;
 
-Animation &Animation::operator=(Animation&& other)
+Animation &Animation::operator=(Animation&& other) noexcept
 {
     frames_list = other.frames_list;
     sprite = other.sprite;
@@ -99,12 +109,15 @@ sf::Texture Animation::generateTextureXY(const std::string& texture, pixels x, p
     return texture_out;
 }
 
-void Animation::standart_tansformator(sf::Sprite& sprite_t, const sf::Texture& texture_T )
+void Animation::default_tansformator(sf::Sprite& sprite_t, const sf::Texture& texture_T )
 {
      sprite_t.setTexture(texture_T);
 }
+void Animation::none_transformator(sf::Sprite& sprite_t, const sf::Texture& texture_T )
+{
+}
 
-
-
-
-
+size_t Animation::size() const
+{
+    return frames_list.size();
+}
