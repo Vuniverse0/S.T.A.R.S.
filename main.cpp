@@ -4,6 +4,7 @@
 #include "typedefs_and_globals.h"
 #include "Handler.h"
 #include "Animation.h"
+#include "Button.h"
 #define PI 3.1415926535898
 sf::Texture generateTexture(const std::string& texture, int size, int offset)//offset by number of frames
 {
@@ -42,21 +43,15 @@ int main()
     ellipse.setOutlineColor(sf::Color(88,136,255,50));
     ellipse.setFillColor(sf::Color(0,0,0,0));
    // ellipse.rotate(-20);
+    sf::Texture texture;
+    texture.loadFromFile("/home/vuniverse/Downloads/VovasProject/icons/research/instruments.png");
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    Button button(100,100,sprite);
     float angle = 20;
     ellipse.move(100,0);
-    while (window.isOpen())
-    {
-        sf::Event event;
-        int ch;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-            if (event.type == sf::Event::KeyPressed){
-            }else if (event.type == sf::Event::KeyReleased){
-            }
-
-        }
+    while (window.isOpen()) {
+        handler.update();
 
 //        double rad = (360.0/quality*i)/(360/PI/2);
 //        double x1 = cos(rad)*radius_x;
@@ -67,7 +62,6 @@ int main()
 
         window.display();
     }
-    std::cout<<angle;
-
+    std::cout << angle;
     return 0;
 }

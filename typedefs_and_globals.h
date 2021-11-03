@@ -8,6 +8,7 @@
 #include <vector>
 #include <utility>
 #include <cmath>
+#include <algorithm>
 #include <SFML/Graphics.hpp>
 #include "iostream"
 
@@ -17,13 +18,13 @@
 
 typedef uint8_t  frames;
 typedef uint16_t pixels;
-typedef uint16_t cords;
+typedef float_t cords;
 typedef void(*transformator)(sf::Sprite&, const sf::Texture &);
 
 namespace Settings
 {
-    extern std::string resources;
-    extern frames fps;
+    extern std::string g_resources;
+    extern frames g_fps;
 }
 
 pixels operator "" _p(unsigned long long value);

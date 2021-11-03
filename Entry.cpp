@@ -5,26 +5,25 @@
 #include "Entry.h"
 
 
-Entry::Entry(cords set_x, cords set_y):
-        animation(),
-        visibility(false),
-        x(set_x),y(set_y)
+Entry::Entry(cords a_x, cords a_y):
+        m_visibility(false),
+        m_x(a_x), m_y(a_y)
 {
 }
 
 Entry::~Entry()
 = default;
 
-void Entry::move(cords set_x, cords set_y)
+void Entry::move(cords a_x, cords a_y)
 {
-    x = set_x;
-    y = set_y;
-    sprite.setPosition(x,y);
+    m_x = a_x;
+    m_y = a_y;
+    m_sprite.setPosition(m_x, m_y);
 }
 
 bool Entry::hide() {
-    if(visibility){
-        visibility = false;
+    if(m_visibility){
+        m_visibility = false;
         return true;//return true if state was changed
     }else{
         return false;
@@ -32,21 +31,27 @@ bool Entry::hide() {
 }
 
 bool Entry::show() {
-    if(visibility){
+    if(m_visibility){
         return false;//return true if state was changed
     }else{
-        visibility = true;
+        m_visibility = true;
         return true;
     }
 }
 
-bool Entry::is_visible()const
+bool Entry::isVisible()const
 {
-    return visibility;
+    return m_visibility;
 }
 
-bool Entry::is_animated() const {
-    return animation.size() != 0;
+bool Entry::isAnimated() const
+{
+    return (m_animation.size() > 0);
+}
+
+void Entry::anchor(cords a_x, cords a_y)
+{
+    m_sprite.setOrigin(a_x, a_y);
 }
 
 

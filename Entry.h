@@ -9,20 +9,22 @@
 
 
 class Entry {
-    cords x,y;
-    sf::Sprite sprite;
-    Animation animation;
-    bool visibility;
+protected:
+    cords m_x,m_y;
+    sf::Sprite m_sprite;
+    Animation m_animation;
+    bool m_visibility;
 public:
     Entry(cords, cords);
     virtual ~Entry();
-    bool is_animated()const;
-    bool is_visible()const;
+    bool isVisible()const;
     bool hide();
     bool show();
     void move(cords,cords);
-    virtual bool is_gui()=0;
-    virtual void draw(sf::Window&)=0;
+    void anchor(cords,cords);
+    virtual bool isAnimated()const;
+    //virtual bool isGui()=0;
+    virtual void draw(sf::RenderWindow&)=0;
 };
 
 

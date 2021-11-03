@@ -3,6 +3,8 @@
 //
 #include "typedefs_and_globals.h"
 
+frames Settings::g_fps{DEFAULT_FPS};
+
 pixels operator "" _p(unsigned long long value)
 {
     pixels  temp = value;

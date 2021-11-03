@@ -22,7 +22,7 @@ public:
     void handle();
     void update();
     void render();
-    void set_fps(frames);
-    void input(sf::Keyboard::Key key, bool isPressed);
+    void set_fps(const frames&);
+    void input(const sf::Keyboard::Key&, const bool&);
 
 };
