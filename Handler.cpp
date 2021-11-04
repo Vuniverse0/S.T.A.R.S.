@@ -3,26 +3,33 @@
 //
 
 #include "Handler.h"
+#include "Containers.h"
 
-std::vector<Entry*> Handler::entry_list{};
-std::vector<Entry*> Handler::gui_list{};
+
+float_t Handler::x_ratio = GAME_MAKER_SCREEN_WIDTH, Handler::y_ratio = GAME_MAKER_SCREEN_WIDTH;
 
 Handler::Handler( sf::RenderWindow& window, sf::VideoMode mode):
-    window(window),
-    x_ratio{mode.width / GAME_MAKER_SCREEN_WIDTH},
-    y_ratio{mode.height / GAME_MAKER_SCREEN_HEIGHT}
+        m_window(window)
 {
+    x_ratio = mode.width / GAME_MAKER_SCREEN_WIDTH;
+    y_ratio = mode.height / GAME_MAKER_SCREEN_HEIGHT;
     set_fps(DEFAULT_FPS);
 }
 
-void Handler::handle() {
+Handler::~Handler()
+{
+    window().close();
+}
+
+void Handler::handle()
+{
     sf::Event event{};
-    while (window.pollEvent(event))
+    while (m_window.pollEvent(event))
     {
         switch (event.type)
         {
             case sf::Event::Closed:
-                window.close();
+                m_window.close();
                 break;
             case sf::Event::Resized:
                 break;
@@ -43,9 +50,10 @@ void Handler::handle() {
             case sf::Event::MouseButtonPressed:
                 break;
             case sf::Event::MouseButtonReleased:
-
+                //Containers::listButton[0]->checkClick({event.mouseMove.x, event.mouseMove.y});
                 break;
             case sf::Event::MouseMoved:
+                //Containers::listButton[0]->isOnMouse({event.mouseMove.x, event.mouseMove.y});
                 break;
             case sf::Event::MouseEntered:
                 break;
@@ -73,40 +81,49 @@ void Handler::handle() {
                 break;
         }
     }
+//    if(Containers::listButton[0]->isOnClick()){
+//        Containers::listButton[0]->move(400,400);
+//    }
 }
 
 void Handler::update()
 {
     static sf::Time last_update_time = sf::Time::Zero;
     static sf::Clock clock;
-    while (last_update_time > time_per_frame)
+    while (last_update_time > m_time_per_frame)
     {
-        last_update_time -= time_per_frame;
+        last_update_time -= m_time_per_frame;
         handle();
+        m_window.clear();
+        Containers::drawAll(Containers::listButton);
     }
     last_update_time += clock.restart();
 }
 
-void Handler::set_fps(const frames& fps)
+void Handler::set_fps(const frames& a_fps)
 {
-    window.setFramerateLimit(fps);
-    time_per_frame = sf::milliseconds(1000/fps);
-    Settings::g_fps=fps;
+    m_window.setFramerateLimit(a_fps);
+    m_time_per_frame = sf::milliseconds(1000 / a_fps);
+    Settings::g_fps=a_fps;
 }
 
-void Handler::render() {
-    for(auto x : Handler::entry_list){
-        x->draw(window);
-    }
-    for(auto x: Handler::gui_list){
-        x->draw(window);
-    }
-}
-
-void Handler::input(const sf::Keyboard::Key& key, const bool& isPressed) {
+void Handler::render()
+{
 
 }
 
-void Handler::pause_switch() {
-    paused = !paused;
+void Handler::input(const sf::Keyboard::Key& key, const bool& isPressed)
+{
+
 }
+
+void Handler::pause_switch()
+{
+    m_IsPaused = !m_IsPaused;
+}
+
+sf::RenderWindow &Handler::window()
+{
+    return m_window;
+}
+

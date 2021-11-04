@@ -21,6 +21,7 @@ int main()
             sf::VideoMode::getFullscreenModes()[0],
             "Surviving Try Around Remote Stars",
             sf::Style::Fullscreen,settings);
+    Settings::g_window = &window;
     window.setFramerateLimit(DEFAULT_FPS);
     Handler handler(window, sf::VideoMode::getFullscreenModes()[0]);
 
@@ -45,9 +46,10 @@ int main()
    // ellipse.rotate(-20);
     sf::Texture texture;
     texture.loadFromFile("/home/vuniverse/Downloads/VovasProject/icons/research/instruments.png");
+    texture.setSmooth(true);
     sf::Sprite sprite;
     sprite.setTexture(texture);
-    Button button(100,100,sprite);
+    //Button button(100,100,sprite);
     float angle = 20;
     ellipse.move(100,0);
     while (window.isOpen()) {
@@ -56,7 +58,6 @@ int main()
 //        double rad = (360.0/quality*i)/(360/PI/2);
 //        double x1 = cos(rad)*radius_x;
 //        double y1 = sin(rad)*radius_y;
-        window.clear();
         //ellipse.setRotation(angle);
         window.draw(ellipse);
 

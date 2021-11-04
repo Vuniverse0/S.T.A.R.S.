@@ -7,9 +7,11 @@
 #include "typedefs_and_globals.h"
 #include "Button.h"
 
-namespace Containers {
-    extern std::vector<Button*> button_list;
+#define LIST(what) std::vector<what*> list##what
 
+
+namespace Containers {
+    extern LIST(Button);
     template<typename T>
     void erase(std::vector<T>& a_vector, const T& a_member)
     {
@@ -23,7 +25,7 @@ namespace Containers {
     void drawAll(std::vector<T>& a_vector)
     {
         for(auto& x : a_vector){
-            x.draw();
+            x->draw(*Settings::g_window);
         }
     }
 
@@ -32,7 +34,7 @@ namespace Containers {
     {
         for(auto& x : a_vector){
             if(comparator(x))
-                x.draw();
+                x->draw(*Settings::g_window);
         }
     }
 };

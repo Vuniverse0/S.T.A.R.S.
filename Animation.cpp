@@ -6,124 +6,130 @@
 
 
 Animation::Animation(const std::vector<std::string>& init_list, sf::Sprite& sprite_p):
-        m_frames_list_(init_list.size()),
-        m_sprite_{sprite_p}
+        m_frames_list(init_list.size()),
+        m_sprite{sprite_p}
 {
     auto initListReader = init_list.cbegin();
-    for( auto frame: m_frames_list_ ){
+    for( auto frame : m_frames_list ){
         if(initListReader == init_list.cend() ){
-
+            throw std::out_of_range("Animation: init_list - data race only");
         }
-        if(!frame.loadFromFile(*initListReader))
+        else if(!frame.loadFromFile(*initListReader))
             throw std::runtime_error("Cant find resources");
+        frame.setSmooth(true);
         initListReader++;
     }
 }
 
 Animation::Animation(transformator transform_funk, sf::Sprite& sprite_p):
-        m_sprite_{sprite_p},
-        m_transform_{transform_funk},
-        m_frames_list_(1)//costilation for .size empty check
+        m_sprite{sprite_p},
+        m_transform{transform_funk},
+        m_frames_list(1)//costilation for .size empty check
 {
 }
 
 Animation::Animation():
-        m_sprite_(m_sprite_),//danger
-        m_transform_{none_transformator_},
-        m_frames_list_(0)//costilation for .size empty check
+        m_sprite(m_sprite),               //danger it very stupid action
+        m_transform{none_transformator},
+        m_frames_list(0)               //for .size empty check (no need, we have these in this->size())
 {
 }
 
-Animation::Animation(const std::string& sheet, sf::Sprite& sprite_p, pixels size, frames count):
-        m_sprite_{sprite_p},
-        m_frames_list_(count),
-        m_transform_{default_tansformator_}
+Animation::Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p, pixels a_size, frames a_count):
+        m_sprite{a_sprite_p},
+        m_frames_list(a_count),
+        m_transform{default_transformator}
 {
-    for(frames i = 0; i<count; i++){
-        m_frames_list_[i] = generateTextureX(sheet, size, i);
+    for (frames i = 0; i < a_count; i++) {
+        m_frames_list[i] = generateTextureX(a_sheet, a_size, i);
+        m_frames_list[i].setSmooth(true);
     }
-    m_sprite_.setTexture(m_frames_list_[0]);
+    m_sprite.setTexture(m_frames_list[0]);
 }
 
 Animation::Animation(const Animation& other):
-        m_frames_list_(other.m_frames_list_),
-        m_sprite_{other.m_sprite_},
-        m_transform_{default_tansformator_}
+        m_frames_list(other.m_frames_list),
+        m_sprite{other.m_sprite},
+        m_transform{default_transformator}
 {
 }
 
-Animation::Animation(const std::string& sheet, sf::Sprite& sprite_p, pixels, frames count, transformator custom_transformator):
-        m_sprite_{sprite_p},
-        m_frames_list_(count),
-        m_transform_{custom_transformator}
+Animation::Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p,
+                     pixels a_size, frames a_count, transformator custom_transformator) :
+        m_sprite{a_sprite_p},
+        m_frames_list(a_count),
+        m_transform{custom_transformator}
 {
-
+    for (frames i = 0; i < a_count; i++) {
+        m_frames_list[i] = generateTextureX(a_sheet, a_size, i);
+        m_frames_list[i].setSmooth(true);
+    }
+    m_sprite.setTexture(m_frames_list[0]);
 }
-
-Animation::~Animation()
-= default;
 
 Animation &Animation::operator=(Animation&& other) noexcept
 {
-    m_frames_list_ = other.m_frames_list_;
-    m_sprite_ = other.m_sprite_;
-    m_transform_ = other.m_transform_;
+    m_frames_list = other.m_frames_list;
+    m_sprite = other.m_sprite;
+    m_transform = other.m_transform;
     return *this;
 }
 
 
 bool Animation::play(int8_t speed, bool direction) {
-    static auto i = m_frames_list_.begin();
+    static auto i = m_frames_list.begin();
 
-    if(direction){
-        if(i == m_frames_list_.begin()){
-            m_transform_(m_sprite_, *i);
-            i = m_frames_list_.end();
+    if (direction) {
+        if(i == m_frames_list.begin()){
+            m_transform(m_sprite, *i);
+            i = m_frames_list.end();
             return true;
         }
         i--;
-        m_transform_(m_sprite_, *i);
+        m_transform(m_sprite, *i);
         return false;
-    }else{
+    }
+    else {
         i++;
-        if(i == m_frames_list_.end()){
-            i = m_frames_list_.begin();
-            m_transform_(m_sprite_, *i);
+        if (i == m_frames_list.end()) {
+            i = m_frames_list.begin();
+            m_transform(m_sprite, *i);
             return true;
         }
-        m_transform_(m_sprite_, *i);
+        m_transform(m_sprite, *i);
         return false;
     }
 }
 
-sf::Texture Animation::generateTextureX(const std::string& texture, pixels size, pixels offset)//offset by number of frames
+sf::Texture Animation::generateTextureX(const std::string& texture, const pixels& size, const pixels& offset)//offset by number of frames
 {
     sf::Texture texture_out;
-    if(!texture_out.loadFromFile(texture,sf::IntRect(offset * size, 0, size, size)))
+    if (!texture_out.loadFromFile(texture,sf::IntRect(offset * size, 0, size, size)))
         throw std::runtime_error("Cant find resources");
     return texture_out;
 }
 
-sf::Texture Animation::generateTextureXY(const std::string& texture, pixels x, pixels y, pixels offset_x, pixels offset_y)//offset by number of frames
+sf::Texture Animation::generateTextureXY(const std::string& texture, const pixels& x, const pixels& y,
+                                         const pixels& offset_x, const pixels& offset_y)//offset by number of frames
 {
     sf::Texture texture_out;
-    if(!texture_out.loadFromFile(texture,sf::IntRect(offset_x * x, offset_y * y, x, y)))
+    if (!texture_out.loadFromFile(texture,sf::IntRect(offset_x * x, offset_y * y, x, y)))
         throw std::runtime_error("Cant find resources");
     return texture_out;
 }
 
-void Animation::default_tansformator_(sf::Sprite& sprite_t, const sf::Texture& texture_T )
+void Animation::default_transformator(sf::Sprite& sprite_t, const sf::Texture& texture_T )
 {
      sprite_t.setTexture(texture_T);
 }
-void Animation::none_transformator_(sf::Sprite&, const sf::Texture&)
+void Animation::none_transformator(sf::Sprite&, const sf::Texture&)
 {
 }
 
 int Animation::size() const
 {
-    if(m_transform_ == none_transformator_){
+    if (m_transform == none_transformator && m_frames_list.size() == 0) {
         return -1;
     }
-    return m_frames_list_.size();
+    return m_frames_list.size();
 }

@@ -4,6 +4,7 @@
 #include "typedefs_and_globals.h"
 
 frames Settings::g_fps{DEFAULT_FPS};
+sf::RenderWindow* Settings::g_window{nullptr};
 
 pixels operator "" _p(unsigned long long value)
 {

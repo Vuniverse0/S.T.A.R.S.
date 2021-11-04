@@ -9,9 +9,11 @@
 
 
 class Gui : public Entry{
-
 public:
-    Gui(cords unnamed, cords unnamed1);
+    Gui(cords, cords, const std::string&, frames, pixels, transformator);
+    Gui(cords, cords, cords, cords, const std::string&, frames, pixels, transformator);
+    Gui(cords, cords, const std::string&, transformator);
+    ~Gui() override = default;
     virtual bool isGui()const;
     using Entry::isAnimated;
 };

@@ -4,7 +4,8 @@
 
 #include "Containers.h"
 
-
-namespace Containers {
+namespace Containers
+{
+    LIST(Button);
     std::vector<Button*> button_list{};
 };

@@ -9,15 +9,16 @@
 
 struct Handler {
 private:
-    sf::RenderWindow& window;
-    sf::Time time_per_frame;
-    bool paused = false;
+    sf::RenderWindow& m_window;
+    sf::Time m_time_per_frame;
+    bool m_IsPaused = false;
 public:
-    static std::vector<Entry*> entry_list;
-    static std::vector<Entry*> gui_list;
-    mutable double_t x_ratio, y_ratio;
-    Handler(sf::RenderWindow&, sf::VideoMode);
+    static float_t x_ratio, y_ratio;
 
+    Handler(sf::RenderWindow&, sf::VideoMode);
+    ~Handler();
+
+    sf::RenderWindow& window();
     void pause_switch();
     void handle();
     void update();

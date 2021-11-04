@@ -8,11 +8,9 @@
 
 struct Animation{
 private:
-    sf::Sprite& m_sprite_;
-
-    std::vector<sf::Texture> m_frames_list_{};
-
-    transformator m_transform_;
+    sf::Sprite& m_sprite;
+    std::vector<sf::Texture> m_frames_list{};
+    transformator m_transform;
 public:
     Animation();
     Animation(const std::string&, sf::Sprite&, pixels, frames);//Анимация из одной картинки(спрайтлист)
@@ -20,13 +18,15 @@ public:
     Animation(const std::vector<std::string>&, sf::Sprite&);//Некоторое количевство картинок в анимацию
     Animation(transformator, sf::Sprite&);//Анимация посредством пользовательской функции(текстура едина)
     Animation(Animation const&);
-    ~Animation();
+    ~Animation() = default;
     Animation& operator=(Animation&&) noexcept ;
+
     bool play(int8_t = 0, bool = false);//return true when m_animation finish
     int size() const;
-    static sf::Texture generateTextureX(const std::string&, pixels, pixels = 0);
-    static sf::Texture generateTextureXY(const std::string&, pixels, pixels , pixels = 0, pixels = 0);
-private:
-    static void default_tansformator_(sf::Sprite &sprite_t, const sf::Texture &texture_T);
-    static void none_transformator_(sf::Sprite&, const sf::Texture&);
+
+    static sf::Texture generateTextureX(const std::string&, const pixels&, const pixels& = 0);
+    static sf::Texture generateTextureXY(const std::string&, const pixels&, const pixels&,
+                                                             const pixels& = 0, const pixels& = 0);
+    static void default_transformator(sf::Sprite &sprite_t, const sf::Texture &texture_T);
+    static void none_transformator(sf::Sprite&, const sf::Texture&);
 };
