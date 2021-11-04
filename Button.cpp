@@ -2,15 +2,19 @@
 // Created by vuniverse on 11/2/21.
 //
 
-#include "Button.h"
 #include "Containers.h"
 #include "Handler.h"
+#include "Button.h"
+
+#define MAGIC_RATIO_BUTTONS 0.5f
 
 Button::Button(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator) :
                 Gui(a_x, a_y, a_string, a_transformator)
 {
     Containers::listButton.push_back(this);
-    m_sprite.scale(0.5f * Handler::x_ratio,0.5f * Handler::y_ratio);
+    m_sprite.scale(MAGIC_RATIO_BUTTONS * Handler::x_ratio,MAGIC_RATIO_BUTTONS * Handler::y_ratio);
+    m_normal_scale = m_sprite.getScale();
+    m_sprite.setOrigin(local_center(&m_sprite));
 }
 
 Button::~Button()
@@ -18,44 +22,48 @@ Button::~Button()
     Containers::erase(Containers::listButton, this);
 }
 
-void Button::checkClick(sf::Vector2i a_mousePos) {
-    auto size_regulator{[this](){auto l_bounds = (this->m_sprite.getGlobalBounds());
-                                                    l_bounds.height;
-                                                    l_bounds.width*0.6;
-                                                    return l_bounds;}};
-
-    if (size_regulator().contains(a_mousePos.x,a_mousePos.y))
-        m_current = true;
+void Button::checkClick(sf::Vector2i a_mousePos)
+{
+    if (size_regulator(&m_sprite).contains(a_mousePos.x,a_mousePos.y))
+        m_flags.m_current = 1;
 }
 
-bool Button::isOnClick()
+void Button::checkMouse(sf::Vector2i a_mousePos)
 {
-    if(m_current){
-        m_current = false;
+    if (size_regulator(&m_sprite).contains(a_mousePos.x,a_mousePos.y)) {
+        m_flags.m_mouse = 1;
+    }
+    else {
+        m_flags.m_mouse = 0;
+    }
+}
+
+bool Button::isOnClick()//if true, turn off click flag
+{
+    if (m_flags.m_current == 1) {
+        m_flags.m_current = 0;
         return true;
     }
     return false;
 }
 
-void Button::draw(sf::RenderWindow& window)
+bool Button::isOnMouse() const
 {
-    window.draw(m_sprite);
+    return m_flags.m_mouse == 1;
 }
 
-bool Button::isOnMouse(sf::Vector2i a_mousePos)
+void Button::draw(sf::RenderWindow& window)
 {
-    auto size_regulator{[this](){auto l_bounds = (this->m_sprite.getGlobalBounds());
-        l_bounds.height;
-        l_bounds.width*0.6;
-        return l_bounds;}};
-
-    if (size_regulator().contains(a_mousePos.x,a_mousePos.y)){
-        if(m_sprite.getScale().x<1.2){
-            m_sprite.scale(1.05,1.05);
-        }
-    }else{
-        if(m_sprite.getScale().x>=1){
-            m_sprite.scale(0.95,0.95);
+    if (isOnMouse()) {
+        if (m_sprite.getScale().x - m_normal_scale.x < 0.05f) {
+            scale_by_mouse(&m_sprite, true);
         }
     }
+    else if (m_sprite.getScale() > m_normal_scale) {
+        scale_by_mouse(&m_sprite, false);
+    }
+    else if (m_sprite.getScale() != m_normal_scale) {
+        m_sprite.setScale(m_normal_scale);
+    }
+    window.draw(m_sprite);
 }

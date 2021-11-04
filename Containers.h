@@ -7,13 +7,14 @@
 #include "typedefs_and_globals.h"
 #include "Button.h"
 
-#define LIST(what) std::vector<what*> list##what
+#define LIST(arg) static std::vector<arg*> list##arg;
+#define LIST_INIT(arg) std::vector<arg*> Containers::list##arg(0);
 
 
-namespace Containers {
-    extern LIST(Button);
+struct Containers {
+    LIST(Button)
     template<typename T>
-    void erase(std::vector<T>& a_vector, const T& a_member)
+    static void erase(std::vector<T>& a_vector, const T& a_member)
     {
         auto it = std::find(a_vector.begin(), a_vector.end(), a_member);
         if(it == a_vector.end())
@@ -22,7 +23,7 @@ namespace Containers {
     }
 
     template<typename T>
-    void drawAll(std::vector<T>& a_vector)
+    static void drawAll(std::vector<T>& a_vector)
     {
         for(auto& x : a_vector){
             x->draw(*Settings::g_window);

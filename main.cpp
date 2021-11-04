@@ -49,7 +49,8 @@ int main()
     texture.setSmooth(true);
     sf::Sprite sprite;
     sprite.setTexture(texture);
-    //Button button(100,100,sprite);
+    Button button(100, 100,
+            "/home/vuniverse/Downloads/VovasProject/icons/research/instruments.png", Animation::default_transformator);
     float angle = 20;
     ellipse.move(100,0);
     while (window.isOpen()) {

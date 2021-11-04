@@ -10,6 +10,7 @@
 
 class Entry {
 protected:
+    sf::Vector2f m_normal_scale;
     cords m_x,m_y;
     sf::Sprite m_sprite;
     sf::Texture* m_texture = nullptr;
@@ -19,8 +20,6 @@ public:
     Entry() = delete;
     Entry(cords, cords, const std::string&, frames, pixels, transformator);
     Entry(cords, cords, const std::string&, transformator);
-    Entry(cords a_x, cords a_y, cords a_anchor_x, cords a_anchor_y, const std::string& a_string,
-          frames a_frames, pixels a_pixels, transformator a_transformator);
     virtual ~Entry();
 
     bool isVisible()const;

@@ -11,14 +11,14 @@ float_t Handler::x_ratio = GAME_MAKER_SCREEN_WIDTH, Handler::y_ratio = GAME_MAKE
 Handler::Handler( sf::RenderWindow& window, sf::VideoMode mode):
         m_window(window)
 {
-    x_ratio = mode.width / GAME_MAKER_SCREEN_WIDTH;
-    y_ratio = mode.height / GAME_MAKER_SCREEN_HEIGHT;
+    x_ratio = static_cast<float_t>(mode.width) / GAME_MAKER_SCREEN_WIDTH;
+    y_ratio = static_cast<float_t>(mode.height)  / GAME_MAKER_SCREEN_HEIGHT;
     set_fps(DEFAULT_FPS);
 }
 
 Handler::~Handler()
 {
-    window().close();
+    Containers::listButton.clear();
 }
 
 void Handler::handle()
@@ -50,10 +50,10 @@ void Handler::handle()
             case sf::Event::MouseButtonPressed:
                 break;
             case sf::Event::MouseButtonReleased:
-                //Containers::listButton[0]->checkClick({event.mouseMove.x, event.mouseMove.y});
+                Containers::listButton[0]->checkClick({event.mouseMove.x, event.mouseMove.y});
                 break;
             case sf::Event::MouseMoved:
-                //Containers::listButton[0]->isOnMouse({event.mouseMove.x, event.mouseMove.y});
+                Containers::listButton[0]->checkMouse({event.mouseMove.x, event.mouseMove.y});
                 break;
             case sf::Event::MouseEntered:
                 break;
@@ -104,7 +104,7 @@ void Handler::set_fps(const frames& a_fps)
 {
     m_window.setFramerateLimit(a_fps);
     m_time_per_frame = sf::milliseconds(1000 / a_fps);
-    Settings::g_fps=a_fps;
+    Settings::g_fps = a_fps;
 }
 
 void Handler::render()

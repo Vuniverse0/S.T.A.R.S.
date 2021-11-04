@@ -27,6 +27,7 @@ public:
     static sf::Texture generateTextureX(const std::string&, const pixels&, const pixels& = 0);
     static sf::Texture generateTextureXY(const std::string&, const pixels&, const pixels&,
                                                              const pixels& = 0, const pixels& = 0);
+public:
     static void default_transformator(sf::Sprite &sprite_t, const sf::Texture &texture_T);
     static void none_transformator(sf::Sprite&, const sf::Texture&);
 };

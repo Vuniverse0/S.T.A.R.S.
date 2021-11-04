@@ -14,16 +14,6 @@ Entry::Entry(cords a_x, cords a_y, const std::string& a_string,
 {
     m_sprite.setPosition(m_x, m_y);//    m_sprite.setOrigin(a_x, a_y);
 }
-Entry::Entry(cords a_x, cords a_y, cords a_anchor_x, cords a_anchor_y, const std::string& a_string,
-             frames a_frames, pixels a_pixels, transformator a_transformator) :
-        m_visibility(false),
-        m_sprite{},
-        m_animation(a_string, m_sprite, a_pixels, a_frames, a_transformator),
-        m_x(a_x), m_y(a_y)
-{
-    move(m_x, m_y);
-    anchor(a_anchor_x, a_anchor_y);
-}
 
 Entry::Entry(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator) :
         m_visibility(false),
