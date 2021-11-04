@@ -2,9 +2,9 @@
 // Created by vuniverse on 11/2/21.
 //
 
-#include "Button.h"
 #include "Containers.h"
 #include "Handler.h"
+
 
 Button::Button(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator) :
                 Gui(a_x, a_y, a_string, a_transformator)
@@ -53,9 +53,11 @@ bool Button::isOnMouse(sf::Vector2i a_mousePos)
         if(m_sprite.getScale().x<1.2){
             m_sprite.scale(1.05,1.05);
         }
+        return true;
     }else{
         if(m_sprite.getScale().x>=1){
             m_sprite.scale(0.95,0.95);
         }
+        return false;
     }
 }

@@ -11,14 +11,14 @@ float_t Handler::x_ratio = GAME_MAKER_SCREEN_WIDTH, Handler::y_ratio = GAME_MAKE
 Handler::Handler( sf::RenderWindow& window, sf::VideoMode mode):
         m_window(window)
 {
-    x_ratio = mode.width / GAME_MAKER_SCREEN_WIDTH;
-    y_ratio = mode.height / GAME_MAKER_SCREEN_HEIGHT;
+    x_ratio = static_cast<float_t>(mode.width) / GAME_MAKER_SCREEN_WIDTH;
+    y_ratio = static_cast<float_t>(mode.height)  / GAME_MAKER_SCREEN_HEIGHT;
     set_fps(DEFAULT_FPS);
 }
 
 Handler::~Handler()
 {
-    window().close();
+    Containers::listButton.clear();
 }
 
 void Handler::handle()
