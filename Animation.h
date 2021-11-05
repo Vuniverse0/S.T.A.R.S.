@@ -12,14 +12,20 @@ private:
     std::vector<sf::Texture> m_frames_list{};
     transformator m_transform;
 public:
-    Animation();
-    Animation(const std::string&, sf::Sprite&, pixels, frames);//Анимация из одной картинки(спрайтлист)
-    Animation(const std::string&, sf::Sprite&, pixels, frames, transformator);//Анимация из одной картинки+кастом трансформатор
-    Animation(const std::vector<std::string>&, sf::Sprite&);//Некоторое количевство картинок в анимацию
-    Animation(transformator, sf::Sprite&);//Анимация посредством пользовательской функции(текстура едина)
+    Animation() = delete;
+    Animation(const std::string&, sf::Sprite&, pixels, frames);
+    //Анимация из одной картинки(спрайтлист) одна полоса
+    Animation(const std::string&, sf::Sprite&, pixels, frames, transformator);
+    //Анимация из одной картинки+кастом трансформатор
+    Animation(const std::vector<std::string>&, sf::Sprite&);
+    //Некоторое количевство картинок в анимацию
+    Animation(const std::string&, sf::Sprite&, pixels, pixels, frames, frames);
+    //Анимация из одной картинки(спрайтлист) много полос
+    Animation(transformator, sf::Sprite&);
+    //Анимация посредством пользовательской функции(текстура едина)
     Animation(Animation const&);
-    ~Animation() = default;
     Animation& operator=(Animation&&) noexcept ;
+    ~Animation() = default;
 
     bool play(int8_t = 0, bool = false);//return true when m_animation finish
     int size() const;

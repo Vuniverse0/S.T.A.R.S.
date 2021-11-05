@@ -26,22 +26,37 @@ Animation::Animation(transformator transform_funk, sf::Sprite& sprite_p):
         m_transform{transform_funk},
         m_frames_list(1)//costilation for .size empty check
 {
+    m_frames_list[0] = *m_sprite.getTexture();
 }
 
-Animation::Animation():
-        m_sprite(m_sprite),               //danger it very stupid action
-        m_transform{none_transformator},
-        m_frames_list(0)               //for .size empty check (no need, we have these in this->size())
-{
-}
+//Animation::Animation():
+//        m_sprite(m_sprite),               //danger it very stupid action
+//        m_transform{none_transformator},
+//        m_frames_list(0)               //for .size empty check (no need, we have these in this->size())
+//{
+//}
 
-Animation::Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p, pixels a_size, frames a_count):
+Animation::Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p, pixels a_size, frames a_count) : //x==y
         m_sprite{a_sprite_p},
         m_frames_list(a_count),
         m_transform{default_transformator}
 {
     for (frames i = 0; i < a_count; i++) {
         m_frames_list[i] = generateTextureX(a_sheet, a_size, i);
+        m_frames_list[i].setSmooth(true);
+    }
+    m_sprite.setTexture(m_frames_list[0]);
+}
+
+Animation::Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p, pixels a_size_x, pixels a_size_y,
+                     frames a_frames_per_line, frames a_count) : //x!=y
+        m_sprite{a_sprite_p},
+        m_frames_list(a_count),
+        m_transform{default_transformator}
+{
+    for (frames i = 0; i < a_count; i++) {
+        m_frames_list[i] = generateTextureXY(a_sheet, a_size_x, a_size_y,
+                                     i % a_frames_per_line, i / a_frames_per_line);
         m_frames_list[i].setSmooth(true);
     }
     m_sprite.setTexture(m_frames_list[0]);

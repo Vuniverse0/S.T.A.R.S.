@@ -12,7 +12,7 @@ Entry::Entry(cords a_x, cords a_y, const std::string& a_string,
         m_animation(a_string, m_sprite, a_pixels, a_frames, a_transformator),
         m_x(a_x), m_y(a_y)
 {
-    m_sprite.setPosition(m_x, m_y);//    m_sprite.setOrigin(a_x, a_y);
+    move(a_x,a_y);
 }
 
 Entry::Entry(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator) :
@@ -25,7 +25,7 @@ Entry::Entry(cords a_x, cords a_y, const std::string& a_string, transformator a_
     m_texture->loadFromFile(a_string);
     m_texture->setSmooth(true);
     m_sprite.setTexture(*m_texture);
-    m_sprite.setPosition(m_x, m_y);
+    move(a_x,a_y);
 }
 
 Entry::~Entry()

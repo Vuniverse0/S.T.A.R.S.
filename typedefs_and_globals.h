@@ -27,6 +27,7 @@ namespace Settings
     extern std::string g_resources;
     extern frames g_fps;
     extern sf::RenderWindow* g_window;
+    extern sf::ContextSettings g_settings;
 }
 
 static auto size_regulator{

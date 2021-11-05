@@ -5,7 +5,7 @@
 
 frames Settings::g_fps{DEFAULT_FPS};
 sf::RenderWindow* Settings::g_window{nullptr};
-
+sf::ContextSettings Settings::g_settings;
 pixels operator "" _p(unsigned long long value)
 {
     pixels  temp = value;
