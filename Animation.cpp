@@ -26,7 +26,7 @@ Animation::Animation(transformator transform_funk, sf::Sprite& sprite_p):
         m_transform{transform_funk},
         m_frames_list(1)//costilation for .size empty check
 {
-    m_frames_list[0] = *m_sprite.getTexture();
+    //m_frames_list[0] = *m_sprite.getTexture();
 }
 
 //Animation::Animation():
@@ -91,28 +91,29 @@ Animation &Animation::operator=(Animation&& other) noexcept
 }
 
 
-bool Animation::play(int8_t speed, bool direction) {
+bool Animation::play(uint8_t speed, bool direction) {
     static auto i = m_frames_list.begin();
-
-    if (direction) {
-        if(i == m_frames_list.begin()){
+    while (speed > 0) {
+        if (direction) {
+            if (i == m_frames_list.begin()) {
+                m_transform(m_sprite, *i);
+                i = m_frames_list.end();
+                return true;
+            }
+            --i;
             m_transform(m_sprite, *i);
-            i = m_frames_list.end();
-            return true;
-        }
-        i--;
-        m_transform(m_sprite, *i);
-        return false;
-    }
-    else {
-        i++;
-        if (i == m_frames_list.end()) {
-            i = m_frames_list.begin();
+            return false;
+        } else {
+            ++i;
+            if (i == m_frames_list.end()) {
+                i = m_frames_list.begin();
+                m_transform(m_sprite, *i);
+                return true;
+            }
             m_transform(m_sprite, *i);
-            return true;
+            return false;
         }
-        m_transform(m_sprite, *i);
-        return false;
+        --speed;
     }
 }
 

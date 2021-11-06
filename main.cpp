@@ -13,7 +13,7 @@ int main()
             "Surviving Try Around Remote Stars",
             sf::Style::Fullscreen,Settings::g_settings);
     Settings::g_window = &*&window;
-    window.setFramerateLimit(DEFAULT_FPS);
+    window.setFramerateLimit(DEFAULT_FPS+5);
     Handler handler(window, sf::VideoMode::getFullscreenModes()[0]);
 
     float radius_x = 450.0f * 0.7f;
@@ -45,10 +45,6 @@ int main()
             i++;
         handler.update();
 
-//        double rad = (360.0/quality*i)/(360/PI/2);
-//        double x1 = cos(rad)*radius_x;
-//        double y1 = sin(rad)*radius_y;
-        //ellipse.setRotation(angle);
         window.draw(ellipse);
 
         window.display();

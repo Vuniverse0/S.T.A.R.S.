@@ -102,7 +102,7 @@ void Handler::update()
 
 void Handler::set_fps(const frames& a_fps)
 {
-    m_window.setFramerateLimit(a_fps);
+    m_window.setFramerateLimit(a_fps+5);
     m_time_per_frame = sf::milliseconds(1000 / a_fps);
     Settings::g_fps = a_fps;
 }

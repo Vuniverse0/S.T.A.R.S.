@@ -27,7 +27,7 @@ public:
     Animation& operator=(Animation&&) noexcept ;
     ~Animation() = default;
 
-    bool play(int8_t = 0, bool = false);//return true when m_animation finish
+    bool play(uint8_t = 1, bool = false);//return true when m_animation finish
     int size() const;
 
     static sf::Texture generateTextureX(const std::string&, const pixels&, const pixels& = 0);
