@@ -11,6 +11,8 @@ private:
     sf::Sprite& m_sprite;
     std::vector<sf::Texture> m_frames_list{};
     transformator m_transform;
+    frames m_i;
+    float_t counter = 1.0f;
 public:
     Animation() = delete;
     Animation(const std::string&, sf::Sprite&, pixels, frames);
@@ -27,7 +29,7 @@ public:
     Animation& operator=(Animation&&) noexcept ;
     ~Animation() = default;
 
-    bool play(uint8_t = 1, bool = false);//return true when m_animation finish
+    bool play(float_t = 1, bool = false);//return true when m_animation finish
     int size() const;
 
     static sf::Texture generateTextureX(const std::string&, const pixels&, const pixels& = 0);

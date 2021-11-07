@@ -17,7 +17,7 @@ int main()
     Handler handler(window, sf::VideoMode::getFullscreenModes()[0]);
 
     float radius_x = 450.0f * 0.7f;
-    float radius_y = 340.0f * 0.6f;
+    float radius_y = radius_x * 0.6f;
     float quality = 170.0f;
 
     sf::ConvexShape ellipse;
@@ -41,13 +41,13 @@ int main()
     while (window.isOpen()) {
             if(i==quality){i=0;}
             auto point = ellipse.getPoint(i);
-            //button.move(point.x+400,point.y+400);
+            button.move(point.x+400,point.y+400);
             i++;
         handler.update();
 
         window.draw(ellipse);
-
         window.display();
+
     }
     Settings::g_window = nullptr;
     return 0;

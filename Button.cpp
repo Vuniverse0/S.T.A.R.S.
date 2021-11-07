@@ -6,7 +6,7 @@
 #include "Handler.h"
 #include "Button.h"
 
-#define MAGIC_RATIO_BUTTONS 0.5f
+#define MAGIC_RATIO_BUTTONS 0.5f //TODO delete this shit
 
 Button::Button(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator) :
                 Gui(a_x, a_y, a_string, a_transformator)

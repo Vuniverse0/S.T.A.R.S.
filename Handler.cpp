@@ -90,11 +90,16 @@ void Handler::update()
 {
     static sf::Time last_update_time = sf::Time::Zero;
     static sf::Clock clock;
+    static sf::Sprite sprite;
+    static Animation animation("/home/vuniverse/Downloads/1976757976.png",sprite,100,163);
     while (last_update_time > m_time_per_frame)
     {
         last_update_time -= m_time_per_frame;
         handle();
+
         m_window.clear();
+        animation.play(.2f);
+        m_window.draw(sprite);
         Containers::drawAll(Containers::listButton);
     }
     last_update_time += clock.restart();

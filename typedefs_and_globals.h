@@ -13,9 +13,9 @@
 #include <algorithm>
 #include <iostream>
 
-#define GAME_MAKER_SCREEN_WIDTH 1366.0f
+#define GAME_MAKER_SCREEN_WIDTH 1366.0f //TODO remake these
 #define GAME_MAKER_SCREEN_HEIGHT 768.0f
-#define DEFAULT_FPS 60
+#define DEFAULT_FPS 60 // keep
 
 typedef uint8_t  frames;
 typedef uint16_t pixels;
@@ -51,7 +51,7 @@ static auto scale_by_mouse{
         }
 };
 
-static auto center{
+static auto center{//for code trigger - anchors
         [](const sf::Sprite*const sprite)->sf::Vector2f
         {
             auto temp = sprite->getGlobalBounds();
@@ -59,7 +59,7 @@ static auto center{
         }
 };
 
-static auto local_center{
+static auto local_center{//for .setOrigin
         [](const sf::Sprite*const sprite)->sf::Vector2f
         {
             auto temp = sprite->getGlobalBounds();

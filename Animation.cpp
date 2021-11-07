@@ -45,6 +45,7 @@ Animation::Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p, pixels 
         m_frames_list[i] = generateTextureX(a_sheet, a_size, i);
         m_frames_list[i].setSmooth(true);
     }
+    m_i = m_frames_list.size();
     m_sprite.setTexture(m_frames_list[0]);
 }
 
@@ -59,13 +60,15 @@ Animation::Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p, pixels 
                                      i % a_frames_per_line, i / a_frames_per_line);
         m_frames_list[i].setSmooth(true);
     }
+    m_i = m_frames_list.size();
     m_sprite.setTexture(m_frames_list[0]);
 }
 
 Animation::Animation(const Animation& other):
         m_frames_list(other.m_frames_list),
         m_sprite{other.m_sprite},
-        m_transform{default_transformator}
+        m_transform{default_transformator},
+        m_i{other.m_i}
 {
 }
 
@@ -79,6 +82,7 @@ Animation::Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p,
         m_frames_list[i] = generateTextureX(a_sheet, a_size, i);
         m_frames_list[i].setSmooth(true);
     }
+    m_i = m_frames_list.size();
     m_sprite.setTexture(m_frames_list[0]);
 }
 
@@ -90,38 +94,33 @@ Animation &Animation::operator=(Animation&& other) noexcept
     return *this;
 }
 
-
-bool Animation::play(uint8_t speed, bool direction) {
-    static auto i = m_frames_list.begin();
-    while (speed > 0) {
-        if (direction) {
-            if (i == m_frames_list.begin()) {
-                m_transform(m_sprite, *i);
-                i = m_frames_list.end();
-                return true;
-            }
-            --i;
-            m_transform(m_sprite, *i);
-            return false;
-        } else {
-            ++i;
-            if (i == m_frames_list.end()) {
-                i = m_frames_list.begin();
-                m_transform(m_sprite, *i);
-                return true;
-            }
-            m_transform(m_sprite, *i);
-            return false;
-        }
-        --speed;
+bool Animation::play(float_t speed, bool direction) {
+    bool result = false;
+    if (m_i == m_frames_list.size()) {
+        m_i = 0;
+        result = true;
     }
+    if (counter <= 0.0f) {
+        if (direction) {
+                m_transform(m_sprite, m_frames_list[m_frames_list.size()-(m_i+1)]);
+        }
+        else {
+            m_transform(m_sprite, m_frames_list[m_i]);
+        }
+        counter = 1.0f;
+        ++m_i;
+    }
+    else {
+        counter -= speed;
+    }
+    return result;
 }
 
 sf::Texture Animation::generateTextureX(const std::string& texture, const pixels& size, const pixels& offset)//offset by number of frames
 {
     sf::Texture texture_out;
     if (!texture_out.loadFromFile(texture,sf::IntRect(offset * size, 0, size, size)))
-        throw std::runtime_error("Cant find resources");
+        throw std::runtime_error("Animation::generateTextureX - Cant find resources");
     return texture_out;
 }
 
@@ -130,7 +129,7 @@ sf::Texture Animation::generateTextureXY(const std::string& texture, const pixel
 {
     sf::Texture texture_out;
     if (!texture_out.loadFromFile(texture,sf::IntRect(offset_x * x, offset_y * y, x, y)))
-        throw std::runtime_error("Cant find resources");
+        throw std::runtime_error("Animation::generateTextureX - Cant find resources");
     return texture_out;
 }
 

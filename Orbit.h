@@ -7,12 +7,27 @@
 #include "Entry.h"
 
 
-class Orbit : public Entry{
-    using Entry::m_normal_scale;
-    using Entry::m_x;
-    using Entry::m_y;
-    using Entry::m_sprite;
-    using Entry::m_animation;
-    using Entry::m_visibility;
+class Orbit
+{
+private:
+    cords m_x,m_y;
+    bool m_visibility;
+    float radius_x;
+    float radius_y;
+public:
+    Orbit() = delete;
+    Orbit(cords, cords, cords);
+
+    sf::Vector2f getWay();
+
+    bool isVisible()const;
+
+    bool hide();
+    bool show();
+
+    void move(cords,cords);
+    void anchor(cords,cords);
+
+    virtual void draw(sf::RenderWindow&)=0;
 
 };
