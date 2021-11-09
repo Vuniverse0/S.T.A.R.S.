@@ -45,5 +45,5 @@ public:
     using Gui::isGui;
 protected:
     bool isOnClick ();
-    bool isOnMouse() const;
+    bool isOnMouse()const;
 };
