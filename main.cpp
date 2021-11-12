@@ -18,13 +18,13 @@ int main()
 
     float radius_x = 450.0f * 0.7f;
     float radius_y = radius_x * 0.6f;
-    float quality = 170.0f;
+    int quality = 170;
 
     sf::ConvexShape ellipse;
     ellipse.setPointCount(quality);
 
-    for (unsigned short i =0; i < quality; ++i) {
-        float rad = (360.0f/quality*i)/(360.0f/M_PI/2.0f);
+    for (unsigned int i =0; i < quality; ++i) {
+        float rad = (360.0f/static_cast<float>(quality*i))/(360.0f/static_cast<float>(M_PI)/2.0f);
         float x = cos(rad-0.1f)*radius_x;
         float y = sin(rad+0.3f)*radius_y;
 

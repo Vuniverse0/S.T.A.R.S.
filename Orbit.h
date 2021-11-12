@@ -21,6 +21,7 @@ public:
     sf::Vector2f getWay();
 
     bool isVisible()const;
+    bool isAnimated()const;
 
     bool hide();
     bool show();

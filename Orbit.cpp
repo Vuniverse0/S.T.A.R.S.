@@ -35,29 +35,48 @@ Orbit::Orbit(cords a_x, cords a_y, cords radius) :
 
 }
 
-bool Orbit::isVisible() const
-{
-    return false;
-}
-
 bool Orbit::hide()
 {
-    return false;
+    if (m_visibility) {
+        m_visibility = false;
+        return true;//return true if state was changed
+    }
+    else {
+        return false;
+    }
 }
 
 bool Orbit::show()
 {
+    if (m_visibility) {
+        return false;//return true if state was changed
+    }
+    else {
+        m_visibility = true;
+        return true;
+    }
+}
+
+bool Orbit::isVisible()const
+{
+    return m_visibility;
+}
+
+bool Orbit::isAnimated() const
+{
     return false;
 }
 
-void Orbit::move(cords, cords)
+void Orbit::move(cords a_x, cords a_y)
 {
-
+    m_x = a_x;
+    m_y = a_y;
+    m_elips.setPosition(m_x, m_y);
 }
 
-void Orbit::anchor(cords, cords)
+void Orbit::anchor(cords a_x, cords a_y)
 {
-
+    m_elips.setOrigin(a_x, a_y);
 }
 
 sf::Vector2f Orbit::getWay()

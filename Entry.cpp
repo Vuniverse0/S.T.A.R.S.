@@ -41,6 +41,11 @@ void Entry::move(cords a_x, cords a_y)
     m_sprite.setPosition(m_x, m_y);
 }
 
+void Entry::anchor(cords a_x, cords a_y)
+{
+    m_sprite.setOrigin(a_x, a_y);
+}
+
 bool Entry::hide()
 {
     if (m_visibility) {
@@ -71,9 +76,4 @@ bool Entry::isVisible()const
 bool Entry::isAnimated() const
 {
     return (m_animation.size() > 0);
-}
-
-void Entry::anchor(cords a_x, cords a_y)
-{
-    m_sprite.setOrigin(a_x, a_y);
 }

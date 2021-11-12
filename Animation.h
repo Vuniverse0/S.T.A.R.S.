@@ -1,6 +1,5 @@
 //
 // Created by vuniverse on 10/7/21.
-//
 #pragma once
 
 #include "typedefs_and_globals.h"
