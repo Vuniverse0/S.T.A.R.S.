@@ -13,3 +13,19 @@ void Containers::init()
 {
     LISTING(Button);
 }
+
+void Containers::drawAll()
+{
+    for(auto& x: base)
+        (*x)->drawe();
+}
+
+Containers::drawer *Containers::uniq::operator*()
+{
+    return m_drawer;
+}
+
+Containers::uniq::~uniq()
+{
+    delete m_drawer;
+}

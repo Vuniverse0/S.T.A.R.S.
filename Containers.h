@@ -40,14 +40,8 @@ private:
         {
             m_drawer = new predrawer<T>(arg);
         }
-        ~uniq()
-        {
-            delete m_drawer;
-        }
-        drawer* operator*()
-        {
-            return m_drawer;
-        }
+        ~uniq();
+        drawer* operator*();
     };
 
     static std::vector<uniq> base;
@@ -74,11 +68,7 @@ public:
         a_vector.erase(it);
     }
 
-    static void drawAll()
-    {
-        for(auto& x: base)
-            (*x)->drawe();
-    }
+    static void drawAll();
 
     template<typename T>
     static void drawAll(std::vector<T>& a_vector)
