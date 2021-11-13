@@ -8,11 +8,63 @@
 #include "Button.h"
 
 #define LIST(arg) static std::vector<arg*> list##arg;
+#define LISTING(arg) listing(&list##arg);
 #define LIST_INIT(arg) std::vector<arg*> Containers::list##arg(0);
 
 
 struct Containers {
+private:
+    struct drawer {
+        virtual void drawe() = 0;
+        virtual ~drawer() = default;
+    };
+
+    template<typename T>
+    struct predrawer : public drawer {
+    protected:
+        std::vector<T>* m_ptr;
+    public:
+        explicit predrawer(std::vector<T>* ptr) : m_ptr(ptr)
+        {
+        }
+        ~predrawer() override = default;
+        void drawe() override;
+    };
+
+    struct uniq{
+    protected:
+        drawer* m_drawer;
+    public:
+        template<typename T>
+        explicit uniq(std::vector<T>* arg)
+        {
+            m_drawer = new predrawer<T>(arg);
+        }
+        ~uniq()
+        {
+            delete m_drawer;
+        }
+        drawer* operator*()
+        {
+            return m_drawer;
+        }
+    };
+
+    static std::vector<uniq> base;
+
+    template<typename T>
+    static void listing(std::vector<T>* arg)
+    {
+        base.emplace_back(arg);
+    }
+
+public:
+    friend drawer;
+
     LIST(Button)
+
+    static void init();
+
     template<typename T>
     static void erase(std::vector<T>& a_vector, const T& a_member)
     {
@@ -20,6 +72,12 @@ struct Containers {
         if(it == a_vector.end())
             throw std::invalid_argument("Containers::erase : invalid member to delete - could not find");
         a_vector.erase(it);
+    }
+
+    static void drawAll()
+    {
+        for(auto& x: base)
+            (*x)->drawe();
     }
 
     template<typename T>
@@ -38,4 +96,10 @@ struct Containers {
                 x->draw(*Settings::g_window);
         }
     }
+    Containers() = delete;
 };
+
+template<typename T>
+void Containers::predrawer<T>::drawe() {
+    Containers::drawAll(*m_ptr);
+}

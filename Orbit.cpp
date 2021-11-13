@@ -26,7 +26,7 @@ void Orbit::draw(sf::RenderWindow&)
     }
 }*/
 
-Orbit::Orbit(cords a_x, cords a_y, cords radius) :
+Orbit::Orbit(cords a_x, cords a_y, cords radius, frames) :
     m_x{a_x}, m_y{a_y},
     radius_x{radius},
     radius_y{radius * 0.6f},

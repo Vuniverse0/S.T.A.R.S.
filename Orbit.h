@@ -14,9 +14,11 @@ private:
     bool m_visibility;
     float radius_x;
     float radius_y;
+    sf::ConvexShape m_elips;
+    frames way;
 public:
     Orbit() = delete;
-    Orbit(cords, cords, cords);
+    Orbit(cords, cords, cords, frames = 100);
 
     sf::Vector2f getWay();
 

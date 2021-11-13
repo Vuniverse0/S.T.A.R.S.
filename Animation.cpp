@@ -116,8 +116,8 @@ bool Animation::play(float_t speed, bool direction) {
     return result;
 }
 
-sf::Texture Animation::generateTextureX(const std::string& texture, const pixels& size, const pixels& offset)//offset by number of frames
-{
+sf::Texture Animation::generateTextureX(const std::string& texture, const pixels& size, const pixels& offset)
+{//offset by number of frames
     sf::Texture texture_out;
     if (!texture_out.loadFromFile(texture,sf::IntRect(offset * size, 0, size, size)))
         throw std::runtime_error("Animation::generateTextureX - Cant find resources");
@@ -133,7 +133,7 @@ sf::Texture Animation::generateTextureXY(const std::string& texture, const pixel
     return texture_out;
 }
 
-void Animation::default_transformator(sf::Sprite& sprite_t, const sf::Texture& texture_T )
+void Animation::default_transformator(sf::Sprite& sprite_t, const sf::Texture& texture_T)
 {
      sprite_t.setTexture(texture_T);
 }

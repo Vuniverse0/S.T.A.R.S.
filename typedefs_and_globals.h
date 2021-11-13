@@ -71,4 +71,4 @@ pixels operator "" _p(unsigned long long);
 frames operator "" _f(unsigned long long);
 
 bool operator<(sf::Vector2f, sf::Vector2f);
-bool operator>(sf::Vector2f, sf::Vector2f);gi
+bool operator>(sf::Vector2f, sf::Vector2f);

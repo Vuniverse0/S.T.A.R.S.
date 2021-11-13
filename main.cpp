@@ -41,7 +41,7 @@ int main()
     while (window.isOpen()) {
             if(i==quality){i=0;}
             auto point = ellipse.getPoint(i);
-            button.move(point.x+400,point.y+400);
+            //button.move(point.x+400,point.y+400);
             i++;
         handler.update();
 

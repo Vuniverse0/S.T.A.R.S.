@@ -7,10 +7,17 @@
 
 
 float_t Handler::x_ratio = GAME_MAKER_SCREEN_WIDTH, Handler::y_ratio = GAME_MAKER_SCREEN_WIDTH;
+bool Handler::m_singleton = false;
 
 Handler::Handler( sf::RenderWindow& window, sf::VideoMode mode):
         m_window(window)
 {
+    if (m_singleton) {
+        std::cerr << "HANDLER MUST BE SINGLETON";
+        throw std::bad_typeid();
+    }
+    Containers::init();
+    m_singleton = true;
     x_ratio = static_cast<float_t>(mode.width) / GAME_MAKER_SCREEN_WIDTH;
     y_ratio = static_cast<float_t>(mode.height)  / GAME_MAKER_SCREEN_HEIGHT;
     set_fps(DEFAULT_FPS);
@@ -96,8 +103,8 @@ void Handler::update()
     {
         last_update_time -= m_time_per_frame;
         handle();
-
         m_window.clear();
+        render();
         animation.play(.2f);
         m_window.draw(sprite);
         Containers::drawAll(Containers::listButton);
@@ -114,7 +121,7 @@ void Handler::set_fps(const frames& a_fps)
 
 void Handler::render()
 {
-
+    Containers::drawAll();
 }
 
 void Handler::input(const sf::Keyboard::Key& key, const bool& isPressed)

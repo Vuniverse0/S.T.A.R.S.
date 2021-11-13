@@ -4,4 +4,12 @@
 
 #include "Containers.h"
 
-LIST_INIT(Button)
+
+LIST_INIT(Button);
+
+std::vector<Containers::uniq> Containers::base{};
+
+void Containers::init()
+{
+    LISTING(Button);
+}

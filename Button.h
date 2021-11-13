@@ -32,7 +32,7 @@ private:
         [[maybe_unused]] uint8_t null = 0;
     };
 public:
-    Button(cords, cords, const std::string&, transformator);
+    Button(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator);
     ~Button() override;
 
     void checkClick (sf::Vector2i);

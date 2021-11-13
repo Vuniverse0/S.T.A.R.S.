@@ -18,8 +18,9 @@ protected:
     bool m_visibility;
 public:
     Entry() = delete;
-    Entry(cords, cords, const std::string&, frames, pixels, transformator);
-    Entry(cords, cords, const std::string&, transformator);
+    Entry(cords a_x, cords a_y, const std::string& a_string,
+          frames a_frames, pixels a_pixels, transformator a_transformator);
+    Entry(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator);
     virtual ~Entry();
 
     bool isVisible()const;
@@ -28,10 +29,10 @@ public:
     bool hide();
     bool show();
 
-    void move(cords,cords);
-    void anchor(cords,cords);
+    void move(cords x, cords y);
+    void anchor(cords x, cords y);
 
-    virtual void draw(sf::RenderWindow&)=0;
+    virtual void draw(sf::RenderWindow& window)=0;
 };
 
 
