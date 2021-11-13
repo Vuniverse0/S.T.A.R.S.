@@ -7,17 +7,17 @@
 
 
 float_t Handler::x_ratio = GAME_MAKER_SCREEN_WIDTH, Handler::y_ratio = GAME_MAKER_SCREEN_WIDTH;
-bool Handler::m_singleton = false;
-
-Handler::Handler( sf::RenderWindow& window, sf::VideoMode mode):
-        m_window(window)
+Handler Handler::gHandler{};
+sf::RenderWindow Handler::m_window(
+        sf::VideoMode::getFullscreenModes()[0],
+        "Surviving Try Around Remote Stars",
+        sf::Style::Fullscreen, Settings::g_settings);
+Handler::Handler() noexcept
 {
-    if (m_singleton) {
-        std::cerr << "HANDLER MUST BE SINGLETON";
-        throw std::bad_typeid();
-    }
     Containers::init();
-    m_singleton = true;
+    Settings::g_settings.antialiasingLevel = 8;
+    Settings::g_window = &m_window;
+    sf::VideoMode mode = sf::VideoMode::getFullscreenModes()[0];
     x_ratio = static_cast<float_t>(mode.width) / GAME_MAKER_SCREEN_WIDTH;
     y_ratio = static_cast<float_t>(mode.height)  / GAME_MAKER_SCREEN_HEIGHT;
     set_fps(DEFAULT_FPS);
@@ -138,4 +138,3 @@ sf::RenderWindow &Handler::window()
 {
     return m_window;
 }
-

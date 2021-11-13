@@ -28,7 +28,10 @@ private:
         {
         }
         ~predrawer() override = default;
-        void drawe() override;
+        void drawe() final
+        {
+            drawAll(*m_ptr);
+        }
     };
 
     struct uniq{
@@ -73,23 +76,27 @@ public:
     template<typename T>
     static void drawAll(std::vector<T>& a_vector)
     {
-        for(auto& x : a_vector){
+        for (auto& x : a_vector){
             x->draw(*Settings::g_window);
+        }
+    }
+
+    template<typename C>
+    static void drawIf(C comparator)
+    {
+        for (auto& x : base){
+            if(comparator(x))
+                (*x)->drawe();
         }
     }
 
     template<typename T, typename C>
     void drawIf(std::vector<T>& a_vector, C comparator)
     {
-        for(auto& x : a_vector){
-            if(comparator(x))
+        for (auto& x : a_vector) {
+            if (comparator(x))
                 x->draw(*Settings::g_window);
         }
     }
     Containers() = delete;
 };
-
-template<typename T>
-void Containers::predrawer<T>::drawe() {
-    Containers::drawAll(*m_ptr);
-}

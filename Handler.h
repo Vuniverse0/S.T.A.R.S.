@@ -9,16 +9,14 @@
 
 struct Handler {//singleton
 private:
-    static bool m_singleton;
-    sf::RenderWindow& m_window;
+    Handler() noexcept ;
+    static sf::RenderWindow m_window;
     sf::Time m_time_per_frame;
     bool m_IsPaused = false;
 public:
+    static Handler gHandler;
     static float_t x_ratio, y_ratio;
-
-    Handler(sf::RenderWindow& window, sf::VideoMode modee);
     ~Handler();
-
     sf::RenderWindow& window();
     void pause_switch();
     void handle();
@@ -26,5 +24,4 @@ public:
     void render();
     void set_fps(const frames&);
     void input(const sf::Keyboard::Key& key, const bool& isPressed);
-
 };

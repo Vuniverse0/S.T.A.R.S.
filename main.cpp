@@ -7,14 +7,7 @@
 
 int main()
 {
-    Settings::g_settings.antialiasingLevel = 8;
-    sf::RenderWindow window(
-            sf::VideoMode::getFullscreenModes()[0],
-            "Surviving Try Around Remote Stars",
-            sf::Style::Fullscreen,Settings::g_settings);
-    Settings::g_window = &*&window;
-    window.setFramerateLimit(DEFAULT_FPS+5);
-    Handler handler(window, sf::VideoMode::getFullscreenModes()[0]);
+    sf::RenderWindow& window = Handler::gHandler.window();
 
     float radius_x = 450.0f * 0.7f;
     float radius_y = radius_x * 0.6f;
@@ -43,7 +36,7 @@ int main()
             auto point = ellipse.getPoint(i);
             //button.move(point.x+400,point.y+400);
             i++;
-        handler.update();
+        Handler::gHandler.update();
 
         window.draw(ellipse);
         window.display();

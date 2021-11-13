@@ -16,7 +16,7 @@ void Containers::init()
 
 void Containers::drawAll()
 {
-    for(auto& x: base)
+    for(auto& x : base)
         (*x)->drawe();
 }
 
