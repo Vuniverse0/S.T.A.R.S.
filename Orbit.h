@@ -12,25 +12,22 @@ class Orbit
 private:
     cords m_x,m_y;
     bool m_visibility;
-    float radius_x;
-    float radius_y;
     sf::ConvexShape m_elips;
-    frames way;
+    frames m_way;
 public:
     Orbit() = delete;
-    Orbit(cords, cords, cords, frames = 100);
+    Orbit(cords a_x, cords a_y, cords radius, frames quality = 100);
 
-    sf::Vector2f getWay();
+    sf::Vector2f getWay(frames speed);
 
     bool isVisible()const;
-    bool isAnimated()const;
+    static bool isAnimated();
 
     bool hide();
     bool show();
 
-    void move(cords,cords);
-    void anchor(cords,cords);
-
-    virtual void draw(sf::RenderWindow&)=0;
+    void move(cords x, cords y);
+    void anchor(cords x, cords y);
+    void draw(sf::RenderWindow&);
 
 };

@@ -30,8 +30,7 @@ Entry::Entry(cords a_x, cords a_y, const std::string& a_string, transformator a_
 
 Entry::~Entry()
 {
-    if ( m_texture != nullptr )
-        delete m_texture;
+    delete m_texture;
 }
 
 void Entry::move(cords a_x, cords a_y)
@@ -47,10 +46,10 @@ void Entry::anchor(cords a_x, cords a_y)
 }
 
 bool Entry::hide()
-{
+{//return true if state was changed
     if (m_visibility) {
         m_visibility = false;
-        return true;//return true if state was changed
+        return true;
     }
     else {
         return false;
@@ -58,9 +57,9 @@ bool Entry::hide()
 }
 
 bool Entry::show()
-{
+{//return true if state was changed
     if (m_visibility) {
-        return false;//return true if state was changed
+        return false;
     }
     else {
         m_visibility = true;

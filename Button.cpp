@@ -11,10 +11,10 @@
 Button::Button(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator) :
                 Gui(a_x, a_y, a_string, a_transformator)
 {
-    Containers::listButton.push_back(this);
     m_sprite.scale(MAGIC_RATIO_BUTTONS * Handler::x_ratio,MAGIC_RATIO_BUTTONS * Handler::y_ratio);
     m_normal_scale = m_sprite.getScale();
     m_sprite.setOrigin(local_center(&m_sprite));
+    Containers::listButton.push_back(this);
 }
 
 Button::~Button()

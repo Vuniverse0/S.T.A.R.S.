@@ -3,11 +3,11 @@
 #include "Handler.h"
 #include "Animation.h"
 #include "Button.h"
-
+#include "Containers.h"
 
 int main()
 {
-    sf::RenderWindow& window = Handler::gHandler.window();
+    sf::RenderWindow& window = Handler::window();
 
     float radius_x = 450.0f * 0.7f;
     float radius_y = radius_x * 0.6f;
@@ -17,14 +17,14 @@ int main()
     ellipse.setPointCount(quality);
 
     for (unsigned int i =0; i < quality; ++i) {
-        float rad = (360.0f/static_cast<float>(quality*i))/(360.0f/static_cast<float>(M_PI)/2.0f);
+        float rad = (360.0f/static_cast<float>(quality*i))/(360.0f/F_PI/2.0f);
         float x = cos(rad-0.1f)*radius_x;
         float y = sin(rad+0.3f)*radius_y;
 
         ellipse.setPoint(i,sf::Vector2f(x,y));
     }
     ellipse.setOutlineThickness(2);
-    ellipse.setOutlineColor(sf::Color(88,136,255,50));
+    ellipse.setOutlineColor(sf::Color(88,136,255,255));
     ellipse.setFillColor(sf::Color(0,0,0,0));
     ellipse.setPosition(400,400);
 
@@ -42,6 +42,5 @@ int main()
         window.display();
 
     }
-    Settings::g_window = nullptr;
     return 0;
 }

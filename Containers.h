@@ -6,9 +6,11 @@
 
 #include "typedefs_and_globals.h"
 #include "Button.h"
+#include "Orbit.h"
+#include "Handler.h"
 
 #define LIST(arg) static std::vector<arg*> list##arg;
-#define LISTING(arg) listing(&list##arg);
+#define LISTING(arg) new predrawer(&list##arg)
 #define LIST_INIT(arg) std::vector<arg*> Containers::list##arg(0);
 
 
@@ -34,33 +36,13 @@ private:
         }
     };
 
-    struct uniq{
-    protected:
-        drawer* m_drawer;
-    public:
-        template<typename T>
-        explicit uniq(std::vector<T>* arg)
-        {
-            m_drawer = new predrawer<T>(arg);
-        }
-        ~uniq();
-        drawer* operator*();
-    };
-
-    static std::vector<uniq> base;
-
-    template<typename T>
-    static void listing(std::vector<T>* arg)
-    {
-        base.emplace_back(arg);
-    }
+    static std::vector<drawer*> base;
 
 public:
     friend drawer;
 
     LIST(Button)
-
-    static void init();
+    LIST(Orbit)
 
     template<typename T>
     static void erase(std::vector<T>& a_vector, const T& a_member)
@@ -71,13 +53,18 @@ public:
         a_vector.erase(it);
     }
 
-    static void drawAll();
+    static void drawAll()
+    {
+        for (auto& x : base) {
+            x->drawe();
+        }
+    }
 
     template<typename T>
     static void drawAll(std::vector<T>& a_vector)
     {
         for (auto& x : a_vector){
-            x->draw(*Settings::g_window);
+            x->draw(Handler::window());
         }
     }
 
@@ -86,7 +73,7 @@ public:
     {
         for (auto& x : base){
             if(comparator(x))
-                (*x)->drawe();
+                x->drawe();
         }
     }
 
@@ -95,7 +82,7 @@ public:
     {
         for (auto& x : a_vector) {
             if (comparator(x))
-                x->draw(*Settings::g_window);
+                x->draw(Handler::window());
         }
     }
     Containers() = delete;

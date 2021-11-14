@@ -17,11 +17,11 @@ public:
     static Handler gHandler;
     static float_t x_ratio, y_ratio;
     ~Handler();
-    sf::RenderWindow& window();
+    static sf::RenderWindow& window();
     void pause_switch();
-    void handle();
+    static void handle();
     void update();
-    void render();
+    static void render();
     void set_fps(const frames&);
     void input(const sf::Keyboard::Key& key, const bool& isPressed);
 };
