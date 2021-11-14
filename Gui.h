@@ -13,6 +13,6 @@ public:
     Gui(cords, cords, const std::string&, frames, pixels, transformator);
     Gui(cords, cords, const std::string&, transformator);
     ~Gui() override = default;
-    virtual bool isGui()const;
+    virtual bool isGui()const final;
     using Entry::isAnimated;
 };

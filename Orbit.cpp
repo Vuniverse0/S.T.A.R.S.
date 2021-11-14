@@ -6,7 +6,6 @@
 #include "Containers.h"
 
 Orbit::Orbit(cords a_x, cords a_y, cords radius, frames quality) :
-    m_x{a_x}, m_y{a_y},
     m_visibility{true}, m_way{0}
 {
     m_elips.setPointCount(quality);
@@ -16,10 +15,10 @@ Orbit::Orbit(cords a_x, cords a_y, cords radius, frames quality) :
         float y = std::sin(rad + 0.3f) * radius * 0.6f;
         m_elips.setPoint(i, sf::Vector2f(x, y));
     }
-    m_elips.setOutlineThickness(2);
+    m_elips.setOutlineThickness(1);
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
-    m_elips.setPosition(m_x, m_y);
+    m_elips.setPosition(a_x, a_y);
     Containers::listOrbit.push_back(this);
 }
 
@@ -62,9 +61,7 @@ bool Orbit::isAnimated()
 
 void Orbit::move(cords a_x, cords a_y)
 {
-    m_x = a_x;
-    m_y = a_y;
-    m_elips.setPosition(m_x, m_y);
+    m_elips.setPosition(a_x, a_y);
 }
 
 void Orbit::anchor(cords a_x, cords a_y)
@@ -72,10 +69,10 @@ void Orbit::anchor(cords a_x, cords a_y)
     m_elips.setOrigin(a_x, a_y);
 }
 
-sf::Vector2f Orbit::getWay(frames speed)
+sf::Vector2f Orbit::getWay(float speed)
 {
     m_way += speed;
-    if(m_way == m_elips.getPointCount()){
+    if(m_way >= m_elips.getPointCount()){
         m_way = 0;
     }
     return{m_elips.getPoint(m_way).x + m_elips.getPosition().x,

@@ -9,8 +9,7 @@ Entry::Entry(cords a_x, cords a_y, const std::string& a_string,
         frames a_frames, pixels a_pixels, transformator a_transformator) :
         m_visibility(false),
         m_sprite{},
-        m_animation(a_string, m_sprite, a_pixels, a_frames, a_transformator),
-        m_x(a_x), m_y(a_y)
+        m_animation(a_string, m_sprite, a_pixels, a_frames, a_transformator)
 {
     move(a_x,a_y);
 }
@@ -18,8 +17,7 @@ Entry::Entry(cords a_x, cords a_y, const std::string& a_string,
 Entry::Entry(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator) :
         m_visibility(false),
         m_sprite{},
-        m_animation(a_transformator, m_sprite),
-        m_x(a_x), m_y(a_y)
+        m_animation(a_transformator, m_sprite)
 {
     m_texture = new sf::Texture();
     m_texture->loadFromFile(a_string);
@@ -35,9 +33,7 @@ Entry::~Entry()
 
 void Entry::move(cords a_x, cords a_y)
 {
-    m_x = a_x;
-    m_y = a_y;
-    m_sprite.setPosition(m_x, m_y);
+    m_sprite.setPosition(a_x, a_y);
 }
 
 void Entry::anchor(cords a_x, cords a_y)

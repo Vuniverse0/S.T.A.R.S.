@@ -11,7 +11,6 @@
 class Entry {
 protected:
     sf::Vector2f m_normal_scale;
-    cords m_x,m_y;
     sf::Sprite m_sprite;
     sf::Texture* m_texture = nullptr;
     Animation m_animation;

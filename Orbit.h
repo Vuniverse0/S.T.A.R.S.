@@ -10,15 +10,14 @@
 class Orbit
 {
 private:
-    cords m_x,m_y;
     bool m_visibility;
     sf::ConvexShape m_elips;
-    frames m_way;
+    double m_way;
 public:
     Orbit() = delete;
     Orbit(cords a_x, cords a_y, cords radius, frames quality = 100);
 
-    sf::Vector2f getWay(frames speed);
+    sf::Vector2f getWay(float speed = 1);
 
     bool isVisible()const;
     static bool isAnimated();

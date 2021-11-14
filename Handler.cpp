@@ -6,17 +6,18 @@
 #include "Containers.h"
 #include "Orbit.h"
 
-float_t Handler::x_ratio = GAME_MAKER_SCREEN_WIDTH, Handler::y_ratio = GAME_MAKER_SCREEN_WIDTH;
+float_t Handler::x_ratio =
+        static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH,
+Handler::y_ratio =
+        static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].height) / GAME_MAKER_SCREEN_WIDTH;
 Handler Handler::gHandler{};
 sf::RenderWindow Handler::m_window(
         sf::VideoMode::getFullscreenModes()[0],
         "Surviving Try Around Remote Stars",
         sf::Style::Fullscreen, sf::ContextSettings(0,0,8));
+sf::Clock Handler::clock{};
 Handler::Handler() noexcept
 {
-    sf::VideoMode mode = sf::VideoMode::getFullscreenModes()[0];
-    x_ratio = static_cast<float_t>(mode.width) / GAME_MAKER_SCREEN_WIDTH;
-    y_ratio = static_cast<float_t>(mode.height)  / GAME_MAKER_SCREEN_HEIGHT;
     set_fps(DEFAULT_FPS);
 }
 
@@ -54,10 +55,8 @@ void Handler::handle()
             case sf::Event::MouseButtonPressed:
                 break;
             case sf::Event::MouseButtonReleased:
-                Containers::listButton[0]->checkClick({event.mouseMove.x, event.mouseMove.y});
                 break;
             case sf::Event::MouseMoved:
-                Containers::listButton[0]->checkMouse({event.mouseMove.x, event.mouseMove.y});
                 break;
             case sf::Event::MouseEntered:
                 break;
@@ -85,29 +84,39 @@ void Handler::handle()
                 break;
         }
     }
-//    if(Containers::listButton[0]->isOnClick()){
-//        Containers::listButton[0]->move(400,400);
-//    }
+
+}
+
+void Handler::event()
+{
+
 }
 
 void Handler::update()
 {
     static sf::Time last_update_time = sf::Time::Zero;
-    static sf::Clock clock;
+    static sf::Time update_time = sf::Time::Zero;
+    static sf::Time update_time_fix = sf::microseconds(1000/60);
     static sf::Sprite sprite;
     static Animation animation("/home/vuniverse/Downloads/1976757976.png",sprite,100,163);
     static Orbit orbit(400,400,200,255);
+    sprite.setOrigin(local_center(&sprite));
+    update_time += clock.getElapsedTime();
     while (last_update_time > m_time_per_frame)
     {
         last_update_time -= m_time_per_frame;
-        handle();
         m_window.clear();
+        handle();
+        if(update_time >= update_time_fix) {
+            update_time = sf::Time::Zero;
+            event();
+            sprite.setPosition(orbit.getWay());
+        }
+        animation.play(0.3f*m_time_per_frame.asMilliseconds());
         render();
-        animation.play(0.3f);
-        m_window.draw(sprite);
         orbit.draw(m_window);
-        //Containers::drawAll(Containers::listButton);
-        Containers::drawAll(Containers::listOrbit);
+        m_window.draw(sprite);
+        m_window.display();
     }
     last_update_time += clock.restart();
 }
@@ -137,3 +146,4 @@ sf::RenderWindow& Handler::window()
 {
     return m_window;
 }
+
