@@ -7,10 +7,10 @@
 #include "Gui.h"
 
 struct Corner{
-    static sf::Vector2f LeftTop;
-    static sf::Vector2f RightTop;
-    static sf::Vector2f LeftBottom;
-    static sf::Vector2f RightBottom;
+    static sf::Vector2f LeftTop(const sf::Sprite&);
+    static sf::Vector2f RightTop(const sf::Sprite&);
+    static sf::Vector2f LeftBottom(const sf::Sprite&);
+    static sf::Vector2f RightBottom(const sf::Sprite&);
 };
 
 class Dashboard : public Gui {

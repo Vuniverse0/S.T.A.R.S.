@@ -9,7 +9,7 @@
 float_t Handler::x_ratio =
         static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH,
 Handler::y_ratio =
-        static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].height) / GAME_MAKER_SCREEN_WIDTH;
+        static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].height) / GAME_MAKER_SCREEN_HEIGHT;
 Handler Handler::gHandler{};
 sf::RenderWindow Handler::m_window(
         sf::VideoMode::getFullscreenModes()[0],
