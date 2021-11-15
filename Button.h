@@ -13,8 +13,6 @@
 class Button : public Gui {
 private:
     using Entry::m_normal_scale;
-    using Entry::m_x;
-    using Entry::m_y;
     using Entry::m_sprite;
     using Entry::m_animation;
     using Entry::m_visibility;
@@ -41,7 +39,7 @@ public:
     void draw(sf::RenderWindow&)override;
 
     using Entry::move;
-    using Entry::anchor;
+    using Entry::origin;
     using Gui::isGui;
 protected:
     bool isOnClick ();

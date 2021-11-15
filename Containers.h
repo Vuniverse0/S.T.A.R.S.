@@ -53,12 +53,9 @@ public:
         a_vector.erase(it);
     }
 
-    static void drawAll()
-    {
-        for (auto& x : base) {
-            x->drawe();
-        }
-    }
+    static void drawAll();
+
+    static void handleAll();
 
     template<typename T>
     static void drawAll(std::vector<T>& a_vector)

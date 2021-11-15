@@ -17,6 +17,7 @@
 #define GAME_MAKER_SCREEN_HEIGHT 768.0f
 #define DEFAULT_FPS 60 // keep
 #define F_PI 3.14159265358979323846f
+#define EMPTY "null.png"
 
 typedef uint8_t  frames;
 typedef uint16_t pixels;

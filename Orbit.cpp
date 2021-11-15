@@ -5,8 +5,7 @@
 #include "Orbit.h"
 #include "Containers.h"
 
-Orbit::Orbit(cords a_x, cords a_y, cords radius, frames quality) :
-    m_visibility{true}, m_way{0}
+Orbit::Orbit(cords a_x, cords a_y, cords radius, frames quality) : Entry(a_x, a_y, EMPTY, Animation::none_transformator)
 {
     m_elips.setPointCount(quality);
     for (unsigned short i = 0; i < quality; ++i) {
@@ -22,54 +21,27 @@ Orbit::Orbit(cords a_x, cords a_y, cords radius, frames quality) :
     Containers::listOrbit.push_back(this);
 }
 
-void Orbit::draw(sf::RenderWindow& window)
+void Orbit::draw(sf::RenderWindow& window)//draw shape on window
 {
     window.draw(m_elips);
 }
 
-bool Orbit::hide()
-{//return true if state was changed
-    if (m_visibility) {
-        m_visibility = false;
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-bool Orbit::show()
-{//return true if state was changed
-    if (m_visibility) {
-        return false;
-    }
-    else {
-        m_visibility = true;
-        return true;
-    }
-}
-
-bool Orbit::isVisible()const
-{
-    return m_visibility;
-}
-
-bool Orbit::isAnimated()
+bool Orbit::isAnimated() const
 {
     return false;
 }
 
-void Orbit::move(cords a_x, cords a_y)
+void Orbit::move(cords a_x, cords a_y)//set position for shape
 {
     m_elips.setPosition(a_x, a_y);
 }
 
-void Orbit::anchor(cords a_x, cords a_y)
+void Orbit::origin(cords a_x, cords a_y)//set origin for shape
 {
     m_elips.setOrigin(a_x, a_y);
 }
 
-sf::Vector2f Orbit::getWay(float speed)
+sf::Vector2f Orbit::getWay(float speed)//return cords for next step on orbit(center)
 {
     m_way += speed;
     if(m_way >= m_elips.getPointCount()){
@@ -77,5 +49,9 @@ sf::Vector2f Orbit::getWay(float speed)
     }
     return{m_elips.getPoint(m_way).x + m_elips.getPosition().x,
            m_elips.getPoint(m_way).y + m_elips.getPosition().y};
+}
+
+void Orbit::handle()
+{
 }
 

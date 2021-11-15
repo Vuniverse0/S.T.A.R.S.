@@ -36,9 +36,9 @@ void Entry::move(cords a_x, cords a_y)
     m_sprite.setPosition(a_x, a_y);
 }
 
-void Entry::anchor(cords a_x, cords a_y)
+void Entry::origin(cords x, cords y)
 {
-    m_sprite.setOrigin(a_x, a_y);
+    m_sprite.setOrigin(x, y);
 }
 
 bool Entry::hide()

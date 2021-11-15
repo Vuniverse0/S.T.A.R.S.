@@ -7,26 +7,22 @@
 #include "Entry.h"
 
 
-class Orbit
+class Orbit : private Entry
 {
 private:
-    bool m_visibility;
+    using Entry::m_visibility;
     sf::ConvexShape m_elips;
-    double m_way;
+    double m_way{0};
 public:
     Orbit() = delete;
     Orbit(cords a_x, cords a_y, cords radius, frames quality = 100);
 
     sf::Vector2f getWay(float speed = 1);
 
-    bool isVisible()const;
-    static bool isAnimated();
+    bool isAnimated()const override ;
 
-    bool hide();
-    bool show();
-
-    void move(cords x, cords y);
-    void anchor(cords x, cords y);
-    void draw(sf::RenderWindow&);
-
+    void move(cords x, cords y) override ;
+    void origin(cords a_x, cords a_y) override ;
+    void handle() override;
+    void draw(sf::RenderWindow&) final;
 };

@@ -14,7 +14,7 @@ protected:
     sf::Sprite m_sprite;
     sf::Texture* m_texture = nullptr;
     Animation m_animation;
-    bool m_visibility;
+    bool m_visibility{true};
 public:
     Entry() = delete;
     Entry(cords a_x, cords a_y, const std::string& a_string,
@@ -28,10 +28,11 @@ public:
     bool hide();
     bool show();
 
-    void move(cords x, cords y);
-    void anchor(cords x, cords y);
+    virtual void move(cords x, cords y);//set position for m_sprite
+    virtual void origin(cords x, cords y);//set origin for m_sprite
 
-    virtual void draw(sf::RenderWindow& window)=0;
+    virtual void draw(sf::RenderWindow& window)=0;//Draw to screen
+    virtual void handle()=0;//Change properties
 };
 
 

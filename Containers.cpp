@@ -12,3 +12,17 @@ std::vector<Containers::drawer*> Containers::base{
     LISTING(Button),
     LISTING(Orbit)
 };
+
+void Containers::drawAll()
+{
+    for (auto& x : base) {
+        x->drawe();
+    }
+}
+
+void Containers::handleAll()
+{
+    for (auto& x : base) {
+        x->drawe();
+    }
+}
