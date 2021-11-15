@@ -23,6 +23,6 @@ void Containers::drawAll()
 void Containers::handleAll()
 {
     for (auto& x : base) {
-        x->drawe();
+        x->handle();
     }
 }

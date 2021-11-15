@@ -18,6 +18,7 @@ struct Containers {
 private:
     struct drawer {
         virtual void drawe() = 0;
+        virtual void handle() = 0;
         virtual ~drawer() = default;
     };
 
@@ -33,6 +34,10 @@ private:
         void drawe() final
         {
             drawAll(*m_ptr);
+        }
+        void handle() final
+        {
+            handleAll(*m_ptr);
         }
     };
 
@@ -54,8 +59,6 @@ public:
     }
 
     static void drawAll();
-
-    static void handleAll();
 
     template<typename T>
     static void drawAll(std::vector<T>& a_vector)
@@ -82,5 +85,16 @@ public:
                 x->draw(Handler::window());
         }
     }
+
+    static void handleAll();
+
+    template<typename T>
+    static void handleAll(std::vector<T>& a_vector)
+    {
+        for (auto& x : a_vector){
+            x->handle();
+        }
+    }
+
     Containers() = delete;
 };

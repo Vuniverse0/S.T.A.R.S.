@@ -12,10 +12,10 @@ Animation::Animation(const std::vector<std::string>& init_list, sf::Sprite& spri
     auto initListReader = init_list.cbegin();
     for( auto frame : m_frames_list ){
         if(initListReader == init_list.cend() ){
-            throw std::out_of_range("Animation: init_list - data race only");
+            throw std::out_of_range("Animation: init_list - data updated, size changed");
         }
-        else if(!frame.loadFromFile(*initListReader))
-            throw std::runtime_error("Cant find resources");
+        if(!frame.loadFromFile(*initListReader))
+            std::cerr<<"Cant find resources:" <<(*initListReader)<<"\n";
         frame.setSmooth(true);
         initListReader++;
     }
@@ -120,7 +120,7 @@ sf::Texture Animation::generateTextureX(const std::string& texture, const pixels
 {//offset by number of frames
     sf::Texture texture_out;
     if (!texture_out.loadFromFile(texture,sf::IntRect(offset * size, 0, size, size)))
-        throw std::runtime_error("Animation::generateTextureX - Cant find resources");
+        std::cerr<<"Animation::generateTextureX - Cant find resources\n";
     return texture_out;
 }
 
@@ -129,7 +129,7 @@ sf::Texture Animation::generateTextureXY(const std::string& texture, const pixel
 {
     sf::Texture texture_out;
     if (!texture_out.loadFromFile(texture,sf::IntRect(offset_x * x, offset_y * y, x, y)))
-        throw std::runtime_error("Animation::generateTextureX - Cant find resources");
+        std::cerr<<"Animation::generateTextureX - Cant find resources\n";
     return texture_out;
 }
 
