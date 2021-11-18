@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "typedefs_and_globals.h"
-#include "Button.h"
-#include "Orbit.h"
+#include "../utility/typedefs_and_globals.h"
+#include "../interface/Button.h"
+#include "../objects/Orbit.h"
 #include "Handler.h"
 
 #define LIST(arg) static std::vector<arg*> list##arg;
@@ -48,6 +48,8 @@ public:
 
     LIST(Button)
     LIST(Orbit)
+    LIST(Entry)
+    LIST(Gui)
 
     template<typename T>
     static void erase(std::vector<T>& a_vector, const T& a_member)

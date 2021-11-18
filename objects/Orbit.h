@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Entry.h"
+#include "../primitives/Entry.h"
 
 
 class Orbit : private Entry
@@ -15,7 +15,7 @@ private:
     double m_way{0};
 public:
     Orbit() = delete;
-    Orbit(cords a_x, cords a_y, cords radius, frames quality = 100);
+    Orbit(cords radius, frames quality = 100);
 
     sf::Vector2f getWay(float speed = 1);
 

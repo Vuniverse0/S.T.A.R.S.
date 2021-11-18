@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "typedefs_and_globals.h"
+#include "../utility/typedefs_and_globals.h"
 #include "Animation.h"
 
 
@@ -12,14 +12,16 @@ class Entry {
 protected:
     sf::Vector2f m_normal_scale;
     sf::Sprite m_sprite;
-    sf::Texture* m_texture = nullptr;
     Animation m_animation;
     bool m_visibility{true};
+    sf::Texture* m_texture = nullptr;
 public:
     Entry() = delete;
-    Entry(cords a_x, cords a_y, const std::string& a_string,
-          frames a_frames, pixels a_pixels, transformator a_transformator);
-    Entry(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator);
+    Entry(const std::string& a_string,
+          frames a_frames, pixels size_x, pixels size_y);
+    Entry(const std::string& a_string,
+          frames a_frames, pixels a_pixels);
+    Entry(const std::string& a_string);
     virtual ~Entry();
 
     bool isVisible()const;

@@ -22,7 +22,6 @@
 typedef uint8_t  frames;
 typedef uint16_t pixels;
 typedef float_t cords;
-typedef void ( *transformator )( sf::Sprite&, const sf::Texture& );
 
 static auto size_regulator{
         [](const sf::Sprite*const sprite)->sf::FloatRect
@@ -53,10 +52,10 @@ static auto center{//for code trigger - anchors
         }
 };
 
-static auto local_center{//for .setOrigin
+static auto local_center{//for .setOrigin by local center
         [](const sf::Sprite*const sprite)->sf::Vector2f
         {
-            auto temp = sprite->getGlobalBounds();
+            auto temp = sprite->getLocalBounds();
             return{temp.width / 2.0f, temp.height / 2.0f};
         }
 };

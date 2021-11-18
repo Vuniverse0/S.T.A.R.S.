@@ -3,7 +3,7 @@
 //
 #pragma once
 
-#include "typedefs_and_globals.h"
+#include "../utility/typedefs_and_globals.h"
 #include "Gui.h"
 
 
@@ -11,6 +11,7 @@ enum class Anchor{
     LeftTop, RightTop, LeftBottom, RightBottom
 };
 class Dashboard : public Gui {
+    friend Gui;
     struct Corner{
         static sf::Vector2f LeftTop(const sf::Sprite&);
         static sf::Vector2f RightTop(const sf::Sprite&);
@@ -30,8 +31,12 @@ class Dashboard : public Gui {
                 return Corner::RightBottom(m_sprite);
         }
     }
+    sf::RenderTexture m_renderTexture;
+    std::vector<sf::Sprite> m_attached;
 public:
-    Dashboard(Anchor anch, const std::string& a_string, transformator a_transformator);
-
+    Dashboard(Anchor anch, const std::string& a_string);
+    bool add(Gui&);
+    void handle() override ;
+    void  draw(sf::RenderWindow& window) override ;
     using Gui::isAnimated;
 };

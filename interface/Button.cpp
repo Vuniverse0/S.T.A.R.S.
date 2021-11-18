@@ -2,14 +2,14 @@
 // Created by vuniverse on 11/2/21.
 //
 
-#include "Containers.h"
-#include "Handler.h"
+#include "../core/Containers.h"
+#include "../core/Handler.h"
 #include "Button.h"
 
 #define MAGIC_RATIO_BUTTONS 0.5f //TODO delete this shit
 
-Button::Button(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator) :
-                Gui(a_x, a_y, a_string, a_transformator)
+Button::Button(const std::string& a_string) :
+                Gui(a_string)
 {
     m_sprite.scale(MAGIC_RATIO_BUTTONS * Handler::x_ratio,MAGIC_RATIO_BUTTONS * Handler::y_ratio);
     m_normal_scale = m_sprite.getScale();

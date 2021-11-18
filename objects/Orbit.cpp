@@ -3,9 +3,9 @@
 //
 
 #include "Orbit.h"
-#include "Containers.h"
+#include "../core/Containers.h"
 
-Orbit::Orbit(cords a_x, cords a_y, cords radius, frames quality) : Entry(a_x, a_y, EMPTY, Animation::none_transformator)
+Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
 {
     m_elips.setPointCount(quality);
     for (unsigned short i = 0; i < quality; ++i) {
@@ -17,7 +17,6 @@ Orbit::Orbit(cords a_x, cords a_y, cords radius, frames quality) : Entry(a_x, a_
     m_elips.setOutlineThickness(1);
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
-    m_elips.setPosition(a_x, a_y);
     Containers::listOrbit.push_back(this);
 }
 

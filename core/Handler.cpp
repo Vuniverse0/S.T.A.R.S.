@@ -4,7 +4,7 @@
 
 #include "Handler.h"
 #include "Containers.h"
-#include "Orbit.h"
+#include "../objects/Orbit.h"
 
 float_t Handler::x_ratio =
         static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH,
@@ -99,7 +99,8 @@ void Handler::update()
     static sf::Time update_time_fix = sf::microseconds(1000/60);
     static sf::Sprite sprite;
     static Animation animation("/home/vuniverse/Downloads/1976757976.png",sprite,100,163);
-    static Orbit orbit(400,400,200,255);
+    static Orbit orbit(200,255);
+    orbit.move(400,400);
     sprite.setOrigin(local_center(&sprite));
     update_time += clock.getElapsedTime();
     while (last_update_time > m_time_per_frame)

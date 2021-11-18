@@ -7,10 +7,14 @@
 
 LIST_INIT(Button);
 LIST_INIT(Orbit);
+LIST_INIT(Entry);
+LIST_INIT(Gui);
 
 std::vector<Containers::drawer*> Containers::base{
     LISTING(Button),
-    LISTING(Orbit)
+    LISTING(Orbit),
+    LISTING(Entry),
+    LISTING(Gui)
 };
 
 void Containers::drawAll()

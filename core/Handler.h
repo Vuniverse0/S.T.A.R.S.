@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "typedefs_and_globals.h"
-#include "Entry.h"
+#include "../utility/typedefs_and_globals.h"
+#include "../primitives/Entry.h"
 
 struct Handler {//singleton
 private:

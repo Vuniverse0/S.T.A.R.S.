@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "typedefs_and_globals.h"
-#include "Animation.h"
+#include "../utility/typedefs_and_globals.h"
+#include "../primitives/Animation.h"
 #include "Gui.h"
 
 
@@ -30,7 +30,7 @@ private:
         [[maybe_unused]] uint8_t null = 0;
     };
 public:
-    Button(cords a_x, cords a_y, const std::string& a_string, transformator a_transformator);
+    Button(const std::string& a_string);
     ~Button() override;
 
     void checkClick (sf::Vector2i);

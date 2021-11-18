@@ -3,7 +3,7 @@
 //
 
 #include "Dashboard.h"
-#include "Handler.h"
+#include "../core/Handler.h"
 
 
 sf::Vector2f Dashboard::Corner::LeftTop(const sf::Sprite& sprite)
@@ -27,9 +27,34 @@ sf::Vector2f Dashboard::Corner::RightBottom(const sf::Sprite& sprite)
                         Handler::window().getSize().y - sprite.getGlobalBounds().height + sprite.getOrigin().y);
 }
 
-
-Dashboard::Dashboard(Anchor anch, const std::string& a_string, transformator a_transformator):
-        Gui( 0, 0, a_string,  a_transformator)
+Dashboard::Dashboard(Anchor anch, const std::string &a_string):Gui(a_string)
 {
-    move(init(anch).x,init(anch).y);
+    sf::Image image;
+    sf::Texture texture;
+
+    image.loadFromFile(a_string);
+    texture.loadFromImage(image);
+
+    m_attached.emplace_back();
+    m_attached[0].setTexture(texture);
+
+    m_renderTexture.create(image.getSize().x,image.getSize().y);
+
+    m_sprite.setTexture(m_renderTexture.getTexture());
+    m_sprite.setPosition(init(anch).x,init(anch).y);
+}
+
+bool Dashboard::add(Gui& tracked)
+{
+    m_attached.emplace_back();
+    m_attached[m_attached.size()-1].setTexture(*tracked.getAttach());
+    return false;
+}
+
+void Dashboard::handle() {
+
+}
+
+void Dashboard::draw(sf::RenderWindow &window) {
+
 }
