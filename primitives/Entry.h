@@ -25,8 +25,6 @@ public:
     virtual ~Entry();
 
     bool isVisible()const;
-    virtual bool isAnimated()const;
-
     bool hide();
     bool show();
 

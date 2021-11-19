@@ -25,11 +25,6 @@ void Orbit::draw(sf::RenderWindow& window)//draw shape on window
     window.draw(m_elips);
 }
 
-bool Orbit::isAnimated() const
-{
-    return false;
-}
-
 void Orbit::move(cords a_x, cords a_y)//set position for shape
 {
     m_elips.setPosition(a_x, a_y);

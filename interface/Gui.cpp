@@ -22,11 +22,6 @@ Gui::Gui(const std::string& a_string) :
 {
 }
 
-bool Gui::isGui()const
-{
-    return true;
-}
-
 sf::Texture *Gui::getAttach()
 {
     return m_texture;

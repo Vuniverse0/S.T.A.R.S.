@@ -40,7 +40,6 @@ public:
 
     using Entry::move;
     using Entry::origin;
-    using Gui::isGui;
 protected:
     bool isOnClick ();
     bool isOnMouse()const;

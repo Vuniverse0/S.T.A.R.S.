@@ -67,8 +67,3 @@ bool Entry::isVisible()const
 {
     return m_visibility;
 }
-
-bool Entry::isAnimated() const
-{
-    return (m_animation.size() != 0);
-}

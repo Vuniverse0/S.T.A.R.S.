@@ -19,7 +19,7 @@
 #define F_PI 3.14159265358979323846f
 #define EMPTY "null.png"
 
-typedef uint8_t  frames;
+typedef uint16_t  frames;
 typedef uint16_t pixels;
 typedef float_t cords;
 
@@ -56,6 +56,14 @@ static auto local_center{//for .setOrigin by local center
         [](const sf::Sprite*const sprite)->sf::Vector2f
         {
             auto temp = sprite->getLocalBounds();
+            return{temp.width / 2.0f, temp.height / 2.0f};
+        }
+};
+
+static auto global_center{//for global center
+        [](const sf::Sprite*const sprite)->sf::Vector2f
+        {
+            auto temp = sprite->getGlobalBounds();
             return{temp.width / 2.0f, temp.height / 2.0f};
         }
 };

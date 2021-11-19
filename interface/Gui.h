@@ -15,6 +15,4 @@ public:
     Gui(const std::string&);
     ~Gui() override = default;
     sf::Texture* getAttach();
-    virtual bool isGui()const final;
-    using Entry::isAnimated;
 };

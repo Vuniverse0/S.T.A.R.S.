@@ -5,6 +5,7 @@
 #include "Handler.h"
 #include "Containers.h"
 #include "../objects/Orbit.h"
+#include "../interface/Dashboard.h"
 
 float_t Handler::x_ratio =
         static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH,
@@ -98,10 +99,16 @@ void Handler::update()
     static sf::Time update_time = sf::Time::Zero;
     static sf::Time update_time_fix = sf::microseconds(1000/60);
     static sf::Sprite sprite;
-    static Animation animation("/home/vuniverse/Downloads/1976757976.png",sprite,100,163);
-    static Orbit orbit(200,255);
+    static Animation animation("/home/vuniverse/Downloads/speedTest.png",sprite,100,100,600);
+    static Orbit orbit(200);
+    static Dashboard dashboard(Anchor::CenterTop,
+            "/home/vuniverse/Downloads/WenrexaAssetsUI_SciFI/PNG/top_center_panel.png");
+    static sf::Texture texture;
+    texture.loadFromFile("/home/vuniverse/Downloads/WenrexaAssetsUI_SciFI/PNG/TitlePanel02.png");
+    static sf::Sprite sprit(texture);
     orbit.move(400,400);
     sprite.setOrigin(local_center(&sprite));
+    sprite.setScale(0.4,0.4);
     update_time += clock.getElapsedTime();
     while (last_update_time > m_time_per_frame)
     {
@@ -111,11 +118,12 @@ void Handler::update()
         if(update_time >= update_time_fix) {
             update_time = sf::Time::Zero;
             event();
-            sprite.setPosition(orbit.getWay());
+            sprite.setPosition(orbit.getWay(1));
         }
-        animation.play(0.3f*m_time_per_frame.asMilliseconds());
+        animation.play(0.1f*m_time_per_frame.asMilliseconds());
         render();
         orbit.draw(m_window);
+        //m_window.draw(sprit);
         m_window.draw(sprite);
         m_window.display();
     }
