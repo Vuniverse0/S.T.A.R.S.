@@ -51,44 +51,48 @@ sf::Vector2f Dashboard::Corner::CenterLeft(const sf::Sprite& sprite)
     return sf::Vector2f(0,Handler::window().getSize().y/2-global_center(&sprite).y);
 }
 
-Dashboard::Dashboard(Anchor anch, const std::string &a_string):Gui(a_string)
+sf::Vector2f Dashboard::Corner::Center(const sf::Sprite& sprite)
 {
-    sf::Image image;
-
-    image.loadFromFile(a_string);
-    m_texture->loadFromImage(image);
-
-    m_attached.emplace_back();
-    m_attached[0].setTexture(*m_texture);
-
-    m_renderTexture.create(image.getSize().x,image.getSize().y);
-
-    m_sprite.setTexture(m_renderTexture.getTexture());
-    m_sprite.setPosition(init(anch).x,init(anch).y);
-
-    Containers::listGui.push_back(this);
+    return sf::Vector2f(Handler::window().getSize().x/2-global_center(&sprite).x,
+                        Handler::window().getSize().y/2-global_center(&sprite).y);
 }
 
-bool Dashboard::add(Gui& tracked)
+Dashboard::Dashboard(Anchor anch, const std::string &a_string) : Gui(a_string)
 {
-    m_attached.emplace_back();
-    m_attached[m_attached.size()-1].setTexture(*tracked.getAttach());
-    m_member.push_back(&tracked);
-    return false;
+    m_step = {static_cast<int>(m_step.x * Handler::x_ratio), 
+              static_cast<int>(m_step.y * Handler::y_ratio) };
+    m_anchor = anch;
+    m_sprite.setTexture(*m_texture);
+    m_sprite.setPosition(init(anch).x,init(anch).y);
+    Containers::listGui.push_back(this);
+    m_located = {static_cast<int>(m_sprite.getGlobalBounds().left),
+                 static_cast<int>(m_sprite.getGlobalBounds().top)};
 }
 
 void Dashboard::handle()
 {
-    for (auto& item : m_member)
-        item->handle();
 }
 
 void Dashboard::draw(sf::RenderWindow &window)
 {
-    m_renderTexture.clear(sf::Color(sf::Color::Transparent));
-    for (auto& item : m_attached) {
-        m_renderTexture.draw(item);
-    }
-    //m_sprite.setTexture(m_renderTexture.getTexture());
     window.draw(m_sprite);
+}
+
+void Dashboard::updateAnchor()
+{
+    m_sprite.setPosition(init(m_anchor).x,init(m_anchor).y);
+}
+
+void Dashboard::scale(float_t x, float_t y) {
+    Entry::scale(x, y);
+    updateAnchor();
+}
+
+sf::Vector2i Dashboard::m_step = {30,30};
+sf::Vector2i Dashboard::locate(const sf::FloatRect & rect) {
+    auto temp = m_located;
+    m_located += {0,//static_cast<int>(rect.width)
+                  static_cast<int>(rect.height)};
+    std::cout<<m_located.x <<" "<<m_located.y<<std::endl;
+    return { (temp.x+m_step.x),  (temp.y+m_step.y)};
 }

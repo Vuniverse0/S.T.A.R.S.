@@ -70,6 +70,6 @@ static auto global_center{//for global center
 
 pixels operator "" _p(unsigned long long);
 frames operator "" _f(unsigned long long);
-
+void no_callback();
 bool operator<(sf::Vector2f, sf::Vector2f);
 bool operator>(sf::Vector2f, sf::Vector2f);

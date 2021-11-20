@@ -20,6 +20,7 @@ public:
     sf::Vector2f getWay(float speed = 1);
     void move(cords x, cords y) override ;
     void origin(cords a_x, cords a_y) override ;
+    void scale(float x, float y) override ;
     void handle() override;
     void draw(sf::RenderWindow&) final;
 };

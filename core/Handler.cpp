@@ -101,12 +101,13 @@ void Handler::update()
     static sf::Sprite sprite;
     static Animation animation("/home/vuniverse/Downloads/speedTest.png",sprite,100,100,600);
     static Orbit orbit(200);
-    static Dashboard dashboard(Anchor::CenterTop,
-            "/home/vuniverse/Downloads/WenrexaAssetsUI_SciFI/PNG/top_center_panel.png");
-    static sf::Texture texture;
-    texture.loadFromFile("/home/vuniverse/Downloads/WenrexaAssetsUI_SciFI/PNG/TitlePanel02.png");
-    static sf::Sprite sprit(texture);
+    static Dashboard dashboard(Anchor::CenterLeft,
+            "/home/vuniverse/CLionProjects/space/resources/interface/PNG/MainPanel04.png");
+    static Button button("/home/vuniverse/CLionProjects/space/resources/icons/main/research.png",no_callback);
+    dashboard.scale(0.5,1.5);
     orbit.move(400,400);
+    static auto temp = dashboard.locate(button.localBounds());
+    button.move(temp.x,temp.y);
     sprite.setOrigin(local_center(&sprite));
     sprite.setScale(0.4,0.4);
     update_time += clock.getElapsedTime();
@@ -123,7 +124,6 @@ void Handler::update()
         animation.play(0.1f*m_time_per_frame.asMilliseconds());
         render();
         orbit.draw(m_window);
-        //m_window.draw(sprit);
         m_window.draw(sprite);
         m_window.display();
     }

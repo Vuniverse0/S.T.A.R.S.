@@ -30,7 +30,7 @@ public:
 
     virtual void move(cords x, cords y);//set position for m_sprite
     virtual void origin(cords x, cords y);//set origin for m_sprite
-
+    virtual void scale(float_t x, float_t y);
     virtual void draw(sf::RenderWindow& window)=0;//Draw to screen
     virtual void handle()=0;//Change properties
 };

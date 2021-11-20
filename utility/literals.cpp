@@ -24,3 +24,7 @@ bool operator>(sf::Vector2f a_left, sf::Vector2f a_right)//x & y >
 {
     return (a_left.x > a_right.x && a_left.y > a_right.y);
 }
+
+void no_callback()
+{
+}

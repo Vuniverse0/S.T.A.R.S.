@@ -98,5 +98,12 @@ public:
         }
     }
 
+    template<typename T>
+    static void handleAll(std::vector<Button*>& a_vector)
+    {
+        for (auto& x : a_vector){
+            x->handle();
+        }
+    }
     Containers() = delete;
 };

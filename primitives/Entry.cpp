@@ -41,6 +41,11 @@ void Entry::origin(cords x, cords y)
     m_sprite.setOrigin(x, y);
 }
 
+void Entry::scale(float_t x, float_t y)
+{
+    m_sprite.setScale(x, y);
+}
+
 bool Entry::hide()
 {//return true if state was changed
     if (m_visibility) {

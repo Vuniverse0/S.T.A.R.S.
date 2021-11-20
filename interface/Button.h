@@ -29,17 +29,21 @@ private:
         } m_flags;
         [[maybe_unused]] uint8_t null = 0;
     };
+    void(*m_callback)();
 public:
-    Button(const std::string& a_string);
+    Button(const std::string& a_string, void(*callback)());
     ~Button() override;
 
     void checkClick (sf::Vector2i);
     void checkMouse (sf::Vector2i);
 
-    void draw(sf::RenderWindow&)override;
-
+    void draw(sf::RenderWindow&) override ;
+    void handle() override ;
+    void handle(sf::Event::MouseMoveEvent);
+    void handle(sf::Event::MouseButtonEvent);
     using Entry::move;
     using Entry::origin;
+    sf::FloatRect localBounds();
 protected:
     bool isOnClick ();
     bool isOnMouse()const;

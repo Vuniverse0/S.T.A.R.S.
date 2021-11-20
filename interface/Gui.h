@@ -14,5 +14,6 @@ public:
     Gui(const std::string&, frames, pixels, pixels);
     Gui(const std::string&);
     ~Gui() override = default;
-    sf::Texture* getAttach();
+
+    virtual sf::Texture* getAttach();
 };

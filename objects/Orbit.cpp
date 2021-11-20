@@ -49,3 +49,8 @@ void Orbit::handle()
 {
 }
 
+void Orbit::scale(float x, float y)
+{
+    m_elips.setScale(x, y);
+}
+

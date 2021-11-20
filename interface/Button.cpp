@@ -6,11 +6,12 @@
 #include "../core/Handler.h"
 #include "Button.h"
 
-#define MAGIC_RATIO_BUTTONS 0.5f //TODO delete this shit
+#define MAGIC_RATIO_BUTTONS 0.5f //TODO delete this shit, or no)))
 
-Button::Button(const std::string& a_string) :
+Button::Button(const std::string& a_string, void(*callback)()) :
                 Gui(a_string)
 {
+    m_callback = callback;
     m_sprite.scale(MAGIC_RATIO_BUTTONS * Handler::x_ratio,MAGIC_RATIO_BUTTONS * Handler::y_ratio);
     m_normal_scale = m_sprite.getScale();
     m_sprite.setOrigin(local_center(&m_sprite));
@@ -66,4 +67,25 @@ void Button::draw(sf::RenderWindow& window)
         m_sprite.setScale(m_normal_scale);
     }
     window.draw(m_sprite);
+}
+
+void Button::handle()
+{
+    if (isOnClick()) {
+        m_callback();
+    }
+}
+
+void Button::handle(sf::Event::MouseMoveEvent event)
+{
+    checkMouse({event.x,event.y});
+}
+
+void Button::handle(sf::Event::MouseButtonEvent event)
+{
+    checkClick({event.x,event.y});
+}
+
+sf::FloatRect Button::localBounds() {
+    return m_sprite.getLocalBounds();
 }

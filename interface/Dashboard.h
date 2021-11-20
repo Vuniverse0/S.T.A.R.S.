@@ -8,7 +8,10 @@
 
 
 enum class Anchor{
-    LeftTop, RightTop, LeftBottom, RightBottom, CenterTop, CenterBottom, CenterRight, CenterLeft
+    LeftTop, RightTop, LeftBottom, RightBottom,
+    CenterTop, CenterBottom,
+    CenterRight, CenterLeft,
+    Center
 };
 class Dashboard : public Gui {
     friend Gui;
@@ -21,8 +24,9 @@ class Dashboard : public Gui {
         static sf::Vector2f CenterBottom(const sf::Sprite&);
         static sf::Vector2f CenterRight(const sf::Sprite&);
         static sf::Vector2f CenterLeft(const sf::Sprite&);
+        static sf::Vector2f Center(const sf::Sprite&);
     };
-    sf::Vector2f init(const Anchor& anch)
+    sf::Vector2f init(const Anchor& anch = Anchor::Center)
     {
         switch (anch) {
             case Anchor::LeftTop:
@@ -41,14 +45,18 @@ class Dashboard : public Gui {
                 return Corner::CenterRight(m_sprite);
             case Anchor::CenterLeft:
                 return Corner::CenterLeft(m_sprite);
+            case Anchor::Center:
+                return Corner::Center(m_sprite);
         }
     }
-    sf::RenderTexture m_renderTexture;
-    std::vector<sf::Sprite> m_attached;
-    std::vector<Gui*> m_member;
+    void updateAnchor();
+    Anchor m_anchor;
+    sf::Vector2i m_located;
+    static sf::Vector2i m_step;
 public:
     Dashboard(Anchor anch, const std::string& a_string);
-    bool add(Gui&);
+    sf::Vector2i locate(const sf::FloatRect&);
     void handle() override ;
-    void  draw(sf::RenderWindow& window) override ;
+    void draw(sf::RenderWindow& window) override ;
+    void scale(float_t x, float_t y) override ;
 };
