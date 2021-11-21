@@ -30,6 +30,7 @@ private:
         [[maybe_unused]] uint8_t null = 0;
     };
     void(*m_callback)();
+    static std::vector<Button*> m_handle;
 public:
     Button(const std::string& a_string, void(*callback)());
     ~Button() override;
@@ -39,11 +40,7 @@ public:
 
     void draw(sf::RenderWindow&) override ;
     void handle() override ;
-    void handle(sf::Event::MouseMoveEvent);
-    void handle(sf::Event::MouseButtonEvent);
-    using Entry::move;
-    using Entry::origin;
-    sf::FloatRect localBounds();
+    static void handle(sf::Event);
 protected:
     bool isOnClick ();
     bool isOnMouse()const;

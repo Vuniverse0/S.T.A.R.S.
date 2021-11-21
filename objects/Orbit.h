@@ -18,9 +18,7 @@ public:
     Orbit(cords radius, frames quality = 1000);
 
     sf::Vector2f getWay(float speed = 1);
-    void move(cords x, cords y) override ;
-    void origin(cords a_x, cords a_y) override ;
-    void scale(float x, float y) override ;
+    void move(cords x, cords y);
     void handle() override;
     void draw(sf::RenderWindow&) final;
 };

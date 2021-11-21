@@ -6,17 +6,19 @@
 #include "Containers.h"
 #include "../objects/Orbit.h"
 #include "../interface/Dashboard.h"
+#include "../interface/LeftCenterPanel.h"
 
-float_t Handler::x_ratio =
-        static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH,
-Handler::y_ratio =
+float_t Handler::x_ratio = //1600 / GAME_MAKER_SCREEN_WIDTH,
+       static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH,
+Handler::y_ratio = //1000 / GAME_MAKER_SCREEN_HEIGHT;
         static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].height) / GAME_MAKER_SCREEN_HEIGHT;
 Handler Handler::gHandler{};
-sf::RenderWindow Handler::m_window(
+sf::RenderWindow Handler::m_window(//{1600,1000},
         sf::VideoMode::getFullscreenModes()[0],
-        "Surviving Try Around Remote Stars",
+        "Surviving Try Around Remote Stars",//sf::Style::Default, sf::ContextSettings(0,0,8));
         sf::Style::Fullscreen, sf::ContextSettings(0,0,8));
 sf::Clock Handler::clock{};
+bool Handler::m_IsPaused = false;
 Handler::Handler() noexcept
 {
     set_fps(DEFAULT_FPS);
@@ -56,8 +58,10 @@ void Handler::handle()
             case sf::Event::MouseButtonPressed:
                 break;
             case sf::Event::MouseButtonReleased:
+                Button::handle(event);
                 break;
             case sf::Event::MouseMoved:
+                Button::handle(event);
                 break;
             case sf::Event::MouseEntered:
                 break;
@@ -92,7 +96,10 @@ void Handler::event()
 {
 
 }
-
+void callback()
+{
+    std::cout<<"CALLBACK BABY"<<std::endl;
+}
 void Handler::update()
 {
     static sf::Time last_update_time = sf::Time::Zero;
@@ -101,13 +108,9 @@ void Handler::update()
     static sf::Sprite sprite;
     static Animation animation("/home/vuniverse/Downloads/speedTest.png",sprite,100,100,600);
     static Orbit orbit(200);
-    static Dashboard dashboard(Anchor::CenterLeft,
-            "/home/vuniverse/CLionProjects/space/resources/interface/PNG/MainPanel04.png");
-    static Button button("/home/vuniverse/CLionProjects/space/resources/icons/main/research.png",no_callback);
-    dashboard.scale(0.5,1.5);
+    static LeftCenterPanel panel{};
     orbit.move(400,400);
-    static auto temp = dashboard.locate(button.localBounds());
-    button.move(temp.x,temp.y);
+    //button.move(temp.x,temp.y);
     sprite.setOrigin(local_center(&sprite));
     sprite.setScale(0.4,0.4);
     update_time += clock.getElapsedTime();
@@ -120,10 +123,10 @@ void Handler::update()
             update_time = sf::Time::Zero;
             event();
             sprite.setPosition(orbit.getWay(1));
+            Containers::handleAll();
         }
         animation.play(0.1f*m_time_per_frame.asMilliseconds());
-        render();
-        orbit.draw(m_window);
+        Containers::drawAll();
         m_window.draw(sprite);
         m_window.display();
     }
@@ -136,11 +139,6 @@ void Handler::set_fps(const frames& a_fps)
     m_time_per_frame = sf::milliseconds(1000 / a_fps);
 }
 
-void Handler::render()
-{
-    Containers::drawAll();
-}
-
 void Handler::input(const sf::Keyboard::Key& key, const bool& isPressed)
 {
 
@@ -149,6 +147,7 @@ void Handler::input(const sf::Keyboard::Key& key, const bool& isPressed)
 void Handler::pause_switch()
 {
     m_IsPaused = !m_IsPaused;
+    std::cout<<"pause"<<std::endl;
 }
 
 sf::RenderWindow& Handler::window()

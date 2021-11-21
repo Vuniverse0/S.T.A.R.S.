@@ -16,6 +16,7 @@ Button::Button(const std::string& a_string, void(*callback)()) :
     m_normal_scale = m_sprite.getScale();
     m_sprite.setOrigin(local_center(&m_sprite));
     Containers::listButton.push_back(this);
+    m_handle.push_back(this);
 }
 
 Button::~Button()
@@ -76,16 +77,16 @@ void Button::handle()
     }
 }
 
-void Button::handle(sf::Event::MouseMoveEvent event)
-{
-    checkMouse({event.x,event.y});
-}
+std::vector<Button*> Button::m_handle{};
 
-void Button::handle(sf::Event::MouseButtonEvent event)
+void Button::handle(sf::Event event)
 {
-    checkClick({event.x,event.y});
-}
-
-sf::FloatRect Button::localBounds() {
-    return m_sprite.getLocalBounds();
+    if (event.type == sf::Event::MouseMoved) {
+        for (auto &item : m_handle)
+            item->checkMouse({event.mouseMove.x, event.mouseMove.y});
+    }
+    else if (event.type == sf::Event::MouseButtonReleased) {
+        for (auto &item : m_handle)
+            item->checkClick({event.mouseButton.x, event.mouseButton.y});
+    }
 }

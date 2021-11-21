@@ -31,21 +31,6 @@ Entry::~Entry()
     delete m_texture;
 }
 
-void Entry::move(cords a_x, cords a_y)
-{
-    m_sprite.setPosition(a_x, a_y);
-}
-
-void Entry::origin(cords x, cords y)
-{
-    m_sprite.setOrigin(x, y);
-}
-
-void Entry::scale(float_t x, float_t y)
-{
-    m_sprite.setScale(x, y);
-}
-
 bool Entry::hide()
 {//return true if state was changed
     if (m_visibility) {
@@ -71,4 +56,8 @@ bool Entry::show()
 bool Entry::isVisible()const
 {
     return m_visibility;
+}
+
+sf::Sprite& Entry::sprite() {
+    return m_sprite;
 }

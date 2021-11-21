@@ -52,7 +52,7 @@ static auto center{//for code trigger - anchors
         }
 };
 
-static auto local_center{//for .setOrigin by local center
+static auto local_center{//for local center
         [](const sf::Sprite*const sprite)->sf::Vector2f
         {
             auto temp = sprite->getLocalBounds();

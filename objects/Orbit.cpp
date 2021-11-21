@@ -5,6 +5,7 @@
 #include "Orbit.h"
 #include "../core/Containers.h"
 
+
 Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
 {
     m_elips.setPointCount(quality);
@@ -30,11 +31,6 @@ void Orbit::move(cords a_x, cords a_y)//set position for shape
     m_elips.setPosition(a_x, a_y);
 }
 
-void Orbit::origin(cords a_x, cords a_y)//set origin for shape
-{
-    m_elips.setOrigin(a_x, a_y);
-}
-
 sf::Vector2f Orbit::getWay(float speed)//return cords for next step on orbit(center)
 {
     m_way += speed;
@@ -48,9 +44,3 @@ sf::Vector2f Orbit::getWay(float speed)//return cords for next step on orbit(cen
 void Orbit::handle()
 {
 }
-
-void Orbit::scale(float x, float y)
-{
-    m_elips.setScale(x, y);
-}
-

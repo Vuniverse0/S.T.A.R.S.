@@ -59,11 +59,11 @@ sf::Vector2f Dashboard::Corner::Center(const sf::Sprite& sprite)
 
 Dashboard::Dashboard(Anchor anch, const std::string &a_string) : Gui(a_string)
 {
-    m_step = {static_cast<int>(m_step.x * Handler::x_ratio), 
-              static_cast<int>(m_step.y * Handler::y_ratio) };
+    m_stepLeftCenterPanel = {static_cast<int>(m_stepLeftCenterPanel.x * Handler::x_ratio),
+                             static_cast<int>(m_stepLeftCenterPanel.y * Handler::y_ratio) };
     m_anchor = anch;
     m_sprite.setTexture(*m_texture);
-    m_sprite.setPosition(init(anch).x,init(anch).y);
+    m_sprite.setPosition(init(anch).x, init(anch).y);
     Containers::listGui.push_back(this);
     m_located = {static_cast<int>(m_sprite.getGlobalBounds().left),
                  static_cast<int>(m_sprite.getGlobalBounds().top)};
@@ -84,15 +84,25 @@ void Dashboard::updateAnchor()
 }
 
 void Dashboard::scale(float_t x, float_t y) {
-    Entry::scale(x, y);
+    m_sprite.setScale(x, y);
     updateAnchor();
+    m_located = {static_cast<int>(m_sprite.getGlobalBounds().left),
+                 static_cast<int>(m_sprite.getGlobalBounds().top)};
 }
 
-sf::Vector2i Dashboard::m_step = {30,30};
-sf::Vector2i Dashboard::locate(const sf::FloatRect & rect) {
+sf::Vector2i Dashboard::m_stepLeftCenterPanel = {10, 15};
+int Dashboard::locateLeftCenterPanel(Button& button)//locate button
+{
     auto temp = m_located;
     m_located += {0,//static_cast<int>(rect.width)
-                  static_cast<int>(rect.height)};
-    std::cout<<m_located.x <<" "<<m_located.y<<std::endl;
-    return { (temp.x+m_step.x),  (temp.y+m_step.y)};
+                  static_cast<int>(button.sprite().getGlobalBounds().height) + m_stepLeftCenterPanel.y};
+    button.sprite().setPosition(m_sprite.getGlobalBounds().width/2,
+            static_cast<float>(button.sprite().getOrigin().y+temp.y)-15.f);
+    return 0;
+}
+
+sf::Vector2i Dashboard::m_stepRightBottomPanel = {10, 15};
+int Dashboard::locateRightBottomPanel(Button &button)
+{
+
 }
