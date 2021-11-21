@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../utility/typedefs_and_globals.h"
-#include "../interface/Button.h"
-#include "../objects/Orbit.h"
+#include "../interface/Interfaces.h"
+#include "../objects/Objects.h"
 #include "Handler.h"
 
 #define LIST(arg) static std::vector<arg*> list##arg;
@@ -18,8 +18,8 @@ struct Containers {
 private:
     struct drawer {
         virtual void drawe() = 0;
-        virtual void handle() = 0;
         virtual ~drawer() = default;
+        virtual void handle() = 0;
     };
 
     template<typename T>

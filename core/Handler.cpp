@@ -2,11 +2,9 @@
 // Created by vuniverse on 10/22/21.
 //
 
-#include "Handler.h"
-#include "Containers.h"
-#include "../objects/Orbit.h"
-#include "../interface/Dashboard.h"
-#include "../interface/LeftCenterPanel.h"
+#include "Core.h"
+#include "../interface/Interfaces.h"
+#include "../objects/Objects.h"
 
 float_t Handler::x_ratio = //1600 / GAME_MAKER_SCREEN_WIDTH,
        static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH,
