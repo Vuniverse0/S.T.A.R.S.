@@ -28,7 +28,7 @@ public:
     bool hide();
     bool show();
     virtual sf::Sprite& sprite();
-    virtual void draw(sf::RenderWindow& window)=0;//Draw to screen
+    virtual void draw(sf::RenderWindow& window) = 0;//Draw to screen
     virtual void handle()=0;//Change properties
 };
 

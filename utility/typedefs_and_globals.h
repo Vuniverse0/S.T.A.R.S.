@@ -4,7 +4,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
+#include <nlohmann/json.hpp>
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -12,6 +12,7 @@
 #include <cmath>
 #include <algorithm>
 #include <iostream>
+#include <random>
 
 #define GAME_MAKER_SCREEN_WIDTH 1366.0f //TODO remake these
 #define GAME_MAKER_SCREEN_HEIGHT 768.0f
@@ -22,6 +23,21 @@
 typedef uint16_t  frames;
 typedef uint16_t pixels;
 typedef float_t cords;
+
+using json = nlohmann::json;
+
+static auto binominal{
+        [](float_t a_start, float_t a_end, float_t a_binominal)->float_t
+        {
+            if (a_end > 25 || a_start >= a_end || a_start < 0.f || a_binominal <= 0.f || a_binominal >= 1.f) {
+                return -1.f;
+            }
+            std::default_random_engine generator;
+            int start = static_cast<uint8_t>(a_start*10), end = static_cast<uint8_t>(a_end*10);
+            std::binomial_distribution<uint8_t> distribution((start + end), a_binominal);
+            return ((distribution(generator) - start)/10.f);
+        }
+};
 
 static auto size_regulator{
         [](const sf::Sprite*const sprite)->sf::FloatRect
