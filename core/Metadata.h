@@ -7,9 +7,10 @@
 #include "../utility/typedefs_and_globals.h"
 
 
-enum class Body{Asteroid, Moon, Planet, Star, Hole, System, Galaxy};
+enum class Body{Asteroid, Moon, Planet, Star, Hole, System};
 enum class Planet{Wet, Dry, Islands, Stone,  Gas, Rings, Ice, Lava};
 enum class Star{White, Red, Blue, Purple, Other, Black};
+enum class System{OneSun, TwoSun, ThirdSun};
 
 union Set{
     struct{
@@ -29,6 +30,12 @@ private:
 union Type{
     Planet planet;
     Star star;
+    System system;
+};
+
+struct Sets{
+    Set first;
+    Set second;
 };
 
 struct MetaDataBody{
@@ -40,5 +47,14 @@ struct MetaDataBody{
 struct MetaDataObject{
     Body body;
     Type type;
+    Sets sets;
     std::string file;
 };
+/*
+ * If json Data Object is System
+ * sets:
+ *      first: light ears
+ *      second: 10^n
+ * type: suns count
+ * Planet & asteroids count: other objects
+ */
