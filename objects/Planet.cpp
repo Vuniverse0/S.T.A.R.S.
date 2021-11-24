@@ -9,9 +9,7 @@
 uint16_t Planet::m_idGenetaror = 0;
 
 
-Planet::Planet(Metadata data):Entry(data.f_name,600,100,100),m_orbit(100) {
-
-}
+//Planets::Planet(Metadata data): Entry(data.f_name, 600, 100, 100), m_orbit(100) {}
 
 Planet::~Planet() {
 

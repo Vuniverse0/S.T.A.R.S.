@@ -5,24 +5,8 @@
 #include "Create.h"
 
 
-Entry *Create::create(const Body &a_body) {
-    Metadata data;
-    switch (a_body) {
-        case Body::Asteroid:
-            break;
-        case Body::Moon:
-            break;
-        case Body::Planet:
+Entry *Create::create(const Body &a_body)
+{
 
-            break;
-        case Body::Star:
-            break;
-        case Body::Hole:
-            break;
-        case Body::System:
-            break;
-        case Body::Galaxy:
-            break;
-    }
-    return nullptr;
+
 }

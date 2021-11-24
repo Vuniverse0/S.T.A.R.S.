@@ -8,10 +8,12 @@
 
 
 enum class Body{Asteroid, Moon, Planet, Star, Hole, System};
-enum class Planet{Wet, Dry, Islands, Stone,  Gas, Rings, Ice, Lava};
-enum class Star{White, Red, Blue, Purple, Other, Black};
-enum class System{OneSun, TwoSun, ThirdSun};
-
+enum class Planets{ Wet, Dry, Islands, Stone,  Gas, Rings, Ice, Lava};
+enum class Moons{ Stone, Gas, Ice, Dry};
+enum class Stars{ White, Red, Blue, Purple, Other, Black};
+//enum class Systems Number of objects
+enum class Asteroid{ Classic, Ore, Material};
+enum class Holes{ Classic, Material, Gate, Math};
 union Set{
     struct{
         uint8_t m0 : 1;
@@ -23,14 +25,16 @@ union Set{
         uint8_t m6 : 1;
         uint8_t m7 : 1;
     };
-private:
     uint8_t set = 0;
 };
 
 union Type{
-    Planet planet;
-    Star star;
-    System system;
+    unsigned int member;
+    Planets planet;
+    Stars star;
+    Moons moon;
+    Asteroid asteroid;
+    Holes hole;
 };
 
 struct Sets{
@@ -50,6 +54,13 @@ struct MetaDataObject{
     Sets sets;
     std::string file;
 };
+
+void from_json(const json& j, MetaDataBody& p);
+void from_json(const json& j, MetaDataObject& p);
+void to_json(json& j, const MetaDataBody& p);
+void to_json(json& j, const MetaDataObject& p);
+
+
 /*
  * If json Data Object is System
  * sets:

@@ -24,7 +24,7 @@ typedef uint16_t  frames;
 typedef uint16_t pixels;
 typedef float_t cords;
 
-using json = nlohmann::json;
+using nlohmann::json;
 
 static auto binominal{
         [](float_t a_start, float_t a_end, float_t a_binominal)->float_t
