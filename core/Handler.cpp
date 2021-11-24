@@ -108,7 +108,6 @@ void Handler::update()
     static Orbit orbit(200);
     static LeftCenterPanel panel{};
     orbit.move(400,400);
-    //button.move(temp.x,temp.y);
     sprite.setOrigin(local_center(&sprite));
     sprite.setScale(0.4,0.4);
     update_time += clock.getElapsedTime();

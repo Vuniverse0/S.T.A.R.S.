@@ -44,7 +44,7 @@ struct Sets{
 
 struct MetaDataBody{
     float_t speed;
-    float_t size;
+    float_t bsize;
     float_t spin;
 };
 
@@ -61,8 +61,7 @@ void to_json(json& j, const MetaDataBody& p);
 void to_json(json& j, const MetaDataObject& p);
 
 
-/*
- * If json Data Object is System
+/*If json Data Object is System
  * sets:
  *      first: light ears
  *      second: 10^n

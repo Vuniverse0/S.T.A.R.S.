@@ -26,13 +26,13 @@ void from_json(const json& j, MetaDataObject& p)
 void to_json(json& j, const MetaDataBody& p)
 {
     j = json{{"speed", p.speed},
-             {"size", p.size},
+             {"size", p.bsize},
              {"spin", p.spin}};
 }
 
 void from_json(const json& j, MetaDataBody& p)
 {
     j.at("speed").get_to(p.speed);
-    j.at("size").get_to(p.size);
+    j.at("size").get_to(p.bsize);
     j.at("spin").get_to(p.spin);
 }

@@ -8,16 +8,25 @@
 
 uint16_t Planet::m_idGenetaror = 0;
 
-
-//Planets::Planet(Metadata data): Entry(data.f_name, 600, 100, 100), m_orbit(100) {}
-
-Planet::~Planet() {
+Planet::Planet(Planets type, Sets sets, const std::string &file, cords radius) :
+    Entry(file, 600, 100, 100),
+    m_object{Body::Planet, static_cast<unsigned int>(type), sets, file},
+    m_orbit(radius),
+    m_body{planet_body()}
+{
 
 }
-void Planet::handle() {
+
+Planet::~Planet()
+{
+
+}
+void Planet::handle()
+{
 
 }
 
-void Planet::draw(sf::RenderWindow &window) {
+void Planet::draw(sf::RenderWindow &window)
+{
 
 }

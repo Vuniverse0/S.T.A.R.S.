@@ -3,14 +3,19 @@
 //
 
 #pragma once
-#include "Orbit.h"
-#include "../core/Metadata.h"
+#include "Moon.h"
+
 
 class Planet : public Entry {
-    Orbit m_orbit;
     static uint16_t m_idGenetaror;
+
+    std::vector<Moon> m_moons;
+    Orbit m_orbit;
+
+    MetaDataObject m_object;
+    MetaDataBody m_body;
 public:
-    Planet();
+    Planet(Planets type, Sets sets, const std::string& file, cords radius);
     ~Planet();
     void handle() override ;
     void draw(sf::RenderWindow& window) override ;

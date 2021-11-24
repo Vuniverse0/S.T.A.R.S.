@@ -23,7 +23,8 @@ Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
 
 void Orbit::draw(sf::RenderWindow& window)//draw shape on window
 {
-    window.draw(m_elips);
+    if(m_visibility)
+        window.draw(m_elips);
 }
 
 void Orbit::move(cords a_x, cords a_y)//set position for shape

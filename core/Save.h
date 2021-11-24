@@ -3,8 +3,13 @@
 //
 
 #pragma once
+#include "../objects/Galaxy.h"
 
 
 class Save {
+public:
+    void operator()()
+    {
 
+    }
 };
