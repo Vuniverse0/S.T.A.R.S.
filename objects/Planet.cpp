@@ -2,8 +2,11 @@
 // Created by vuniverse on 11/21/21.
 //
 
-#include "../core/Containers.h"
 #include "Planet.h"
+#include "../core/Handler.h"
+#include "../core/Containers.h"
+#include "../utility/random_body.h"
+#include "../utility/typedefs_and_globals.h"
 
 
 uint16_t Planet::m_idGenetaror = 0;
@@ -14,6 +17,10 @@ Planet::Planet(Planets type, Sets sets, const std::string &file, cords radius) :
     m_orbit(radius),
     m_body{planet_body()}
 {
+    for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
+        //m_moons.emplace_back();
+
+    }
 
 }
 

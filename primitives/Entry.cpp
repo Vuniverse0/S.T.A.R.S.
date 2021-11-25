@@ -10,14 +10,14 @@ Entry::Entry(const std::string &a_string, frames a_frames, pixels a_x, pixels a_
 }
 
 Entry::Entry(const std::string& a_string, frames a_frames, pixels a_pixels) :
-        m_visibility(false),
+        m_visibility(true),
         m_sprite{},
         m_animation(a_string, m_sprite, a_pixels, a_frames)
 {
 }
 
 Entry::Entry(const std::string& a_string) :
-        m_visibility(false),
+        m_visibility(true),
         m_sprite{}
 {
     m_texture = new sf::Texture();

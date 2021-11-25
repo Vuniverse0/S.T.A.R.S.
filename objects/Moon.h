@@ -4,9 +4,8 @@
 
 #pragma once
 #include "Orbit.h"
-#include "../core/Core.h"
-#include "../utility/random_body.h"
-#include "../utility/typedefs_and_globals.h"
+#include "../core/Metadata.h"
+
 
 class Moon : public Entry{
     static uint16_t m_idGenetaror;
@@ -17,5 +16,8 @@ class Moon : public Entry{
     MetaDataBody m_body;
 public:
     Moon(Moons type, Sets sets, const std::string& file, cords radius);
-    ~Moon();
+    ~Moon() override;
+
+    void draw(sf::RenderWindow& window);
+    void handle();
 };

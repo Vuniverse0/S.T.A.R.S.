@@ -26,7 +26,7 @@ typedef float_t cords;
 
 using nlohmann::json;
 
-static auto binominal{
+static auto binominal_float{
         [](float_t a_start, float_t a_end, float_t a_binominal)->float_t
         {
             if (a_end > 25 || a_start >= a_end || a_start < 0.f || a_binominal <= 0.f || a_binominal >= 1.f) {
@@ -36,6 +36,18 @@ static auto binominal{
             int start = static_cast<uint8_t>(a_start*10), end = static_cast<uint8_t>(a_end*10);
             std::binomial_distribution<uint8_t> distribution((start + end), a_binominal);
             return ((distribution(generator) - start)/10.f);
+        }
+};
+
+static auto binominal_int{
+        [](uint8_t a_start, uint8_t a_end, float_t a_binominal)->uint8_t
+        {
+            if (a_start >= a_end || a_binominal <= 0.f || a_binominal >= 1.f) {
+                return 0;
+            }
+            std::default_random_engine generator;
+            std::binomial_distribution<uint8_t> distribution((a_start + a_end), a_binominal);
+            return ((distribution(generator) - a_start));
         }
 };
 
