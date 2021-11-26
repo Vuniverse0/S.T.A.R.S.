@@ -14,6 +14,7 @@ enum class Stars{ White, Red, Blue, Purple, Other, Black};
 //enum class Systems Number of objects
 enum class Asteroid{ Classic, Ore, Material};
 enum class Holes{ Classic, Material, Gate, Math};
+
 union Set{
     struct{
         uint8_t m0 : 1;
@@ -46,6 +47,8 @@ struct MetaDataBody{
     float_t speed;
     float_t bsize;
     float_t spin;
+    bool direction;
+    bool spin_direction;
 };
 
 struct MetaDataObject{
@@ -53,6 +56,7 @@ struct MetaDataObject{
     Type type;
     Sets sets;
     std::string file;
+    uint16_t id;
 };
 
 void from_json(const json& j, MetaDataBody& p);

@@ -16,8 +16,9 @@ private:
 public:
     Orbit() = delete;
     Orbit(cords radius, frames quality = 1000);
+    ~Orbit() override = default;
 
-    sf::Vector2f getWay(float speed = 1);
+    sf::Vector2f getWay(double_t speed = 1, bool direction = false);
 
     using Entry::hide;
     using Entry::show;

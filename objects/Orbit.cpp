@@ -32,14 +32,13 @@ void Orbit::move(cords a_x, cords a_y)//set position for shape
     m_elips.setPosition(a_x, a_y);
 }
 
-sf::Vector2f Orbit::getWay(float speed)//return cords for next step on orbit(center)
+sf::Vector2f Orbit::getWay(double_t speed, bool direction)//return cords for next step on orbit(center)
 {
-    m_way += speed;
-    if(m_way >= m_elips.getPointCount()){
-        m_way = 0;
+    m_way = direction ? (m_way - speed) : (m_way + speed);
+    if (static_cast<size_t>(m_way) >= m_elips.getPointCount() || m_way < 0) {
+        m_way = direction ? static_cast<double>(m_elips.getPointCount()-1) : 0;
     }
-    return{m_elips.getPoint(m_way).x + m_elips.getPosition().x,
-           m_elips.getPoint(m_way).y + m_elips.getPosition().y};
+    return (m_elips.getPoint(static_cast<size_t>(m_way)) + m_elips.getPosition());
 }
 
 void Orbit::handle()
