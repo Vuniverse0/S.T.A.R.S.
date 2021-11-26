@@ -11,13 +11,14 @@ class Planet : public Entry {
 
     std::vector<Moon> m_moons;
     Orbit m_orbit;
-    
+
     MetaDataObject m_object;
     MetaDataBody m_body;
 
     float_t last_x;
 public:
     Planet(Planets type, Sets sets, const std::string& file, cords radius);
+    Planet(MetaDataObject, MetaDataBody, cords);
     ~Planet() override;
 
     void handle() override ;

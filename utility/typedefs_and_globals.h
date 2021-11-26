@@ -15,7 +15,7 @@
 #include <random>
 
 #define GAME_MAKER_SCREEN_WIDTH 1366.0f //TODO remake these
-#define GAME_MAKER_SCREEN_HEIGHT 768.0f
+#define GAME_MAKER_SCREEN_HEIGHT 768.0f //or not))) Any actor view like he want
 #define DEFAULT_FPS 60 // keep
 #define F_PI 3.14159265358979323846f
 #define EMPTY "null.png"

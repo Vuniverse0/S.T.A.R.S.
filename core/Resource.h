@@ -7,7 +7,7 @@
 #include "Metadata.h"
 
 
-class Resourse {
+class Resource {
 
 public:
 
