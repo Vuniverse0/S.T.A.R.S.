@@ -14,6 +14,7 @@ class Star : public Entry  {
     MetaDataBody m_body;
 
     float_t last_x;
+    std::vector<Planet> m_planets;
 public:
     Star(Star type, Sets sets, const std::string& file, cords radius);
     Star(MetaDataObject, MetaDataBody, cords);

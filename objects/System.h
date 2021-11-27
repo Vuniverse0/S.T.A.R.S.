@@ -10,5 +10,5 @@
 
 
 class System {
-
+std::vector<Star> m_stars;
 };
