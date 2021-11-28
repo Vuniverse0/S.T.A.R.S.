@@ -5,22 +5,32 @@
 #include "Star.h"
 
 
-Star::Star(Star type, Sets sets, const std::string &file, cords radius) {
+Star::Star(Star type, Sets sets, const std::string &file, cords radius)
+{
 
 }
 
-Star::Star(MetaDataObject, MetaDataBody, cords) {
+Star::Star(MetaDataObject, MetaDataBody, cords)
+{
 
 }
 
-Star::~Star() {
+Star::Star(const Star& star, const std::string& file)
+{
 
 }
 
-void Star::handle() {
+Star::~Star()
+{
 
 }
 
-void Star::draw(sf::RenderWindow &window) {
+void Star::handle()
+{
+
+}
+
+void Star::draw(sf::RenderWindow &window)
+{
 
 }

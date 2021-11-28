@@ -18,6 +18,7 @@ class Star : public Entry  {
 public:
     Star(Star type, Sets sets, const std::string& file, cords radius);
     Star(MetaDataObject, MetaDataBody, cords);
+    Star(const Star& star, const std::string& file);
     ~Star() override;
 
     void handle() override ;
