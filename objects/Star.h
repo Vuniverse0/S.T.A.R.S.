@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "Planet.cpp"
+#include "Planet.h"
 
 class Star : public Entry  {
     static uint16_t m_idGenerator;
@@ -18,7 +18,7 @@ class Star : public Entry  {
 public:
     Star(const Stars& type, Sets sets, const std::string& file, cords radius);
     Star(MetaDataObject, MetaDataBody, cords);
-    Star(const Star& star, const std::string& file);
+    //Star(const Star& star, const std::string& file);
     ~Star() override;
 
     void handle() override ;

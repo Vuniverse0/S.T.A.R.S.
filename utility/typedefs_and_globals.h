@@ -89,13 +89,13 @@ static auto local_center{//for local center
         }
 };
 
-/*static auto global_center{//for global center
+static auto global_center{//for global center without top&left
         [](const sf::Sprite*const sprite)->sf::Vector2f
         {
             auto temp = sprite->getGlobalBounds();
             return{temp.width / 2.0f, temp.height / 2.0f};
         }
-};*/
+};
 
 pixels operator "" _p(unsigned long long);
 frames operator "" _f(unsigned long long);

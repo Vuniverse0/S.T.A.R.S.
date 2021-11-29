@@ -3,12 +3,18 @@
 //
 
 #include "Star.h"
+#include "../core/Handler.h"
+#include "../core/Containers.h"
+#include "../utility/random_body.h"
+#include "../utility/typedefs_and_globals.h"
 
+
+uint16_t Star::m_idGenerator = 0;
 
 Star::Star(const Stars& type, Sets sets, const std::string &file, cords radius) :
     Entry(file, 600, 100, 100),
     m_object{Body::Star, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
-    m_body{planet_body()},
+    m_body{star_body()},
     m_orbit(radius + m_sprite.getGlobalBounds().width),
     last_x(m_orbit.getWay().x)
 {
@@ -28,10 +34,7 @@ Star::Star(MetaDataObject object, MetaDataBody body, cords radius) :
 {
 }
 
-Star::Star(const Star& star, const std::string& file)
-{
-
-}
+//Star::Star(const Star& star, const std::string& file){}
 
 Star::~Star()
 {
