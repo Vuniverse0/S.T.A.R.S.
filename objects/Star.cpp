@@ -11,7 +11,7 @@
 
 uint16_t Star::m_idGenerator = 0;
 
-Star::Star(const Stars& type, Sets sets, const std::string &file, cords radius) :
+Star::Star(const Stars& type, Sets sets, const std::string &file, cords radius, uint8_t stars_count) :
     Entry(file, 600, 100, 100),
     m_object{Body::Star, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
     m_body{star_body()},
@@ -23,9 +23,30 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, cords radius) 
         m_planets.emplace_back(Planets::Dry, Sets{{},{}},
                 "none.png", m_sprite.getGlobalBounds().width);
     }
+    if (stars_count == 2) {
+        m_stars.push_back(
+                Star(m_orbit.quality()/stars_count, m_body, m_object, radius));
+    }
+    else if (stars_count == 3) {
+        m_stars.push_back(
+                Star(m_orbit.quality()/stars_count, m_body, m_object, radius));
+        m_stars.push_back(
+                Star(m_orbit.quality()/stars_count*2, m_body, m_object, radius));
+    }
+}
+Star::Star(uint8_t stars_count, MetaDataBody body, MetaDataObject object, Orbit orbit):
+    Entry(object.file, 600, 100, 100),//TODO Object.type replace to random type
+    m_object{Body::Star,static_cast<unsigned int>(object.type.star),
+             object.sets, object.file, ++m_idGenerator},
+    m_body{.speed = body.speed, .bsize = star_body().bsize, .spin = body.spin},
+    m_orbit(orbit),
+    last_x(m_orbit.getWay(stars_count).x)           //Make offset orbit here!
+{
+    m_sprite.scale(m_body.bsize, m_body.bsize);
 }
 
-Star::Star(MetaDataObject object, MetaDataBody body, cords radius) :
+
+Star::Star(const MetaDataObject& object, MetaDataBody body, cords radius) :
     Entry(object.file, 600, 100, 100),
     m_object{object},
     m_body{body},

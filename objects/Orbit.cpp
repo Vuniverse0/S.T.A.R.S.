@@ -60,3 +60,8 @@ sf::Vector2f Orbit::getWay(double_t speed, bool direction)//return cords for nex
 void Orbit::handle()
 {
 }
+
+frames Orbit::quality()
+{
+    return m_elips.getPointCount();
+}

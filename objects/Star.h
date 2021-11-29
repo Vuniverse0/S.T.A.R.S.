@@ -15,9 +15,13 @@ class Star : public Entry  {
 
     float_t last_x;
     std::vector<Planet> m_planets;
+    std::vector<Star> m_stars;
+
+    Star(uint8_t stars_count, MetaDataBody body, MetaDataObject object, Orbit orbit);
 public:
-    Star(const Stars& type, Sets sets, const std::string& file, cords radius);
-    Star(MetaDataObject, MetaDataBody, cords);
+    Star() = delete;
+    Star(const Stars& type, Sets sets, const std::string& file, cords radius, uint8_t stars_count = 1);
+    Star(const MetaDataObject&, MetaDataBody, cords);
     //Star(const Star& star, const std::string& file);
     ~Star() override;
 

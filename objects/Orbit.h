@@ -19,6 +19,7 @@ public:
     Orbit(cords radius, cords x, cords y, frames quality = 1000);
     ~Orbit() override = default;
 
+    frames quality();
     sf::Vector2f getWay(double_t speed = 1, bool direction = false);
 
     using Entry::hide;
