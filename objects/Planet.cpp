@@ -11,16 +11,17 @@
 
 uint16_t Planet::m_idGenerator = 0;
 
-Planet::Planet(Planets type, Sets sets, const std::string &file, cords radius) :
+Planet::Planet(const Planets& type, Sets sets, const std::string &file, cords radius) :
     Entry(file, 600, 100, 100),
     m_object{Body::Planet, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
-    m_orbit(radius + m_sprite.getGlobalBounds().width),
-    m_body{planet_body()}
-{
-    m_sprite.setScale(m_body.bsize, m_body.bsize);
-    m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
+    m_body{planet_body()},
+    m_orbit(radius),
+    last_x(m_orbit.getWay().x)
+{ //TODO screen center for sun and planets orbit, multi sun state and one orbit move. Make orbit sections move
+    m_sprite.scale(m_body.bsize, m_body.bsize);
     for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
-        m_moons.emplace_back(Moons::Dry, Sets{{},{}}, "none.png", m_sprite.getGlobalBounds().width);
+        m_moons.emplace_back(Moons::Dry, Sets{{},{}},
+                "none.png", m_sprite.getGlobalBounds().width, center(&m_sprite));
 
     }
 }

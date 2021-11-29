@@ -17,7 +17,7 @@ class Planet : public Entry {
 
     float_t last_x;
 public:
-    Planet(Planets type, Sets sets, const std::string& file, cords radius);
+    Planet(const Planets& type, Sets sets, const std::string& file, cords radius);
     Planet(MetaDataObject, MetaDataBody, cords);
     ~Planet() override;
 

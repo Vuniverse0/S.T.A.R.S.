@@ -3,17 +3,23 @@
 //
 
 #include "Entry.h"
+#include "../core/Handler.h"
 
 
-Entry::Entry(const std::string &a_string, frames a_frames, pixels a_x, pixels a_y) {
-
+Entry::Entry(const std::string &a_string, frames a_frames, pixels a_x, pixels a_y) :
+    m_visibility(true),
+    m_sprite{},
+    m_animation(a_string, m_sprite, a_x, a_y, a_frames)
+{
+    m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
 }
 
 Entry::Entry(const std::string& a_string, frames a_frames, pixels a_pixels) :
-        m_visibility(true),
-        m_sprite{},
-        m_animation(a_string, m_sprite, a_pixels, a_frames)
+    m_visibility(true),
+    m_sprite{},
+    m_animation(a_string, m_sprite, a_pixels, a_frames)
 {
+    m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
 }
 
 Entry::Entry(const std::string& a_string) :
@@ -24,6 +30,7 @@ Entry::Entry(const std::string& a_string) :
     m_texture->loadFromFile(a_string);
     m_texture->setSmooth(true);
     m_sprite.setTexture(*m_texture);
+    m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
 }
 
 Entry::~Entry()

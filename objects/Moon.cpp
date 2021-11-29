@@ -10,14 +10,22 @@
 
 uint16_t Moon::m_idGenerator = 0;
 
-Moon::Moon(Moons type, Sets sets, const std::string& file, cords radius) :
-        Entry(file, 600,100,100),
-        m_orbit(radius + m_sprite.getGlobalBounds().width * VALUABLE_RATIO ),
-        m_object{Body::Moon, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
-        m_body(moon_body())
+Moon::Moon(const Moons& type, Sets sets, const std::string& file, cords radius, sf::Vector2f planet_anchor) :
+    Entry(file, 600,100,100),
+    m_orbit(radius, planet_anchor.x, planet_anchor.y),
+    last_x(m_orbit.getWay().x),
+    m_object{Body::Moon, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
+    m_body(moon_body())
 {
     m_orbit.hide();
+}
 
+Moon::Moon(MetaDataObject object, MetaDataBody body, cords radius, sf::Vector2f planet_anchor) :
+    Entry(object.file, 600, 100, 100),
+    m_object{object},
+    m_orbit(radius, planet_anchor.x, planet_anchor.y),
+    m_body{body}
+{
 }
 
 void Moon::draw(sf::RenderWindow &window)
@@ -27,7 +35,6 @@ void Moon::draw(sf::RenderWindow &window)
         last_x = m_sprite.getPosition().x;
         std::cout<< "Change" << std::endl;
     }
-
 }
 
 void Moon::handle()

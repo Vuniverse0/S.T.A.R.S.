@@ -16,7 +16,7 @@ class Star : public Entry  {
     float_t last_x;
     std::vector<Planet> m_planets;
 public:
-    Star(Star type, Sets sets, const std::string& file, cords radius);
+    Star(const Stars& type, Sets sets, const std::string& file, cords radius);
     Star(MetaDataObject, MetaDataBody, cords);
     Star(const Star& star, const std::string& file);
     ~Star() override;

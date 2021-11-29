@@ -17,7 +17,8 @@ class Moon : public Entry{
 
     float_t last_x;
 public:
-    Moon(Moons type, Sets sets, const std::string& file, cords radius);
+    Moon(const Moons& type, Sets sets, const std::string& file, cords radius, sf::Vector2f planet_anchor);
+    Moon(MetaDataObject, MetaDataBody, cords, sf::Vector2f planet_anchor);
     ~Moon() override;
 
     void draw(sf::RenderWindow& window) override;
