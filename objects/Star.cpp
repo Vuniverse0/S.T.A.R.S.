@@ -40,7 +40,7 @@ Star::Star(uint8_t stars_count, MetaDataBody body, MetaDataObject object, Orbit 
              object.sets, object.file, ++m_idGenerator},
     m_body{.speed = body.speed, .bsize = star_body().bsize, .spin = body.spin},
     m_orbit(orbit),
-    last_x(m_orbit.getWay(stars_count).x)           //Make offset orbit here!
+    last_x(m_orbit.getWay(stars_count).x)            //Make offset orbit here!
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
 }
