@@ -17,7 +17,7 @@ class Star : public Entry  {
     std::vector<Planet> m_planets;
     std::vector<Star> m_stars;
 
-    Star(uint8_t stars_count, MetaDataBody body, MetaDataObject object, Orbit orbit);
+    Star(uint8_t stars_count, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit);
 public:
     Star() = delete;
     Star(const Stars& type, Sets sets, const std::string& file, cords radius, uint8_t stars_count = 1);

@@ -11,6 +11,7 @@
 
 uint16_t Star::m_idGenerator = 0;
 
+//generate star
 Star::Star(const Stars& type, Sets sets, const std::string &file, cords radius, uint8_t stars_count) :
     Entry(file, 600, 100, 100),
     m_object{Body::Star, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
@@ -34,7 +35,9 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, cords radius, 
                 Star(m_orbit.quality()/stars_count*2, m_body, m_object, radius));
     }
 }
-Star::Star(uint8_t stars_count, MetaDataBody body, MetaDataObject object, Orbit orbit):
+
+//Multi star system constructor
+Star::Star(uint8_t stars_count, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit):
     Entry(object.file, 600, 100, 100),//TODO Object.type replace to random type
     m_object{Body::Star,static_cast<unsigned int>(object.type.star),
              object.sets, object.file, ++m_idGenerator},
@@ -45,7 +48,7 @@ Star::Star(uint8_t stars_count, MetaDataBody body, MetaDataObject object, Orbit 
     m_sprite.scale(m_body.bsize, m_body.bsize);
 }
 
-
+//create from file
 Star::Star(const MetaDataObject& object, MetaDataBody body, cords radius) :
     Entry(object.file, 600, 100, 100),
     m_object{object},
@@ -58,9 +61,7 @@ Star::Star(const MetaDataObject& object, MetaDataBody body, cords radius) :
 //Star::Star(const Star& star, const std::string& file){}
 
 Star::~Star()
-{
-
-}
+= default;
 
 void Star::handle()
 {
