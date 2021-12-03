@@ -8,19 +8,22 @@
 
 #define MAGIC_RATIO_BUTTONS 0.5f //TODO delete this shit, or no)))
 
+std::vector<Button*> Button::m_all;
+
 Button::Button(const std::string& a_string, void(*callback)()) :
-                Gui(a_string)
+                Gui(a_string), m_flags{}
 {
     m_callback = callback;
     m_sprite.scale(MAGIC_RATIO_BUTTONS * Handler::x_ratio,MAGIC_RATIO_BUTTONS * Handler::y_ratio);
     m_normal_scale = m_sprite.getScale();
     m_sprite.setOrigin(local_center(&m_sprite));
-    Containers::listButton.push_back(this);
+    Containers::drawTrait(this);
+    m_all.push_back(this);
 }
 
 Button::~Button()
 {
-    Containers::erase(Containers::listButton, this);
+    Containers::erase(this);
 }
 
 void Button::checkClick(sf::Vector2i a_mousePos)
@@ -79,11 +82,11 @@ void Button::handle()
 void Button::handle(sf::Event event)
 {
     if (event.type == sf::Event::MouseMoved) {
-        for (auto &item : Containers::listButton)
+        for (auto &item : m_all)
             item->checkMouse({event.mouseMove.x, event.mouseMove.y});
     }
     else if (event.type == sf::Event::MouseButtonReleased) {
-        for (auto &item : Containers::listButton)
+        for (auto &item : m_all)
             item->checkClick({event.mouseButton.x, event.mouseButton.y});
     }
 }

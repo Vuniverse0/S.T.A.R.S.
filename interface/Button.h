@@ -30,6 +30,7 @@ private:
         [[maybe_unused]] uint8_t null = 0;
     };
     void(*m_callback)();
+    static std::vector<Button*> m_all;
 public:
     Button(const std::string& a_string, void(*callback)());
     ~Button() override;

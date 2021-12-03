@@ -5,28 +5,19 @@
 #include "Containers.h"
 
 
-LIST_INIT(Button);
-LIST_INIT(Orbit);
-LIST_INIT(Entry);
-LIST_INIT(Gui);
-
-std::vector<Containers::drawer*> Containers::base{
-    LISTING(Orbit),
-    LISTING(Entry),
-    LISTING(Gui),
-    LISTING(Button)
-};
+std::vector<Containers::drawer*> Containers::m_handle_base{};
+std::vector<Containers::drawer*> Containers::m_drawe_base{};
 
 void Containers::drawAll()
 {
-    for (auto& x : base) {
+    for (auto& x : m_drawe_base) {
         x->drawe();
     }
 }
 
 void Containers::handleAll()
 {
-    for (auto& x : base) {
+    for (auto& x : m_handle_base) {
         x->handle();
     }
 }

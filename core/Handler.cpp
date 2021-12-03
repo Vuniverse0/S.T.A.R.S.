@@ -24,7 +24,7 @@ Handler::Handler() noexcept
 
 Handler::~Handler()
 {
-    Containers::listButton.clear();
+    //TODO erase all for Containers
 }
 
 void Handler::handle()

@@ -7,7 +7,7 @@
 #include "../primitives/Entry.h"
 
 
-class Orbit : private Entry
+class Orbit : public Entry
 {
 private:
     using Entry::m_visibility;

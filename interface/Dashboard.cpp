@@ -14,7 +14,7 @@ Dashboard::Dashboard(Anchor anch, const std::string &a_string) : Gui(a_string)
     m_anchor = anch;
     //m_sprite.setTexture(*m_texture);
     m_sprite.setPosition(Corner::ship(anch, m_sprite));
-    Containers::listGui.push_back(this);
+    Containers::drawTrait(this);
     m_located = {static_cast<int>(m_sprite.getGlobalBounds().left),
                  static_cast<int>(m_sprite.getGlobalBounds().top)};
 }

@@ -9,17 +9,14 @@
 #include "../objects/Objects.h"
 #include "Handler.h"
 
-#define LIST(arg) static std::vector<arg*> list##arg;
-#define LISTING(arg) new predrawer(&list##arg)
-#define LIST_INIT(arg) std::vector<arg*> Containers::list##arg(0);
-
 
 struct Containers {
 private:
     struct drawer {
-        virtual void drawe() = 0;
         virtual ~drawer() = default;
+        virtual void drawe() = 0;
         virtual void handle() = 0;
+        virtual void erase(Entry*) = 0;
     };
 
     template<typename T>
@@ -33,77 +30,76 @@ private:
         ~predrawer() override = default;
         void drawe() final
         {
-            drawAll(*m_ptr);
+            for (auto& x : (*m_ptr)) {
+                x->draw(Handler::window());
+            }
         }
         void handle() final
         {
-            handleAll(*m_ptr);
+            for (auto& x : (*m_ptr)) {
+                x->handle();
+            }
+        }
+        void erase(Entry* a_member) final
+        {
+            a_member = reinterpret_cast<T>(a_member);
+            auto it = std::find(m_ptr->begin(), m_ptr->end(), a_member);
+            if (it != m_ptr->end())
+                m_ptr->erase(it);
         }
     };
 
-    static std::vector<drawer*> base;
+    static std::vector<drawer*> m_handle_base;
+    static std::vector<drawer*> m_drawe_base;
 
+    constexpr static auto m_drawe_basePush{
+            [](auto& vector)->char
+            {
+                m_drawe_base.push_back(new predrawer(&vector));
+                return char();
+            }
+    };
+    constexpr static auto m_handle_basePush{
+            [](auto& vector)->char
+            {
+                m_handle_base.push_back(new predrawer(&vector));
+                return char();
+            }
+    };
 public:
     friend drawer;
 
-    LIST(Button)
-    LIST(Orbit)
-    LIST(Entry)
-    LIST(Gui)
-
     template<typename T>
-    static void erase(std::vector<T>& a_vector, const T& a_member)
-    {
-        auto it = std::find(a_vector.begin(), a_vector.end(), a_member);
-        if(it == a_vector.end())
-            throw std::invalid_argument("Containers::erase : invalid member to delete - could not find");
-        a_vector.erase(it);
+    static void erase(const T& a_member) {
+        for (auto &base : m_handle_base) {
+            for( auto &x :m_handle_base )
+                x->erase(a_member);
+        }
+        for (auto &base : m_drawe_base) {
+            for( auto &x :m_drawe_base )
+                x->erase(a_member);
+        }
     }
 
     static void drawAll();
 
     template<typename T>
-    static void drawAll(std::vector<T>& a_vector)
+    static void drawTrait(T* drawable)
     {
-        for (auto& x : a_vector){
-            x->draw(Handler::window());
-        }
-    }
-
-    template<typename C>
-    static void drawIf(C comparator)
-    {
-        for (auto& x : base){
-            if(comparator(x))
-                x->drawe();
-        }
-    }
-
-    template<typename T, typename C>
-    void drawIf(std::vector<T>& a_vector, C comparator)
-    {
-        for (auto& x : a_vector) {
-            if (comparator(x))
-                x->draw(Handler::window());
-        }
+        static std::vector<T*> vector;
+        static auto _ = m_drawe_basePush(vector);
+        vector.push_back(drawable);
     }
 
     static void handleAll();
 
     template<typename T>
-    static void handleAll(std::vector<T>& a_vector)
+    static void handleTrait(T* handlable)
     {
-        for (auto& x : a_vector){
-            x->handle();
-        }
+        static std::vector<T*> vector;
+        static auto _ = m_handle_basePush(vector);
+        vector.push_back(handlable);
     }
 
-    template<typename T>
-    static void handleAll(std::vector<Button*>& a_vector)
-    {
-        for (auto& x : a_vector){
-            x->handle();
-        }
-    }
     Containers() = delete;
 };

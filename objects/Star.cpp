@@ -58,8 +58,6 @@ Star::Star(const MetaDataObject& object, MetaDataBody body, cords radius) :
 {
 }
 
-//Star::Star(const Star& star, const std::string& file){}
-
 Star::~Star()
 = default;
 

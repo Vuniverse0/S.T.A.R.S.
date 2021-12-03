@@ -18,7 +18,7 @@ Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
     m_elips.setOutlineThickness(1);
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
-    Containers::listOrbit.push_back(this);
+    Containers::drawTrait(this);
 }
 
 Orbit::Orbit(cords radius, cords a_x, cords a_y, frames quality) : Entry(EMPTY)
@@ -33,7 +33,7 @@ Orbit::Orbit(cords radius, cords a_x, cords a_y, frames quality) : Entry(EMPTY)
     m_elips.setOutlineThickness(1);
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
-    Containers::listOrbit.push_back(this);
+    Containers::drawTrait(this);
     move(a_x, a_y);
 }
 
