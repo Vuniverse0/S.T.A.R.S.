@@ -4,8 +4,9 @@
 
 #include "Dashboard.h"
 #include "../core/Handler.h"
-#include "../core/Containers.h"
 
+
+std::vector<Dashboard*> Dashboard::m_all{};
 
 Dashboard::Dashboard(Anchor anch, const std::string &a_string) : Gui(a_string)
 {
@@ -14,7 +15,6 @@ Dashboard::Dashboard(Anchor anch, const std::string &a_string) : Gui(a_string)
     m_anchor = anch;
     //m_sprite.setTexture(*m_texture);
     m_sprite.setPosition(Corner::ship(anch, m_sprite));
-    Containers::drawTrait(this);
     m_located = {static_cast<int>(m_sprite.getGlobalBounds().left),
                  static_cast<int>(m_sprite.getGlobalBounds().top)};
 }
@@ -23,9 +23,9 @@ void Dashboard::handle()
 {
 }
 
-void Dashboard::draw(sf::RenderWindow &window)
+void Dashboard::draw()
 {
-    window.draw(m_sprite);
+    Handler::window().draw(m_sprite);
 }
 
 void Dashboard::updateAnchor()
@@ -55,4 +55,16 @@ sf::Vector2i Dashboard::m_stepRightBottomPanel = {10, 15};
 int Dashboard::locateRightBottomPanel(Button &button)
 {
 
+}
+
+void Dashboard::drawAll()
+{
+    for(auto& x : m_all_dev<Dashboard>())
+        x->draw();
+}
+
+void Dashboard::handleAll()
+{
+    for(auto& x : m_all_dev<Dashboard>())
+        x->handle();
 }

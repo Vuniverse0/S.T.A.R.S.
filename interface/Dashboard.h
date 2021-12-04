@@ -17,10 +17,15 @@ class Dashboard : public Gui {
     static sf::Vector2i m_stepLeftCenterPanel;
     static sf::Vector2i m_stepRightBottomPanel;
 public:
+    static std::vector<Dashboard*> m_all;
+public:
     Dashboard(Anchor anch, const std::string& a_string);
     int locateLeftCenterPanel(Button& button);
     int locateRightBottomPanel(Button& button);
-    void handle() override;
+
     void scale(float_t x, float_t y);
-    void draw(sf::RenderWindow& window) override ;
+    void draw() override ;
+    void handle() override ;
+    void drawAll() override ;
+    void handleAll() override ;
 };

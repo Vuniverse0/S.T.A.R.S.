@@ -28,7 +28,7 @@ Moon::Moon(MetaDataObject object, MetaDataBody body, cords radius, sf::Vector2f 
 {
 }
 
-void Moon::draw(sf::RenderWindow &window)
+void Moon::draw()
 {
     m_sprite.setPosition(m_orbit.getWay(m_body.spin, m_body.direction));
     if (last_x > m_sprite.getPosition().x) {

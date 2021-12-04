@@ -14,6 +14,8 @@ private:
     sf::ConvexShape m_elips;
     double m_way{0};
 public:
+    static std::vector<Orbit*> m_all;
+public:
     Orbit() = delete;
     Orbit(cords radius, frames quality = 1000);
     Orbit(cords radius, cords x, cords y, frames quality = 1000);
@@ -27,5 +29,7 @@ public:
 
     void move(cords x, cords y);
     void handle() override;
-    void draw(sf::RenderWindow&) final;
+    void draw() final;
+    void drawAll() override ;
+    void handleAll() override ;
 };

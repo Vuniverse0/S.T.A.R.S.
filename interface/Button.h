@@ -30,6 +30,7 @@ private:
         [[maybe_unused]] uint8_t null = 0;
     };
     void(*m_callback)();
+public:
     static std::vector<Button*> m_all;
 public:
     Button(const std::string& a_string, void(*callback)());
@@ -38,8 +39,10 @@ public:
     void checkClick (sf::Vector2i);
     void checkMouse (sf::Vector2i);
 
-    void draw(sf::RenderWindow&) override ;
+    void draw() override ;
     void handle() override ;
+    void drawAll() override ;
+    void handleAll() override ;
     static void handle(sf::Event);
 protected:
     bool isOnClick ();

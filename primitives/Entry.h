@@ -15,6 +15,14 @@ protected:
     Animation m_animation;
     bool m_visibility{true};
     sf::Texture* m_texture = nullptr;
+    sf::Texture m_object_texture;
+public:
+    static std::vector<Entry*> m_all;
+    template<typename T>
+    std::vector<T*>& m_all_dev()
+    {
+        return T::m_all;
+    }
 public:
     Entry() = delete;
     Entry(const std::string& a_string,
@@ -28,8 +36,10 @@ public:
     bool hide();
     bool show();
     virtual sf::Sprite& sprite();
-    virtual void draw(sf::RenderWindow& window) = 0;//Draw to screen
+    virtual void draw() = 0;//Draw to screen
     virtual void handle()=0;//Change properties
+    virtual void drawAll();//Draw to screen(all)
+    virtual void handleAll();//Change properties(all)
 };
 
 

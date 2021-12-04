@@ -120,10 +120,10 @@ void Handler::update()
             update_time = sf::Time::Zero;
             event();
             sprite.setPosition(orbit.getWay(1));
-            Containers::handleAll();
+            Containers::handleAll<Entry>();
         }
         animation.play(0.1f*m_time_per_frame.asMilliseconds());
-        Containers::drawAll();
+        Containers::drawAll<Entry>();
         m_window.draw(sprite);
         m_window.display();
     }

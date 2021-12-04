@@ -2,9 +2,11 @@
 // Created by vuniverse on 11/5/21.
 //
 
-#include "../core/Containers.h"
 #include "Orbit.h"
+#include "../core/Handler.h"
 
+
+std::vector<Orbit*> Orbit::m_all{};
 
 Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
 {
@@ -18,7 +20,6 @@ Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
     m_elips.setOutlineThickness(1);
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
-    Containers::drawTrait(this);
 }
 
 Orbit::Orbit(cords radius, cords a_x, cords a_y, frames quality) : Entry(EMPTY)
@@ -33,14 +34,13 @@ Orbit::Orbit(cords radius, cords a_x, cords a_y, frames quality) : Entry(EMPTY)
     m_elips.setOutlineThickness(1);
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
-    Containers::drawTrait(this);
     move(a_x, a_y);
 }
 
-void Orbit::draw(sf::RenderWindow& window)//draw shape on window
+void Orbit::draw()//draw shape on window
 {
     if(m_visibility)
-        window.draw(m_elips);
+        Handler::window().draw(m_elips);
 }
 
 void Orbit::move(cords a_x, cords a_y)//set position for shape
@@ -64,4 +64,16 @@ void Orbit::handle()
 frames Orbit::quality()
 {
     return m_elips.getPointCount();
+}
+
+void Orbit::drawAll()
+{
+    for(auto& x : m_all_dev<Orbit>())
+        x->draw();
+}
+
+void Orbit::handleAll()
+{
+    for(auto& x : m_all_dev<Orbit>())
+        x->handle();
 }

@@ -45,7 +45,7 @@ void Planet::handle()
 
 }
 
-void Planet::draw(sf::RenderWindow &window)
+void Planet::draw()
 {
 
 }

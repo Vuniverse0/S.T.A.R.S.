@@ -6,12 +6,15 @@
 #include "../core/Handler.h"
 
 
+std::vector<Entry*> Entry::m_all{};
+
 Entry::Entry(const std::string &a_string, frames a_frames, pixels a_x, pixels a_y) :
     m_visibility(true),
     m_sprite{},
     m_animation(a_string, m_sprite, a_x, a_y, a_frames)
 {
     m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
+    m_all.push_back(this);
 }
 
 Entry::Entry(const std::string& a_string, frames a_frames, pixels a_pixels) :
@@ -20,22 +23,25 @@ Entry::Entry(const std::string& a_string, frames a_frames, pixels a_pixels) :
     m_animation(a_string, m_sprite, a_pixels, a_frames)
 {
     m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
+    m_all.push_back(this);
 }
 
 Entry::Entry(const std::string& a_string) :
         m_visibility(true),
-        m_sprite{}
+        m_sprite{},
+        m_object_texture{}
 {
-    m_texture = new sf::Texture();
+    m_texture = &m_object_texture;
     m_texture->loadFromFile(a_string);
     m_texture->setSmooth(true);
     m_sprite.setTexture(*m_texture);
     m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
+    m_all.push_back(this);
 }
 
 Entry::~Entry()
 {
-    delete m_texture;
+    m_all.erase(std::find(m_all.begin(),m_all.end(), this));
 }
 
 bool Entry::hide()
@@ -65,6 +71,19 @@ bool Entry::isVisible()const
     return m_visibility;
 }
 
-sf::Sprite& Entry::sprite() {
+sf::Sprite& Entry::sprite()
+{
     return m_sprite;
+}
+
+void Entry::drawAll()
+{
+    for(auto& x : m_all_dev<Entry>())
+        x->draw();
+}
+
+void Entry::handleAll()
+{
+    for(auto& x : m_all_dev<Entry>())
+        x->handle();
 }

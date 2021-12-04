@@ -2,13 +2,13 @@
 // Created by vuniverse on 11/2/21.
 //
 
-#include "../core/Containers.h"
 #include "../core/Handler.h"
 #include "Button.h"
 
 #define MAGIC_RATIO_BUTTONS 0.5f //TODO delete this shit, or no)))
 
-std::vector<Button*> Button::m_all;
+
+std::vector<Button*> Button::m_all{};
 
 Button::Button(const std::string& a_string, void(*callback)()) :
                 Gui(a_string), m_flags{}
@@ -17,14 +17,11 @@ Button::Button(const std::string& a_string, void(*callback)()) :
     m_sprite.scale(MAGIC_RATIO_BUTTONS * Handler::x_ratio,MAGIC_RATIO_BUTTONS * Handler::y_ratio);
     m_normal_scale = m_sprite.getScale();
     m_sprite.setOrigin(local_center(&m_sprite));
-    Containers::drawTrait(this);
     m_all.push_back(this);
 }
 
 Button::~Button()
-{
-    Containers::erase(this);
-}
+= default;
 
 void Button::checkClick(sf::Vector2i a_mousePos)
 {
@@ -56,7 +53,7 @@ bool Button::isOnMouse() const
     return m_flags.m_mouse == 1;
 }
 
-void Button::draw(sf::RenderWindow& window)
+void Button::draw()
 {
     if (isOnMouse()) {
         if (m_sprite.getScale().x - m_normal_scale.x < 0.05f) {
@@ -69,7 +66,7 @@ void Button::draw(sf::RenderWindow& window)
     else if (m_sprite.getScale() != m_normal_scale) {
         m_sprite.setScale(m_normal_scale);
     }
-    window.draw(m_sprite);
+    Handler::window().draw(m_sprite);
 }
 
 void Button::handle()
@@ -89,4 +86,16 @@ void Button::handle(sf::Event event)
         for (auto &item : m_all)
             item->checkClick({event.mouseButton.x, event.mouseButton.y});
     }
+}
+
+void Button::drawAll()
+{
+    for(auto& x : m_all_dev<Button>())
+        x->draw();
+}
+
+void Button::handleAll()
+{
+    for(auto& x : m_all_dev<Button>())
+        x->handle();
 }

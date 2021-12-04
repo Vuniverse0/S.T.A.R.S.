@@ -22,5 +22,5 @@ public:
     ~Planet() override;
 
     void handle() override ;
-    void draw(sf::RenderWindow& window) override ;
+    void draw() override ;
 };

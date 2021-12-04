@@ -66,7 +66,7 @@ void Star::handle()
 
 }
 
-void Star::draw(sf::RenderWindow &window)
+void Star::draw()
 {
 
 }
