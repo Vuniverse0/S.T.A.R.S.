@@ -9,6 +9,7 @@
 
 class Orbit : public Entry
 {
+    friend Containers;
 private:
     using Entry::m_visibility;
     sf::ConvexShape m_elips;
@@ -19,7 +20,7 @@ public:
     Orbit() = delete;
     Orbit(cords radius, frames quality = 1000);
     Orbit(cords radius, cords x, cords y, frames quality = 1000);
-    ~Orbit() override = default;
+    ~Orbit() override;
 
     frames quality();
     sf::Vector2f getWay(double_t speed = 1, bool direction = false);
@@ -30,6 +31,4 @@ public:
     void move(cords x, cords y);
     void handle() override;
     void draw() final;
-    void drawAll() override ;
-    void handleAll() override ;
 };

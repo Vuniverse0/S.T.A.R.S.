@@ -11,6 +11,7 @@
 
 
 class Button : public Gui {
+    friend Containers;
 private:
     using Entry::m_normal_scale;
     using Entry::m_sprite;
@@ -30,7 +31,6 @@ private:
         [[maybe_unused]] uint8_t null = 0;
     };
     void(*m_callback)();
-public:
     static std::vector<Button*> m_all;
 public:
     Button(const std::string& a_string, void(*callback)());
@@ -41,8 +41,6 @@ public:
 
     void draw() override ;
     void handle() override ;
-    void drawAll() override ;
-    void handleAll() override ;
     static void handle(sf::Event);
 protected:
     bool isOnClick ();

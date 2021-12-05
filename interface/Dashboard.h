@@ -20,12 +20,11 @@ public:
     static std::vector<Dashboard*> m_all;
 public:
     Dashboard(Anchor anch, const std::string& a_string);
+    ~Dashboard() override;
     int locateLeftCenterPanel(Button& button);
     int locateRightBottomPanel(Button& button);
 
     void scale(float_t x, float_t y);
     void draw() override ;
     void handle() override ;
-    void drawAll() override ;
-    void handleAll() override ;
 };

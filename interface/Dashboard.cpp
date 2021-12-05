@@ -17,6 +17,7 @@ Dashboard::Dashboard(Anchor anch, const std::string &a_string) : Gui(a_string)
     m_sprite.setPosition(Corner::ship(anch, m_sprite));
     m_located = {static_cast<int>(m_sprite.getGlobalBounds().left),
                  static_cast<int>(m_sprite.getGlobalBounds().top)};
+    m_all.push_back(this);
 }
 
 void Dashboard::handle()
@@ -57,14 +58,7 @@ int Dashboard::locateRightBottomPanel(Button &button)
 
 }
 
-void Dashboard::drawAll()
+Dashboard::~Dashboard()
 {
-    for(auto& x : m_all_dev<Dashboard>())
-        x->draw();
-}
-
-void Dashboard::handleAll()
-{
-    for(auto& x : m_all_dev<Dashboard>())
-        x->handle();
+    m_all.erase(std::find(m_all.begin(),m_all.end(), this));
 }

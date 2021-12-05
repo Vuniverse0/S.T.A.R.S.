@@ -75,15 +75,3 @@ sf::Sprite& Entry::sprite()
 {
     return m_sprite;
 }
-
-void Entry::drawAll()
-{
-    for(auto& x : m_all_dev<Entry>())
-        x->draw();
-}
-
-void Entry::handleAll()
-{
-    for(auto& x : m_all_dev<Entry>())
-        x->handle();
-}

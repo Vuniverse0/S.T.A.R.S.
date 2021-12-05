@@ -9,11 +9,12 @@
 
 
 class Gui : public Entry{
+    static std::vector<Gui*> m_all;
 public:
     Gui(const std::string&, frames, pixels);
     Gui(const std::string&, frames, pixels, pixels);
     Gui(const std::string&);
-    ~Gui() override = default;
+    ~Gui() override;
 
     virtual sf::Texture* getAttach();
 };

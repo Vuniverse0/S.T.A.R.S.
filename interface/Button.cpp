@@ -21,7 +21,9 @@ Button::Button(const std::string& a_string, void(*callback)()) :
 }
 
 Button::~Button()
-= default;
+{
+    m_all.erase(std::find(m_all.begin(),m_all.end(), this));
+}
 
 void Button::checkClick(sf::Vector2i a_mousePos)
 {
@@ -86,16 +88,4 @@ void Button::handle(sf::Event event)
         for (auto &item : m_all)
             item->checkClick({event.mouseButton.x, event.mouseButton.y});
     }
-}
-
-void Button::drawAll()
-{
-    for(auto& x : m_all_dev<Button>())
-        x->draw();
-}
-
-void Button::handleAll()
-{
-    for(auto& x : m_all_dev<Button>())
-        x->handle();
 }

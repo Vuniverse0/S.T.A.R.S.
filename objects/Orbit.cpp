@@ -20,6 +20,7 @@ Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
     m_elips.setOutlineThickness(1);
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
+    m_all.push_back(this);
 }
 
 Orbit::Orbit(cords radius, cords a_x, cords a_y, frames quality) : Entry(EMPTY)
@@ -35,6 +36,12 @@ Orbit::Orbit(cords radius, cords a_x, cords a_y, frames quality) : Entry(EMPTY)
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
     move(a_x, a_y);
+    m_all.push_back(this);
+}
+
+Orbit::~Orbit()
+{
+    m_all.erase(std::find(m_all.begin(),m_all.end(), this));
 }
 
 void Orbit::draw()//draw shape on window
@@ -64,16 +71,4 @@ void Orbit::handle()
 frames Orbit::quality()
 {
     return m_elips.getPointCount();
-}
-
-void Orbit::drawAll()
-{
-    for(auto& x : m_all_dev<Orbit>())
-        x->draw();
-}
-
-void Orbit::handleAll()
-{
-    for(auto& x : m_all_dev<Orbit>())
-        x->handle();
 }

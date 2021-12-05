@@ -6,9 +6,11 @@
 
 #include "../utility/typedefs_and_globals.h"
 #include "Animation.h"
+#include "../core/Containers.h"
 
 
 class Entry {
+    friend Containers;
 protected:
     sf::Vector2f m_normal_scale;
     sf::Sprite m_sprite;
@@ -16,13 +18,7 @@ protected:
     bool m_visibility{true};
     sf::Texture* m_texture = nullptr;
     sf::Texture m_object_texture;
-public:
     static std::vector<Entry*> m_all;
-    template<typename T>
-    std::vector<T*>& m_all_dev()
-    {
-        return T::m_all;
-    }
 public:
     Entry() = delete;
     Entry(const std::string& a_string,
@@ -38,8 +34,6 @@ public:
     virtual sf::Sprite& sprite();
     virtual void draw() = 0;//Draw to screen
     virtual void handle()=0;//Change properties
-    virtual void drawAll();//Draw to screen(all)
-    virtual void handleAll();//Change properties(all)
 };
 
 
