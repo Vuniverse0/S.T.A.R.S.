@@ -20,8 +20,9 @@ class Star : public Entry  {
     Star(uint8_t stars_count, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit);
 public:
     Star() = delete;
-    Star(const Stars& type, Sets sets, const std::string& file, cords radius, uint8_t stars_count = 1);
-    Star(const MetaDataObject&, MetaDataBody, cords);
+    Star(const Stars& type, Sets sets, const std::string& file, uint8_t stars_count = 1);
+    Star(const MetaDataObject&, MetaDataBody);
+    void addStar(Star);
     //Star(const Star& star, const std::string& file);
     ~Star() override;
 

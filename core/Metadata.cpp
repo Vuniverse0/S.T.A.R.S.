@@ -12,7 +12,8 @@ void to_json(json& j, const MetaDataObject& p)
              {"set first", p.sets.first.set},
              {"set second", p.sets.second.set},
              {"id", p.id},
-             {"file", p.file}};
+             {"file", p.file},
+             {"name", p.name}};
 }
 
 void from_json(const json& j, MetaDataObject& p)
@@ -23,6 +24,7 @@ void from_json(const json& j, MetaDataObject& p)
     j.at("set second").get_to(p.sets.second.set);
     j.at("id").get_to(p.id);
     j.at("file").get_to(p.file);
+    j.at("name").get_to(p.name);
 }
 
 void to_json(json& j, const MetaDataBody& p)

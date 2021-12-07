@@ -6,6 +6,7 @@
 
 #include "../utility/typedefs_and_globals.h"
 #include "../primitives/Animation.h"
+#include "../core/overloaded.h"
 #include "Gui.h"
 
 
@@ -28,7 +29,7 @@ private:
             uint8_t f6: 1;
             uint8_t f7: 1;
         } m_flags;
-        [[maybe_unused]] uint8_t null = 0;
+        uint8_t null = 0;
     };
     void(*m_callback)();
     static std::vector<Button*> m_all;

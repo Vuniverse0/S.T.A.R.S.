@@ -56,10 +56,10 @@ void Handler::handle()
             case sf::Event::MouseButtonPressed:
                 break;
             case sf::Event::MouseButtonReleased:
-                Button::handle(event);
+                Containers::handle<Button>(event);
                 break;
             case sf::Event::MouseMoved:
-                Button::handle(event);
+                Containers::handle<Button>(event);
                 break;
             case sf::Event::MouseEntered:
                 break;

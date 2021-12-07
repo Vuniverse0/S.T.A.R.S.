@@ -12,12 +12,13 @@
 uint16_t Star::m_idGenerator = 0;
 
 //generate star
-Star::Star(const Stars& type, Sets sets, const std::string &file, cords radius, uint8_t stars_count) :
+Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_count) :
     Entry(file, 600, 100, 100),
     m_object{Body::Star, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
     m_body{star_body()},
-    m_orbit(radius + m_sprite.getGlobalBounds().width),
-    last_x(m_orbit.getWay().x)
+    m_orbit((stars_count+1)*m_sprite.getGlobalBounds().width),
+    m_stars(),
+    last_x(stars_count>1?m_orbit.getWay().x:m_orbit.getWay(random_int(1,999)).x)
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
     for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
@@ -26,13 +27,13 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, cords radius, 
     }
     if (stars_count == 2) {
         m_stars.push_back(
-                Star(m_orbit.quality()/stars_count, m_body, m_object, radius));
+                Star(m_orbit.quality()/stars_count, m_body, m_object, m_orbit));
     }
     else if (stars_count == 3) {
         m_stars.push_back(
-                Star(m_orbit.quality()/stars_count, m_body, m_object, radius));
+                Star(m_orbit.quality()/stars_count, m_body, m_object, m_orbit));
         m_stars.push_back(
-                Star(m_orbit.quality()/stars_count*2, m_body, m_object, radius));
+                Star(m_orbit.quality()/stars_count*2, m_body, m_object, m_orbit));
     }
 }
 
@@ -49,12 +50,13 @@ Star::Star(uint8_t stars_count, MetaDataBody body, const MetaDataObject& object,
 }
 
 //create from file
-Star::Star(const MetaDataObject& object, MetaDataBody body, cords radius) :
+Star::Star(const MetaDataObject& object, MetaDataBody body) :
     Entry(object.file, 600, 100, 100),
     m_object{object},
     m_body{body},
-    m_orbit(radius + m_sprite.getGlobalBounds().width),
-    last_x(m_orbit.getWay().x)
+    m_orbit(m_sprite.getGlobalBounds().width),
+    m_stars(),
+    last_x(m_orbit.getWay(random_int(1,999)).x)
 {
 }
 
@@ -69,4 +71,9 @@ void Star::handle()
 void Star::draw()
 {
 
+}
+
+void Star::addStar(Star star)
+{
+    m_stars.push_back(star);
 }

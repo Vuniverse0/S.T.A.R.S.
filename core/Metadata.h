@@ -57,6 +57,7 @@ struct MetaDataObject{
     Sets sets;
     std::string file;
     uint16_t id;
+    std::string name;
 };
 
 void from_json(const json& j, MetaDataBody& p);

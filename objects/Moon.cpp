@@ -13,9 +13,9 @@ uint16_t Moon::m_idGenerator = 0;
 Moon::Moon(const Moons& type, Sets sets, const std::string& file, cords radius, sf::Vector2f planet_anchor) :
     Entry(file, 600,100,100),
     m_orbit(radius, planet_anchor.x, planet_anchor.y),
-    last_x(m_orbit.getWay().x),
     m_object{Body::Moon, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
-    m_body(moon_body())
+    m_body(moon_body()),
+    last_x(m_orbit.getWay(random_int(1,999)).x)
 {
     m_orbit.hide();
 }
@@ -24,7 +24,8 @@ Moon::Moon(MetaDataObject object, MetaDataBody body, cords radius, sf::Vector2f 
     Entry(object.file, 600, 100, 100),
     m_object{object},
     m_orbit(radius, planet_anchor.x, planet_anchor.y),
-    m_body{body}
+    m_body{body},
+    last_x(m_orbit.getWay(random_int(1,999)).x)
 {
 }
 

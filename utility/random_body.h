@@ -8,6 +8,13 @@
 #include "typedefs_and_globals.h"
 
 
+auto random_int{
+    [](int start, int end)->int
+    {
+        return (binominal_float(start/10.f, end/10.f, 0.5)*10);
+    }
+};
+
 auto asteroids_body{
     []()->MetaDataBody
     {
@@ -37,16 +44,16 @@ auto planet_body{
 };
 
 auto moon_body{
-        []()->MetaDataBody
-        {
-            MetaDataBody temp = planet_body();
+    []()->MetaDataBody
+    {
+        MetaDataBody temp = planet_body();
 
-            //temp.speed /= 10.f;
-            //temp.spin /= 10.f;
+        //temp.speed /= 10.f;
+        //temp.spin /= 10.f;
 
-            temp.bsize /= 10.f;
-            return temp;
-        }
+        temp.bsize /= 10.f;
+        return temp;
+    }
 };
 
 auto star_body{
@@ -56,8 +63,8 @@ auto star_body{
         temp.bsize = binominal_float(2.f, 5.f, 0.5);
         temp.speed = binominal_float(0.1f, 1.f, 0.2);
         temp.spin = binominal_float(0.1f, 2.f, 0.2);
+        temp.direction = (binominal_int(1, 10, 0.5) <= 5);
+        temp.spin_direction = (binominal_int(1, 10, 0.5) <= 5);
         return temp;
     }
 };
-
-

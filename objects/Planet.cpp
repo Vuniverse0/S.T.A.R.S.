@@ -16,7 +16,7 @@ Planet::Planet(const Planets& type, Sets sets, const std::string &file, cords ra
     m_object{Body::Planet, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
     m_body{planet_body()},
     m_orbit(radius),
-    last_x(m_orbit.getWay().x)
+    last_x(m_orbit.getWay(random_int(1,999)).x)
 { //TODO screen center for sun and planets orbit, multi sun state and one orbit move. Make orbit sections move
     m_sprite.scale(m_body.bsize, m_body.bsize);
     for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
@@ -26,11 +26,12 @@ Planet::Planet(const Planets& type, Sets sets, const std::string &file, cords ra
     }
 }
 
-Planet::Planet(MetaDataObject object, MetaDataBody body, cords radius) :
+Planet::Planet(const MetaDataObject& object, MetaDataBody body, cords radius) :
     Entry(object.file, 600, 100, 100),
     m_object{object},
     m_orbit(radius),
-    m_body{body}
+    m_body{body},
+    last_x(m_orbit.getWay(random_int(1,999)).x)
 {
 
 }
