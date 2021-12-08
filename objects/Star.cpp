@@ -4,47 +4,53 @@
 
 #include "Star.h"
 #include "../core/Handler.h"
-#include "../core/Containers.h"
 #include "../utility/random_body.h"
 #include "../utility/typedefs_and_globals.h"
 
 
 uint16_t Star::m_idGenerator = 0;
+std::vector<Star*> Star::m_all{};
 
 //generate star
 Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_count) :
     Entry(file, 600, 100, 100),
     m_object{Body::Star, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
     m_body{star_body()},
-    m_orbit((stars_count+1)*m_sprite.getGlobalBounds().width),
+    m_orbit(((float)stars_count) * m_sprite.getGlobalBounds().width),
     m_stars(),
     last_x(stars_count>1?m_orbit.getWay().x:m_orbit.getWay(random_int(1,999)).x)
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
-    for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
-        m_planets.emplace_back(Planets::Dry, Sets{{},{}},
-                "none.png", m_sprite.getGlobalBounds().width);
-    }
     if (stars_count == 2) {
-        m_stars.push_back(
-                Star(m_orbit.quality()/stars_count, m_body, m_object, m_orbit));
+        m_stars.push_back(Star(m_orbit.quality() / stars_count, m_body, m_object, m_orbit));
     }
     else if (stars_count == 3) {
-        m_stars.push_back(
-                Star(m_orbit.quality()/stars_count, m_body, m_object, m_orbit));
-        m_stars.push_back(
-                Star(m_orbit.quality()/stars_count*2, m_body, m_object, m_orbit));
+        m_stars.push_back(Star(m_orbit.quality() / stars_count, m_body, m_object, m_orbit));
+        m_stars.push_back(Star(m_orbit.quality() / stars_count * 2, m_body, m_object, m_orbit));
     }
+    for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
+        m_planets.emplace_back(Planets::Dry,
+                               Sets{{},{}},
+                               "none.png",
+                               ((float)stars_count) * m_sprite.getGlobalBounds().width);
+    }
+    m_all.push_back(this);
 }
 
 //Multi star system constructor
-Star::Star(uint8_t stars_count, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit):
+Star::Star(uint8_t stars_offset, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit):
     Entry(object.file, 600, 100, 100),//TODO Object.type replace to random type
-    m_object{Body::Star,static_cast<unsigned int>(object.type.star),
-             object.sets, object.file, ++m_idGenerator},
-    m_body{.speed = body.speed, .bsize = star_body().bsize, .spin = body.spin},
+    m_object{ .body = Body::Star,
+              .type = object.type,
+              .sets = object.sets,
+              .file = object.file,
+              .id = ++m_idGenerator,
+              .name = "Undefined" },
+    m_body{.speed = body.speed,
+           .bsize = star_body().bsize < body.bsize ? star_body().bsize : body.bsize * 0.8f,
+           .spin = body.spin},
     m_orbit(orbit),
-    last_x(m_orbit.getWay(stars_count).x)            //Make offset orbit way here!
+    last_x(m_orbit.getWay(stars_offset).x)            //Make offset orbit way here!
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
 }
@@ -58,6 +64,7 @@ Star::Star(const MetaDataObject& object, MetaDataBody body) :
     m_stars(),
     last_x(m_orbit.getWay(random_int(1,999)).x)
 {
+    m_sprite.scale(m_body.bsize, m_body.bsize);
 }
 
 Star::~Star()
@@ -70,10 +77,16 @@ void Star::handle()
 
 void Star::draw()
 {
-
+    Handler::window().draw(m_sprite);
 }
 
-void Star::addStar(Star star)
+void Star::addStar(const MetaDataObject& object, MetaDataBody body)
 {
-    m_stars.push_back(star);
+    if (m_stars.size() + 1 == 2) {
+        m_stars.push_back(Star(m_orbit.quality() / 2, body, object, m_orbit));
+    }
+    else if (m_stars.size() + 1 == 3) {
+        m_stars.push_back(Star(m_orbit.quality() / 3, body, object, m_orbit));
+        m_stars.push_back(Star(m_orbit.quality() / 3 * 2, body, object, m_orbit));
+    }
 }

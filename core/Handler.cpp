@@ -104,7 +104,7 @@ void Handler::update()
     static sf::Time update_time = sf::Time::Zero;
     static sf::Time update_time_fix = sf::microseconds(1000/60);
     static sf::Sprite sprite;
-    static Animation animation("/home/vuniverse/Downloads/speedTest.png",sprite,100,100,600);
+    static Animation animation("/home/vuniverse/Downloads/358540927.png",sprite,100,100,600);
     static Orbit orbit(200);
     static LeftCenterPanel panel{};
     orbit.move(400,400);

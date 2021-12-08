@@ -15,7 +15,7 @@ Planet::Planet(const Planets& type, Sets sets, const std::string &file, cords ra
     Entry(file, 600, 100, 100),
     m_object{Body::Planet, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
     m_body{planet_body()},
-    m_orbit(radius),
+    m_orbit(radius + m_sprite.getGlobalBounds().width * 2.f),
     last_x(m_orbit.getWay(random_int(1,999)).x)
 { //TODO screen center for sun and planets orbit, multi sun state and one orbit move. Make orbit sections move
     m_sprite.scale(m_body.bsize, m_body.bsize);

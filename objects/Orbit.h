@@ -14,7 +14,6 @@ private:
     using Entry::m_visibility;
     sf::ConvexShape m_elips;
     double m_way{0};
-public:
     static std::vector<Orbit*> m_all;
 public:
     Orbit() = delete;
