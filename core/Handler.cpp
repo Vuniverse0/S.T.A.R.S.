@@ -104,12 +104,15 @@ void Handler::update()
     static sf::Time update_time = sf::Time::Zero;
     static sf::Time update_time_fix = sf::microseconds(1000/60);
     static sf::Sprite sprite;
-    static Animation animation("/home/vuniverse/Downloads/358540927.png",sprite,100,100,600);
+    //static Animation animation("/home/vuniverse/Downloads/358540927.png",sprite,100,100,600);
+    static Animation animation(
+            "/home/vuniverse/CLionProjects/space/resources/celestial_bodies/planets/gas_giant_2/4169997900.png",
+            sprite,300,300,600);
     static Orbit orbit(200);
     static LeftCenterPanel panel{};
     orbit.move(400,400);
     sprite.setOrigin(local_center(&sprite));
-    sprite.setScale(0.4,0.4);
+    sprite.setScale(0.9,0.9);
     update_time += clock.getElapsedTime();
     while (last_update_time > m_time_per_frame)
     {
