@@ -13,7 +13,12 @@ uint16_t Planet::m_idGenerator = 0;
 
 Planet::Planet(const Planets& type, Sets sets, const std::string &file, cords radius) :
     Entry(file, 600, 100, 100),
-    m_object{Body::Planet, static_cast<unsigned int>(type), sets, file, ++m_idGenerator},
+    m_object{Body::Planet,
+             {static_cast<unsigned int>(type)},
+             sets,
+             file,
+             ++m_idGenerator,
+             "Noname"},
     m_body{planet_body()},
     m_orbit(radius + m_sprite.getGlobalBounds().width * 2.f),
     last_x(m_orbit.getWay(random_int(1,999)).x)

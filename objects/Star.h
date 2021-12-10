@@ -17,14 +17,14 @@ class Star : public Entry  {
     std::vector<Planet> m_planets;
     std::vector<Star> m_stars;
     static std::vector<Star*> m_all;
-    Star(uint8_t stars_count, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit);
+    Star(const uint8_t& stars_count, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit);
 public:
-    Star() = delete;
     Star(const Stars& type, Sets sets, const std::string& file, uint8_t stars_count = 1);
     Star(const MetaDataObject&, MetaDataBody);
-    void addStar(const MetaDataObject& object, MetaDataBody body);
-    //Star(const Star& star, const std::string& file);
     ~Star() override;
+
+    void addStar(const MetaDataObject& object, const MetaDataBody& body);
+    void addPlanet(const MetaDataObject& object, const MetaDataBody& body);
 
     void handle() override ;
     void draw() override ;

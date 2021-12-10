@@ -10,13 +10,15 @@ int main()
     std::ofstream o("/home/vuniverse/Documents/pretty.json");
     MetaDataObject obj{
         Body::System,
-        static_cast<unsigned int>(21),
+        {static_cast<unsigned int>(21)},
         {{0},{0}},
-        "none.png"
+        "none.png",
+        6,
+        "name"
     };
     //MetaDataBody body;
     json j;
-    to_json(j["System"][0], obj);
+    //to_json(j["System"][0], obj);
     o<<j;
     o.close();
     return 0;

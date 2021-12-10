@@ -49,6 +49,14 @@ struct MetaDataBody{
     float_t spin;
     bool direction;
     bool spin_direction;
+
+    typedef const float_t& f;
+    MetaDataBody() = default;
+    MetaDataBody(f a_speed, f a_bsize, f a_spin, const bool& a_direction, const bool& a_spin_direction);
+    explicit MetaDataBody(const json& j);
+    static MetaDataBody from_json(const json& j);
+
+    void to_json(json& j);
 };
 
 struct MetaDataObject{
@@ -58,12 +66,17 @@ struct MetaDataObject{
     std::string file;
     uint16_t id;
     std::string name;
+
+    typedef const std::string& s;
+    MetaDataObject() = default;
+    MetaDataObject(const Body& a_body, const Type& a_type, const Sets& a_sets, s a_file, const uint16_t& a_id, s a_name);
+    explicit MetaDataObject(const json& j);
+    static MetaDataObject from_json(const json& j);
+
+    void to_json(json& j);
 };
 
-void from_json(const json& j, MetaDataBody& p);
-void from_json(const json& j, MetaDataObject& p);
-void to_json(json& j, const MetaDataBody& p);
-void to_json(json& j, const MetaDataObject& p);
+
 
 
 /*If json Data Object is System

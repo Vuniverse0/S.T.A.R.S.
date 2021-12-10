@@ -5,10 +5,19 @@
 #pragma once
 
 #include "Star.h"
-#include "Planet.h"
-#include "Asteroids.h"
 
 
-class System {
-//std::vector<Star> m_stars;
+class System : public Entry {
+    static uint16_t m_idGenerator;
+
+    Star m_star; //Or multi star, its delegate
+    static std::vector<System*> m_all;
+    static System* m_current;
+public:
+    System();
+    System(const json&);
+    //~System() override ;
+
+    //void handle() override ;
+    //void draw() override ;
 };

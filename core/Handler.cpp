@@ -92,7 +92,7 @@ void Handler::handle()
 
 void Handler::event()
 {
-
+    Containers::handleAll<Entry>();
 }
 void callback()
 {
@@ -119,13 +119,12 @@ void Handler::update()
         last_update_time -= m_time_per_frame;
         m_window.clear();
         handle();
-        if(update_time >= update_time_fix) {
+        if (update_time >= update_time_fix) {
             update_time = sf::Time::Zero;
             event();
             sprite.setPosition(orbit.getWay(1));
-            Containers::handleAll<Entry>();
         }
-        animation.play(0.1f*m_time_per_frame.asMilliseconds());
+        animation.play(0.1f * m_time_per_frame.asMilliseconds());
         Containers::drawAll<Entry>();
         m_window.draw(sprite);
         m_window.display();
@@ -135,7 +134,7 @@ void Handler::update()
 
 void Handler::set_fps(const frames& a_fps)
 {
-    m_window.setFramerateLimit(a_fps+5);
+    m_window.setFramerateLimit(a_fps + 5 );
     m_time_per_frame = sf::milliseconds(1000 / a_fps);
 }
 
