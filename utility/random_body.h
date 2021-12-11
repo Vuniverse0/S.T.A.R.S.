@@ -56,7 +56,7 @@ auto moon_body{
     }
 };
 
-auto star_body{
+const auto star_body{
     []()->MetaDataBody
     {
         MetaDataBody temp;

@@ -18,7 +18,7 @@ private:
 public:
     Orbit() = delete;
     Orbit(cords radius, frames quality = 1000);
-    Orbit(cords radius, cords x, cords y, frames quality = 1000);
+    Orbit(cords radius,  sf::Vector2f cord, frames quality = 1000);
     ~Orbit() override;
 
     frames quality();

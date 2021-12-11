@@ -23,7 +23,7 @@ Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
     m_all.push_back(this);
 }
 
-Orbit::Orbit(cords radius, cords a_x, cords a_y, frames quality) : Entry(EMPTY)
+Orbit::Orbit(cords radius, sf::Vector2f cord, frames quality) : Entry(EMPTY)
 {
     m_elips.setPointCount(quality);
     for (unsigned short i = 0; i < quality; ++i) {
@@ -35,7 +35,7 @@ Orbit::Orbit(cords radius, cords a_x, cords a_y, frames quality) : Entry(EMPTY)
     m_elips.setOutlineThickness(1);
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
-    move(a_x, a_y);
+    move(cord.x, cord.y);
     m_all.push_back(this);
 }
 

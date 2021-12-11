@@ -16,7 +16,7 @@ Button::Button(const std::string& a_string, void(*callback)()) :
     m_callback = callback;
     m_sprite.scale(MAGIC_RATIO_BUTTONS * Handler::x_ratio,MAGIC_RATIO_BUTTONS * Handler::y_ratio);
     m_normal_scale = m_sprite.getScale();
-    m_sprite.setOrigin(local_center(&m_sprite));
+    m_sprite.setOrigin(local_center_basic(&m_sprite));
     m_all.push_back(this);
 }
 

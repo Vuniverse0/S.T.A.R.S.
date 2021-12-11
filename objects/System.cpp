@@ -3,7 +3,7 @@
 //
 
 #include "System.h"
-
+#include "../utility/random_body.h"
 
 System::System(const json& j) :
     Entry("null.png"),
@@ -14,8 +14,7 @@ System::System(const json& j) :
 /*
 System::System() :
     Entry("null.png"),
-    m_star()
+    m_star(,star_body())
 {
 
-}
-*/
+}*/

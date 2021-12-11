@@ -27,7 +27,7 @@ typedef float_t cords;
 
 using nlohmann::json;
 
-static auto binominal_float{
+const auto binominal_float{
         [](float_t a_start, float_t a_end, float_t a_binominal)->float_t
         {
             if (a_end > 25 || a_start >= a_end || a_start < 0.f || a_binominal <= 0.f || a_binominal >= 1.f) {
@@ -40,7 +40,7 @@ static auto binominal_float{
         }
 };
 
-static auto binominal_int{
+const auto binominal_int{
         [](uint8_t a_start, uint8_t a_end, float_t a_binominal)->uint8_t
         {
             if (a_start >= a_end || a_binominal <= 0.f || a_binominal >= 1.f) {
@@ -52,7 +52,7 @@ static auto binominal_int{
         }
 };
 
-static auto size_regulator{
+const auto size_regulator{
         [](const sf::Sprite*const sprite)->sf::FloatRect
         {
             auto l_bounds = (sprite->getGlobalBounds());
@@ -61,7 +61,7 @@ static auto size_regulator{
         }
 };
 
-static auto scale_by_mouse{
+const auto scale_by_mouse{
         [](sf::Sprite*const sprite, bool focus)->void
         {
             if (focus) {
@@ -73,7 +73,7 @@ static auto scale_by_mouse{
         }
 };
 
-static auto center{//for code trigger - anchors
+const auto center{//for code trigger - anchors
         [](const sf::Sprite*const sprite)->sf::Vector2f
         {
             auto temp = sprite->getGlobalBounds();
@@ -81,15 +81,7 @@ static auto center{//for code trigger - anchors
         }
 };
 
-static auto local_center{//for local center
-        [](const sf::Sprite*const sprite)->sf::Vector2f
-        {
-            auto temp = sprite->getLocalBounds();
-            return{temp.width / 2.0f, temp.height / 2.0f};
-        }
-};
-
-static auto global_center{//for global center without top&left
+const auto local_center{//for local center
         [](const sf::Sprite*const sprite)->sf::Vector2f
         {
             auto temp = sprite->getGlobalBounds();
@@ -97,8 +89,23 @@ static auto global_center{//for global center without top&left
         }
 };
 
+const auto local_center_basic{//for local center
+        [](const sf::Sprite*const sprite)->sf::Vector2f
+        {
+            auto temp = sprite->getLocalBounds();
+            return{temp.width / 2.0f, temp.height / 2.0f};
+        }
+};
+
+const auto window_center{
+    [](const sf::RenderWindow& window)->sf::Vector2f
+    {
+    return {window.getSize().x/2.f, window.getSize().y/2.f};
+    }
+};
+
 pixels operator "" _p(unsigned long long);
 frames operator "" _f(unsigned long long);
-void no_callback();
+const auto no_callback{[](){}};
 bool operator<(sf::Vector2f, sf::Vector2f);
 bool operator>(sf::Vector2f, sf::Vector2f);

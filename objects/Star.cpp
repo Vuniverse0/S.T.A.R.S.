@@ -21,7 +21,7 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_
              ++m_idGenerator,
              "noname"},
     m_body{star_body()},
-    m_orbit(((float)stars_count) * m_sprite.getGlobalBounds().width),
+    m_orbit{((float)stars_count) * m_sprite.getGlobalBounds().width, window_center(Handler::window())},
     m_stars(),
     last_x(stars_count>1?m_orbit.getWay(0).x:m_orbit.getWay(random_int(1,999)).x)
 {

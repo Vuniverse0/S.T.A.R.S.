@@ -15,7 +15,7 @@ class System : public Entry {
     static System* m_current;
 public:
     System();
-    System(const json&);
+    explicit System(const json&);
     //~System() override ;
 
     //void handle() override ;
