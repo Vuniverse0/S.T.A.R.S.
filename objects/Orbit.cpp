@@ -72,3 +72,8 @@ frames Orbit::quality()
 {
     return m_elips.getPointCount();
 }
+
+void Orbit::move(sf::Vector2f vec)
+{
+    move(vec.x, vec.y);
+}

@@ -28,6 +28,7 @@ public:
     using Entry::show;
 
     void move(cords x, cords y);
+    void move(sf::Vector2f vec);
     void handle() override;
     void draw() final;
 };

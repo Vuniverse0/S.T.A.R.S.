@@ -21,7 +21,7 @@ public:
 public:
     Dashboard(Anchor anch, const std::string& a_string);
     ~Dashboard() override;
-    int locateLeftCenterPanel(Button& button);
+    void locateLeftCenterPanel(Button& button);
     int locateRightBottomPanel(Button& button);
 
     void scale(float_t x, float_t y);

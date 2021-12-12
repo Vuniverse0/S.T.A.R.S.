@@ -110,9 +110,9 @@ void Handler::update()
             sprite,300,300,600);
     static Orbit orbit(200);
     static LeftCenterPanel panel{};
-    orbit.move(400,400);
     sprite.setOrigin(local_center_basic(&sprite));
     sprite.setScale(0.9,0.9);
+    orbit.move(window_center(window()));
     update_time += clock.getElapsedTime();
     while (last_update_time > m_time_per_frame)
     {

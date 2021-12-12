@@ -42,14 +42,13 @@ void Dashboard::scale(float_t x, float_t y) {
 }
 
 sf::Vector2i Dashboard::m_stepLeftCenterPanel = {20, 15};
-int Dashboard::locateLeftCenterPanel(Button& button)//locate button
+void Dashboard::locateLeftCenterPanel(Button& button)//locate button
 {
     auto temp = m_located;
     m_located += {0,
                   static_cast<int>(button.sprite().getGlobalBounds().height + m_stepLeftCenterPanel.y * Handler::y_ratio)};
     button.sprite().setPosition(m_sprite.getGlobalBounds().width / 2.f,
             static_cast<float>(button.sprite().getOrigin().y+temp.y) - (15.f * Handler::x_ratio));
-    return 0;
 }
 //TODO: int return value its "Costil" for testing init like initialization static unused variable in Handler
 sf::Vector2i Dashboard::m_stepRightBottomPanel = {10, 15};
