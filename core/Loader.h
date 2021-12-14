@@ -5,8 +5,12 @@
 #pragma once
 
 #include <filesystem>
+#include "Metadata.h"
+#include "../utility/typedefs_and_globals.h"
 
-
-class Loader {
-
+namespace Loader{
+    [[nodiscard]] std::string load(Stars);
+    [[nodiscard]] std::string load(Planets);
+    [[nodiscard]] std::string load(Moons);
+    [[nodiscard]] std::string load(Asteroid);
 };

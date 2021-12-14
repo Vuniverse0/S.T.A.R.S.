@@ -1,6 +1,8 @@
 #include "Handler.h"
 #include "Metadata.h"
 #include <fstream>
+#include "Loader.h"
+
 
 int main()
 {
@@ -16,6 +18,7 @@ int main()
         6,
         "name"
     };
+    Loader::load(Stars::Black);
     //MetaDataBody body;
     json j;
     //to_json(j["System"][0], obj);
