@@ -13,4 +13,5 @@ namespace Loader{
     [[nodiscard]] std::string load(Planets);
     [[nodiscard]] std::string load(Moons);
     [[nodiscard]] std::string load(Asteroid);
+    [[nodiscard]] std::string load(const std::string& way);
 };

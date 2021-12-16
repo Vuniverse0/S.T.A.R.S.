@@ -3,7 +3,26 @@
 //
 
 #include "Loader.h"
+#include "../utility/random_body.h"
 
+namespace {
+    std::size_t number_of_files_in_directory(const std::filesystem::path &path) {
+        using std::filesystem::directory_iterator;
+        return std::distance(directory_iterator(path), directory_iterator{});
+    }
+}
+
+std::string Loader::load(const std::string& way)
+{
+    auto i = random_int(0,number_of_files_in_directory(way));
+    for(auto& x : (std::filesystem::directory_iterator(way))){
+        --i;
+        if (i == 0) {
+            return x.path();
+        }
+    }
+    return std::filesystem::directory_iterator(way)->path();
+}
 
 std::string Loader::load(Stars star)
 {
@@ -28,6 +47,7 @@ std::string Loader::load(Stars star)
             way = "../resources/celestial_bodies/stars/black";
             break;
     }
+    return load(way);
 }
 
 std::string  Loader::load(Planets planet)
@@ -59,6 +79,7 @@ std::string  Loader::load(Planets planet)
             way = "../resources/celestial_bodies/planets/lava";
             break;
     }
+    return load(way);
 }
 
 std::string  Loader::load(Moons moon)
@@ -78,6 +99,7 @@ std::string  Loader::load(Moons moon)
             way = "../resources/celestial_bodies/planets/terran_dry";
             break;
     }
+    return load(way);
 }
 /*    for ( auto& item : fs::directory_iterator( dir ) ){
         std::string s=item.path();
@@ -102,4 +124,5 @@ std::string  Loader::load(Asteroid asteroids)
             way = "../resources/celestial_bodies/asteroids";
             break;
     }
+    return load(way);
 }
