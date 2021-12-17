@@ -101,15 +101,7 @@ std::string  Loader::load(Moons moon)
     }
     return load(way);
 }
-/*    for ( auto& item : fs::directory_iterator( dir ) ){
-        std::string s=item.path();
-        uint16_t size = std::filesystem::file_size(s);
-        std::FILE *file = std::fopen( s.c_str(), "rb");
 
-        path = ParsePath(s);
-        table.write( path.first, path.second, size, file);
-        std::fclose( file );
-    }*/
 std::string  Loader::load(Asteroid asteroids)
 {
     std::string way {};
