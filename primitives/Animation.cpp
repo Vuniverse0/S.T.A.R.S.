@@ -38,35 +38,37 @@ Animation::Animation(const Animation& other):
 {
 }
 
+Animation& Animation::operator=(const Animation& other)
+{
+    m_sprite = other.m_sprite;
+    m_texture = other.m_texture;
+    m_image = other.m_image;
+    m_i = other.m_i;
+    m_count = other.m_count;
+    m_size_x = other.m_size_x;
+    m_size_y = other.m_size_y;
+    m_xy = other.m_xy;
+    return *this;
+}
+
+
 bool Animation::play(float_t speed, bool direction)
 {
     bool result = false;
-    if (m_i == m_count) {
-        m_i = 0;
+    if ((direction ? m_i == 0 : m_i == m_count)) {
+        m_i = (direction ? m_count - 1 : 0);
         result = true;
     }
     if (counter <= 0.0f) {
-        if (direction) {
-            if (m_xy) {
-                auto n = m_image.getSize().x/m_size_x;
-                m_sprite.setTexture(generateTextureXY(m_count - (m_i + 1) % n,
-                                                      m_count - (m_i + 1) / n));
-            }
-            else {
-                m_sprite.setTexture(generateTextureX(m_count - (m_i + 1)));
-            }
+        if (m_xy) {
+            auto n = m_image.getSize().x/m_size_x;
+            m_sprite.setTexture(generateTextureXY(m_i % n,m_i/n));
         }
         else {
-            if (m_xy) {
-                auto n = m_image.getSize().x/m_size_x;
-                m_sprite.setTexture(generateTextureXY(m_i % n,m_i/n));
-            }
-            else {
-                m_sprite.setTexture(generateTextureX(m_i));
-            }
+            m_sprite.setTexture(generateTextureX(m_i));
         }
         counter = 1.0f;
-        ++m_i;
+        m_i = direction ? m_i - 1 : m_i + 1;
     }
     else {
         counter -= speed;
@@ -86,7 +88,7 @@ sf::Texture& Animation::generateTextureXY(const pixels& offset_x, const pixels& 
 {
     if (!m_texture.loadFromImage(m_image,
             sf::IntRect(offset_x * m_size_x, offset_y * m_size_y, m_size_x, m_size_y)))
-        std::cerr<<"Animation::generateTextureXY - Cant find resources\n";
+        std::cerr<<"Animation::generateTextureXY - Cant find resources\n"<<offset_x * m_size_x<<"\n"<<offset_x<<"X"<<m_size_x<<"\n"<<offset_y * m_size_y<<"\n"<<offset_y<<"Y"<<m_size_y<<"\n";
     return m_texture;
 }
 

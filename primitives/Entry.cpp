@@ -13,6 +13,7 @@ Entry::Entry(const std::string &a_string, frames a_frames, pixels a_x, pixels a_
     m_sprite{},
     m_animation(a_string, m_sprite, a_x, a_y, a_frames)
 {
+    std::cout<<a_string<<" : "<<a_x<<", "<<a_y<<" - "<<a_frames<<std::endl;
     m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
     m_all.push_back(this);
 }
@@ -74,4 +75,9 @@ bool Entry::isVisible()const
 sf::Sprite& Entry::sprite()
 {
     return m_sprite;
+}
+
+void Entry::setAnimation(Animation &anim)
+{
+    m_animation = anim;
 }

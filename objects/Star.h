@@ -6,6 +6,7 @@
 #include "Planet.h"
 
 class Star : public Entry  {
+    friend Containers;
     static uint16_t m_idGenerator;
 
     Orbit m_orbit;
@@ -27,5 +28,6 @@ public:
     void addPlanet(const MetaDataObject& object, const MetaDataBody& body);
 
     void handle() override ;
+    void handle(sf::Int32 time) ;
     void draw() override ;
 };

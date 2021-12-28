@@ -27,7 +27,7 @@ public:
           frames a_frames, pixels a_pixels);
     Entry(const std::string& a_string);
     virtual ~Entry();
-
+    void setAnimation(Animation& anim);
     bool isVisible()const;
     bool hide();
     bool show();

@@ -8,16 +8,16 @@
 
 
 class System : public Entry {
+    friend Containers;
     static uint16_t m_idGenerator;
-
     Star m_star; //Or multi star, its delegate
     static std::vector<System*> m_all;
     static System* m_current;
 public:
     System();
     explicit System(const json&);
-    //~System() override ;
+    ~System() override ;
 
-    //void handle() override ;
-    //void draw() override ;
+    void handle() override ;
+    void draw() override ;
 };

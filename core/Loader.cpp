@@ -5,7 +5,7 @@
 #include "Loader.h"
 #include "../utility/random_body.h"
 
-
+        
 namespace {
     std::size_t number_of_files_in_directory(const std::filesystem::path &path) {
         using std::filesystem::directory_iterator;

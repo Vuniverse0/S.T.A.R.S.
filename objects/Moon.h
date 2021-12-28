@@ -5,6 +5,7 @@
 #pragma once
 #include "Orbit.h"
 #include "../core/Metadata.h"
+#include "../core/Loader.h"
 
 
 class Moon : public Entry{

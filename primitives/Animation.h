@@ -24,6 +24,7 @@ public:
     //Анимация из одной картинки(спрайтлист) много полос
     Animation(Animation const& other);
     Animation& operator=(Animation&& other) = delete;
+    Animation& operator=(const Animation& other);
     ~Animation() = default;
 
     bool play(float_t speed = 1, bool direction = false);//return true when m_animation finish

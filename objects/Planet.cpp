@@ -26,7 +26,7 @@ Planet::Planet(const Planets& type, Sets sets, const std::string &file, cords ra
     m_sprite.scale(m_body.bsize, m_body.bsize);
     for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
         m_moons.emplace_back(Moons::Dry, Sets{{},{}},
-                "none.png", m_sprite.getGlobalBounds().width, center(&m_sprite));
+                Loader::load(Moons::Dry), m_sprite.getGlobalBounds().width, center(&m_sprite));
 
     }
 }
@@ -42,14 +42,23 @@ Planet::Planet(const MetaDataObject& object, MetaDataBody body, cords radius) :
 }
 
 Planet::~Planet()
-= default;
+{
+    m_all.erase(std::find(m_all.begin(),m_all.end(), this));
+}
 
 void Planet::handle()
 {
-
+    m_sprite.setPosition(m_orbit.getWay(m_body.speed, m_body.direction));
+    m_animation.play(m_body.spin, m_body.spin_direction);
+    for ( auto& item : m_moons) {
+        item.handle();
+    }
 }
 
 void Planet::draw()
 {
-
+    Handler::window().draw(m_sprite);
+    for ( auto& item : m_moons) {
+        item.draw();
+    }
 }

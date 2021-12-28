@@ -13,7 +13,7 @@ std::vector<Star*> Star::m_all{};
 
 //generate star
 Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_count) :
-    Entry(file, 600, 100, 100),
+    Entry(file, 600, 200, 200),
     m_object{Body::Star,
              {static_cast<unsigned int>(type)},
              sets,
@@ -33,13 +33,14 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_
         m_stars.push_back(Star(m_orbit.quality() / stars_count, m_body, m_object, m_orbit));
         m_stars.push_back(Star(m_orbit.quality() / stars_count * 2, m_body, m_object, m_orbit));
     }
+    m_all.push_back(this);
+    return;
     for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
         m_planets.emplace_back(Planets::Dry,
                                Sets{{},{}},
-                               "none.png",
+                               Loader::load(Planets::Dry),
                                ((float)stars_count) * m_sprite.getGlobalBounds().width);
     }
-    m_all.push_back(this);
 }
 
 //Multi star system constructor
@@ -60,6 +61,7 @@ Star::Star(const uint8_t& stars_offset, MetaDataBody body, const MetaDataObject&
     last_x(m_orbit.getWay(stars_offset).x)            //Make offset orbit way here!
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
+    m_all.push_back(this);
 }
 
 //create from file
@@ -72,19 +74,33 @@ Star::Star(const MetaDataObject& object, MetaDataBody body) :
     last_x(m_orbit.getWay(0).x)
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
+    m_all.push_back(this);
 }
 
 Star::~Star()
-= default;
+{
+    m_all.erase(std::find(m_all.begin(),m_all.end(), this));
+}
 
 void Star::handle()
 {
-    m_sprite.setPosition(m_orbit.getWay(1));
+    m_sprite.setPosition(m_orbit.getWay(m_body.speed, m_body.direction));
+    for ( auto& item : m_planets) {
+        item.handle();
+    }
+}
+
+void Star::handle(sf::Int32 time)
+{
+    m_animation.play(m_body.spin *time, m_body.spin_direction);
 }
 
 void Star::draw()
 {
     Handler::window().draw(m_sprite);
+    for ( auto& item : m_planets) {
+        item.draw();
+    }
 }
 
 void Star::addStar(const MetaDataObject& object, const MetaDataBody& body)
@@ -100,5 +116,6 @@ void Star::addStar(const MetaDataObject& object, const MetaDataBody& body)
 
 void Star::addPlanet(const MetaDataObject &object, const MetaDataBody &body)
 {
-
+    static cords located = m_stars.size() * m_sprite.getGlobalBounds().width;
+    m_planets.emplace_back(object, body, located + body.bsize);
 }

@@ -105,11 +105,14 @@ void Handler::update()
     static sf::Time update_time_fix = sf::microseconds(1000/60);
     static sf::Sprite sprite;
     //static Animation animation("/home/vuniverse/Downloads/358540927.png",sprite,100,100,600);
+    static Star m_star(Stars::Blue, {{},{}}, Loader::load(Stars::Blue));
     static Animation animation(
-            "/home/vuniverse/CLionProjects/space/resources/celestial_bodies/planets/gas_giant_2/4169997900.png",
-            sprite,300,300,600);
+            "/home/vuniverse/CLionProjects/space/resources/celestial_bodies/stars/blue/1871631401.png",
+            sprite,200,200,600);
+   // m_star.setAnimation(animation);
     static Orbit orbit(200);
     static LeftCenterPanel panel{};
+    //static System system1{};
     sprite.setOrigin(local_center_basic(&sprite));
     sprite.setScale(0.9,0.9);
     orbit.move(window_center(window()));
@@ -123,8 +126,10 @@ void Handler::update()
             update_time = sf::Time::Zero;
             event();
             sprite.setPosition(orbit.getWay(1));
+            Containers::handleAll<Star>((m_time_per_frame.asMilliseconds()));
+            Containers::handleAll<Entry>();
+            animation.play(0.1f * m_time_per_frame.asMilliseconds(), true);
         }
-        animation.play(0.1f * m_time_per_frame.asMilliseconds());
         Containers::drawAll<Entry>();
         m_window.draw(sprite);
         m_window.display();
