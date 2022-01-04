@@ -9,10 +9,10 @@ class Star : public Entry  {
     friend Containers;
     static uint16_t m_idGenerator;
 
-    Orbit m_orbit;
-
     MetaDataObject m_object;
     MetaDataBody m_body;
+
+    Orbit m_orbit;
 
     float_t last_x;
     std::vector<Planet> m_planets;
@@ -28,6 +28,6 @@ public:
     void addPlanet(const MetaDataObject& object, const MetaDataBody& body);
 
     void handle() override ;
-    void handle(sf::Int32 time) ;
+    void handle(const sf::Int32& time) ;
     void draw() override ;
 };

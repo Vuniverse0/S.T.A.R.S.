@@ -10,6 +10,7 @@ std::vector<Orbit*> Orbit::m_all{};
 
 Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
 {
+    //std::cerr<<"Orbit SUCCESSFUL↵\n";
     m_elips.setPointCount(quality);
     for (unsigned short i = 0; i < quality; ++i) {
         float rad = (360.0f/quality * i) / (360.0f / F_PI / 2.0f);
@@ -25,17 +26,17 @@ Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
 
 Orbit::Orbit(cords radius, sf::Vector2f cord, frames quality) : Entry(EMPTY)
 {
+    //std::cerr<<"Orbit SUCCESSFUL↵\n";
     m_elips.setPointCount(quality);
     for (unsigned short i = 0; i < quality; ++i) {
         float rad = (360.0f/quality * i) / (360.0f / F_PI / 2.0f);
-        float x = std::cos(rad - 0.1f) * radius;
-        float y = std::sin(rad + 0.3f) * radius * 0.6f;
+        float x = std::cos(rad - 0.1f) * radius + cord.x;
+        float y = std::sin(rad + 0.3f) * radius * 0.6f + cord.y;
         m_elips.setPoint(i, sf::Vector2f(x, y));
     }
     m_elips.setOutlineThickness(1);
     m_elips.setOutlineColor(sf::Color(88, 136, 255, 50));
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
-    move(cord.x, cord.y);
     m_all.push_back(this);
 }
 
@@ -50,9 +51,9 @@ void Orbit::draw()//draw shape on window
         Handler::window().draw(m_elips);
 }
 
-void Orbit::move(cords a_x, cords a_y)//set position for shape
+void Orbit::move(cords a_x, cords a_y)//move for sprite
 {
-    m_elips.setPosition(a_x, a_y);
+    m_elips.move(a_x, a_y);
 }
 
 sf::Vector2f Orbit::getWay(double_t speed, bool direction)//return cords for next step on orbit(center)

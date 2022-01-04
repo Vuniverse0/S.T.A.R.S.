@@ -13,7 +13,6 @@ Entry::Entry(const std::string &a_string, frames a_frames, pixels a_x, pixels a_
     m_sprite{},
     m_animation(a_string, m_sprite, a_x, a_y, a_frames)
 {
-    std::cout<<a_string<<" : "<<a_x<<", "<<a_y<<" - "<<a_frames<<std::endl;
     m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
     m_all.push_back(this);
 }
@@ -23,7 +22,7 @@ Entry::Entry(const std::string& a_string, frames a_frames, pixels a_pixels) :
     m_sprite{},
     m_animation(a_string, m_sprite, a_pixels, a_frames)
 {
-    m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
+    m_sprite.scale(Handler::x_ratio, Handler::x_ratio);
     m_all.push_back(this);
 }
 
@@ -33,10 +32,12 @@ Entry::Entry(const std::string& a_string) :
         m_object_texture{}
 {
     m_texture = &m_object_texture;
-    m_texture->loadFromFile(a_string);
-    m_texture->setSmooth(true);
-    m_sprite.setTexture(*m_texture);
-    m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
+    if (a_string != EMPTY) {
+        m_texture->loadFromFile(a_string);
+        m_texture->setSmooth(true);
+        m_sprite.setTexture(*m_texture);
+        m_sprite.scale(Handler::x_ratio, Handler::y_ratio);
+    }
     m_all.push_back(this);
 }
 

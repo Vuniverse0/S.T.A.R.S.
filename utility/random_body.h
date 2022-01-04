@@ -64,7 +64,7 @@ const auto star_body{
         temp.speed = binominal_float(0.1f, 1.f, 0.2);
         temp.spin = binominal_float(0.1f, 2.f, 0.2);
         temp.direction = (binominal_int(1, 10, 0.5) <= 5);
-        temp.spin_direction = (binominal_int(1, 10, 0.5) <= 5);
+        temp.spin_direction = false;
         return temp;
     }
 };

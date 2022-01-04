@@ -7,27 +7,34 @@
 #include "../utility/random_body.h"
 
 System::System(const json& j) :
-    Entry("null.png"),
+    Entry(EMPTY),
     m_star(MetaDataObject::from_json(j), MetaDataBody::from_json(j))
 {
-
+    //std::cerr<<"System SUCCESSFUL↵\n";
+    m_all.push_back(this);
 }
 
 System::System() :
-    Entry("null.png"),
+    Entry(EMPTY),
     m_star(Stars::Blue, {{},{}}, Loader::load(Stars::Blue))
 {
-
+    //std::cerr<<"System SUCCESSFUL↵\n";
+    m_all.push_back(this);
 }
 
 System::~System()
 {
-
+    m_all.erase(std::find(m_all.begin(),m_all.end(), this));
 }
 
 void System::handle()
 {
     m_star.handle();
+}
+
+void System::handle(const sf::Int32& time)
+{
+    m_star.handle(time);
 }
 
 void System::draw()

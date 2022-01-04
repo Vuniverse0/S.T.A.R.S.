@@ -21,19 +21,24 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_
              ++m_idGenerator,
              "noname"},
     m_body{star_body()},
-    m_orbit{((float)stars_count) * m_sprite.getGlobalBounds().width, window_center(Handler::window())},
+    m_orbit{((float)stars_count) * m_sprite.getGlobalBounds().width * m_body.bsize * Handler::x_ratio,
+                  window_center(Handler::window())},
     m_stars(),
     last_x(stars_count>1?m_orbit.getWay(0).x:m_orbit.getWay(random_int(1,999)).x)
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
-    if (stars_count == 2) {
+    m_sprite.setOrigin(local_center_basic(&m_sprite));
+    if (stars_count == 1) {
+        m_sprite.setPosition(window_center(Handler::window()));
+    }
+    else if (stars_count == 2) {
         m_stars.push_back(Star(m_orbit.quality() / stars_count, m_body, m_object, m_orbit));
     }
     else if (stars_count == 3) {
         m_stars.push_back(Star(m_orbit.quality() / stars_count, m_body, m_object, m_orbit));
         m_stars.push_back(Star(m_orbit.quality() / stars_count * 2, m_body, m_object, m_orbit));
     }
-    m_all.push_back(this);
+   // m_all.push_back(this);
     return;
     for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
         m_planets.emplace_back(Planets::Dry,
@@ -61,7 +66,8 @@ Star::Star(const uint8_t& stars_offset, MetaDataBody body, const MetaDataObject&
     last_x(m_orbit.getWay(stars_offset).x)            //Make offset orbit way here!
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
-    m_all.push_back(this);
+    m_sprite.setOrigin(local_center_basic(&m_sprite));
+    //m_all.push_back(this);
 }
 
 //create from file
@@ -74,23 +80,25 @@ Star::Star(const MetaDataObject& object, MetaDataBody body) :
     last_x(m_orbit.getWay(0).x)
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
-    m_all.push_back(this);
+    m_sprite.setOrigin(local_center_basic(&m_sprite));
+   // m_all.push_back(this);
 }
 
 Star::~Star()
 {
-    m_all.erase(std::find(m_all.begin(),m_all.end(), this));
+   // m_all.erase(std::find(m_all.begin(),m_all.end(), this));
 }
 
 void Star::handle()
 {
-    m_sprite.setPosition(m_orbit.getWay(m_body.speed, m_body.direction));
+    if (!m_stars.empty())
+        m_sprite.setPosition(m_orbit.getWay(m_body.speed, m_body.direction));
     for ( auto& item : m_planets) {
         item.handle();
     }
 }
 
-void Star::handle(sf::Int32 time)
+void Star::handle(const sf::Int32& time)
 {
     m_animation.play(m_body.spin *time, m_body.spin_direction);
 }
