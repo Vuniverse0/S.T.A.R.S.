@@ -38,7 +38,6 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_
         m_stars.push_back(Star(m_orbit.quality() / stars_count, m_body, m_object, m_orbit));
         m_stars.push_back(Star(m_orbit.quality() / stars_count * 2, m_body, m_object, m_orbit));
     }
-   // m_all.push_back(this);
     return;
     for (uint8_t i = 0; i < (binominal_int(0,5,(m_body.bsize>1.f)?0.9f:0.2f)); ++i) {
         m_planets.emplace_back(Planets::Dry,
@@ -46,6 +45,7 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_
                                Loader::load(Planets::Dry),
                                ((float)stars_count) * m_sprite.getGlobalBounds().width);
     }
+    m_all.push_back(this);
 }
 
 //Multi star system constructor
@@ -67,7 +67,7 @@ Star::Star(const uint8_t& stars_offset, MetaDataBody body, const MetaDataObject&
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
     m_sprite.setOrigin(local_center_basic(&m_sprite));
-    //m_all.push_back(this);
+    m_all.push_back(this);
 }
 
 //create from file
@@ -81,7 +81,7 @@ Star::Star(const MetaDataObject& object, MetaDataBody body) :
 {
     m_sprite.scale(m_body.bsize, m_body.bsize);
     m_sprite.setOrigin(local_center_basic(&m_sprite));
-   // m_all.push_back(this);
+    m_all.push_back(this);
 }
 
 Star::~Star()
@@ -105,6 +105,7 @@ void Star::handle(const sf::Int32& time)
 
 void Star::draw()
 {
+    //TODO last_x recheck system write view
     Handler::window().draw(m_sprite);
     for ( auto& item : m_planets) {
         item.draw();

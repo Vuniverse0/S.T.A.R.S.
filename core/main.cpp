@@ -3,6 +3,8 @@
 #include <fstream>
 #include "Loader.h"
 #include "../objects/System.h"
+#include "../utility/random_body.h"
+
 
 int main()
 {
@@ -18,11 +20,15 @@ int main()
         6,
         "name"
     };
-    Loader::load(Stars::Black);
+    //Loader::load(Stars::Black);
     //MetaDataBody body;
     json j;
     //to_json(j["System"][0], obj);
     o<<j;
     o.close();
+    for (auto i = 0 ; i < 100; ++i) {
+        //std::cout << "float " << RANDOM_N_AFTER_POINT(2,20,10.f)<< std::endl;
+        std::cout << "int "<< ((int) binominal_int(1, 10, 0.5)) << std::endl;
+    }
     return 0;
 }

@@ -102,7 +102,7 @@ void Handler::update()
 {
     static sf::Time last_update_time = sf::Time::Zero;
     static sf::Time update_time = sf::Time::Zero;
-    static sf::Time update_time_fix = sf::microseconds(1000/60);
+    static sf::Time update_time_fix = sf::milliseconds(1000/60);
     static sf::Sprite sprite;
     //static Animation animation("/home/vuniverse/Downloads/358540927.png",sprite,100,100,600);
     static Animation animation(
@@ -127,7 +127,7 @@ void Handler::update()
             //sprite.setPosition(orbit.getWay(1));
             Containers::handleAll<System>((m_time_per_frame.asMilliseconds()));
             Containers::handleAll<Entry>();
-            animation.play(0.1f * m_time_per_frame.asMilliseconds(), true);
+            animation.play(0.1f * update_time_fix.asMilliseconds(), true);
         }
         Containers::drawAll<Entry>();
         m_window.draw(sprite);

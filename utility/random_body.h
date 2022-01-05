@@ -8,14 +8,14 @@
 #include "typedefs_and_globals.h"
 
 
-auto random_int{
+inline auto random_int{
     [](int start, int end)->int
     {
         return (binominal_float(start/10.f, end/10.f, 0.5)*10);
     }
 };
 
-auto asteroids_body{
+inline auto asteroids_body{
     []()->MetaDataBody
     {
         MetaDataBody temp;
@@ -25,7 +25,7 @@ auto asteroids_body{
     }
 };
 
-auto planet_body{
+inline auto planet_body{
     []()->MetaDataBody {
         MetaDataBody temp;
         temp.bsize = binominal_float(0.1f, 2.f, 0.2);
@@ -43,7 +43,7 @@ auto planet_body{
     }
 };
 
-auto moon_body{
+inline auto moon_body{
     []()->MetaDataBody
     {
         MetaDataBody temp = planet_body();
@@ -56,14 +56,14 @@ auto moon_body{
     }
 };
 
-const auto star_body{
+inline const auto star_body{
     []()->MetaDataBody
     {
         MetaDataBody temp;
-        temp.bsize = binominal_float(2.f, 5.f, 0.5);
-        temp.speed = binominal_float(0.1f, 1.f, 0.2);
-        temp.spin = binominal_float(0.1f, 2.f, 0.2);
-        temp.direction = (binominal_int(1, 10, 0.5) <= 5);
+        temp.bsize = (std::rand() % 20 + 2) / 10.f;
+        temp.speed = (std::rand() % 10 + 1) / 10.f;
+        temp.spin =  (std::rand() % 20 + 1) / 10.f;
+        temp.direction = ((std::rand() % 10 + 1) <= 5);
         temp.spin_direction = false;
         return temp;
     }
