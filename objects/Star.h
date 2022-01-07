@@ -18,8 +18,8 @@ class Star : public Entry  {
     std::vector<Planet> m_planets;
     std::vector<Star> m_stars;
     static std::vector<Star*> m_all;
-    Star(const uint8_t& stars_count, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit);
 public:
+    Star(const uint8_t& stars_count, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit);
     Star(const Stars& type, Sets sets, const std::string& file, uint8_t stars_count = 1);
     Star(const MetaDataObject&, MetaDataBody);
     ~Star() override;

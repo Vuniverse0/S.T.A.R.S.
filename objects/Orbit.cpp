@@ -71,10 +71,17 @@ void Orbit::handle()
 
 frames Orbit::quality()
 {
-    return m_elips.getPointCount();
+    return (m_elips.getPointCount()-1);
 }
 
 void Orbit::move(sf::Vector2f vec)
 {
     move(vec.x, vec.y);
+}
+
+Orbit::Orbit(const Orbit &orbit) : Entry(EMPTY)
+{
+    m_elips = orbit.m_elips;
+    m_visibility = m_visibility;
+    m_all.push_back(this);
 }

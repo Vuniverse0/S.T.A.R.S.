@@ -17,8 +17,8 @@
 #define GAME_MAKER_SCREEN_WIDTH 1366.0f //TODO remake these
 #define GAME_MAKER_SCREEN_HEIGHT 768.0f //or not))) Any actor view like he want
 #define VALUABLE_RATIO ((Handler::y_ratio > Handler::x_ratio) ?  Handler::x_ratio : Handler::y_ratio)
-//#define RANDOM(min, max) (std::rand() % (max - min) + min)
-//#define RANDOM_N_AFTER_POINT(min, max, point) (RANDOM(min, max) / point)
+#define RANDOM(min, max) (std::rand() % (max - min) + min)
+#define RANDOM_N_AFTER_POINT(min, max, point) (RANDOM(min, max) / point)
 #define DEFAULT_FPS 60 // keep))
 #define F_PI 3.14159265358979323846f
 #define EMPTY "null.png"

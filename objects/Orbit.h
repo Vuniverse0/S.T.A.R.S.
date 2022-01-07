@@ -17,8 +17,9 @@ private:
     static std::vector<Orbit*> m_all;
 public:
     Orbit() = delete;
-    Orbit(cords radius, frames quality = 1000);
+    explicit Orbit(cords radius, frames quality = 1000);
     Orbit(cords radius,  sf::Vector2f cord, frames quality = 1000);
+    Orbit(const Orbit &orbit);
     ~Orbit() override;
 
     frames quality();
