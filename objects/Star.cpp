@@ -9,7 +9,6 @@
 
 
 uint16_t Star::m_idGenerator = 0;
-std::vector<Star*> Star::m_all{};
 
 //generate star
 Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_count) :
@@ -21,15 +20,17 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_
              ++m_idGenerator,
              "noname"},
     m_body{star_body()},
-    m_orbit{((float)stars_count) * m_sprite.getGlobalBounds().width * m_body.bsize * Handler::x_ratio,
-                  window_center(Handler::window())},
-    m_stars(),
+    m_orbit{m_sprite.getGlobalBounds().width * (m_body.bsize/2.f) * Handler::x_ratio, window_center(Handler::window())},
     last_x(stars_count>1?m_orbit.getWay(0).x:m_orbit.getWay(random_int(1,999)).x),
     m_planets{}
 {
-    m_orbit.hide();
+    //CONFIGURATION
+    m_body.speed *= 10.f;
+    m_body.spin *= 10.f;
     m_sprite.scale(m_body.bsize, m_body.bsize);
+
     m_sprite.setOrigin(local_center_basic(&m_sprite));
+    m_orbit.hide();
     if (stars_count == 1) {
         m_sprite.setPosition(window_center(Handler::window()));
     }
@@ -40,6 +41,8 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_
         m_stars.emplace_back(m_orbit.quality() / 3, m_body, m_object, m_orbit);
         m_stars.emplace_back(m_orbit.quality() / 3 * 2, m_body, m_object, m_orbit);
     }
+    m_all.push_back(this);
+
     return;
     for (uint8_t i = 0; i < RANDOM(2,5); ++i) {
         m_planets.emplace_back(Planets::Dry,
@@ -47,7 +50,6 @@ Star::Star(const Stars& type, Sets sets, const std::string &file, uint8_t stars_
                                Loader::load(Planets::Dry),
                                ((float)stars_count) * m_sprite.getGlobalBounds().width);
     }
-    m_all.push_back(this);
 }
 
 //Multi star system constructor
@@ -67,7 +69,9 @@ Star::Star(const uint8_t& stars_offset, MetaDataBody body, const MetaDataObject&
     m_orbit(orbit),
     last_x(m_orbit.getWay(stars_offset).x)            //Make offset orbit way here!
 {
+    m_orbit.hide();
     m_orbit.getWay(stars_offset,  m_body.direction);
+    m_animation.play(stars_offset, m_body.spin_direction);
     m_sprite.scale(m_body.bsize, m_body.bsize);
     m_sprite.setOrigin(local_center_basic(&m_sprite));
     m_all.push_back(this);
@@ -79,7 +83,6 @@ Star::Star(const MetaDataObject& object, MetaDataBody body) :
     m_object{object},
     m_body{body},
     m_orbit(m_sprite.getGlobalBounds().width),
-    m_stars(),
     last_x(m_orbit.getWay(0).x)
 {
     m_orbit.hide();
@@ -90,15 +93,27 @@ Star::Star(const MetaDataObject& object, MetaDataBody body) :
 
 Star::~Star()
 {
-   // m_all.erase(std::find(m_all.begin(),m_all.end(), this));
+    auto it = std::find(m_all.begin(),m_all.end(), this);
+    if (it == m_all.end())
+        std::cerr << "Star: fail to delete in m_all" << std::endl;
+    m_all.erase(it);
 }
 
 void Star::handle()
-{
-    //if (!m_stars.empty())
-        m_sprite.setPosition(m_orbit.getWay(m_body.speed, m_body.direction));
+{}
+
+void Star::m_handle(){
+    static Star* lastThis = nullptr;
+
+    std::cout<<this<<std::endl;
+    if(lastThis == this){
+        throw std::runtime_error("error");
+    }
+    lastThis = this;
+
+    m_sprite.setPosition(m_orbit.getWay(m_body.speed, m_body.direction));
     for ( auto& item : m_stars) {
-        item.handle();
+        item.m_handle();
     }
     for ( auto& item : m_planets) {
         item.handle();
@@ -107,18 +122,20 @@ void Star::handle()
 
 void Star::handle(const sf::Int32& time)
 {
-    m_animation.play(m_body.spin *time, m_body.spin_direction);
+    m_animation.play(m_body.spin * time, m_body.spin_direction);
     for ( auto& item : m_stars) {
         item.handle(time);
     }
 }
 
-void Star::draw()
+void Star::draw(){}
+
+void Star::m_draw()
 {
     //TODO last_x recheck system write view
     Handler::window().draw(m_sprite);
     for ( auto& item : m_stars) {
-        item.draw();
+        item.m_draw();
     }
     for ( auto& item : m_planets) {
         item.draw();

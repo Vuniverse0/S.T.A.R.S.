@@ -126,7 +126,7 @@ void Handler::update()
             event();
             //sprite.setPosition(orbit.getWay(1));
             Containers::handleAll<System>((m_time_per_frame.asMilliseconds()));
-            Containers::handleAll<Entry>();
+            //Containers::handleAll<Entry>();
             animation.play(0.1f * update_time_fix.asMilliseconds(), true);
         }
         Containers::drawAll<Entry>();

@@ -29,7 +29,7 @@ System::~System()
 
 void System::handle()
 {
-    m_star.handle();
+    m_star.m_handle();
 }
 
 void System::handle(const sf::Int32& time)
@@ -39,5 +39,5 @@ void System::handle(const sf::Int32& time)
 
 void System::draw()
 {
-    m_star.draw();
+    m_star.m_draw();
 }

@@ -6,7 +6,6 @@
 #include "Planet.h"
 
 class Star : public Entry  {
-    friend Containers;
     static uint16_t m_idGenerator;
 
     MetaDataObject m_object;
@@ -16,10 +15,9 @@ class Star : public Entry  {
 
     float_t last_x;
     std::vector<Planet> m_planets;
-    std::vector<Star> m_stars;
-    static std::vector<Star*> m_all;
+    std::vector<Star> m_stars{};
 public:
-    Star(const uint8_t& stars_count, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit);
+    Star(const uint8_t& stars_offset, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit);
     Star(const Stars& type, Sets sets, const std::string& file, uint8_t stars_count = 1);
     Star(const MetaDataObject&, MetaDataBody);
     ~Star() override;
@@ -29,5 +27,7 @@ public:
 
     void handle() override ;
     void handle(const sf::Int32& time) ;
+    void m_handle();
+    void m_draw();
     void draw() override ;
 };
