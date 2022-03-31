@@ -22,6 +22,6 @@ public:
     Moon(MetaDataObject, MetaDataBody, cords, sf::Vector2f planet_anchor);
     ~Moon() override;
 
-    void draw() override;
+    void draw() ;
     void handle() override;
 };

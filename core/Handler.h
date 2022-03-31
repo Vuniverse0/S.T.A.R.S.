@@ -6,6 +6,7 @@
 
 #include "../utility/typedefs_and_globals.h"
 #include "../primitives/Entry.h"
+#include "../interface/LeftCenterPanel.h"
 
 struct Handler {//singleton
 private:
@@ -19,8 +20,9 @@ public:
     static float_t x_ratio, y_ratio;
     ~Handler();
     static sf::RenderWindow& window();
+    static float_t m_alpha;
     static void pause_switch();
-    static void handle();
+    static void handle(LeftCenterPanel& panel);
     void update();
     void event();
     void set_fps(const frames&);

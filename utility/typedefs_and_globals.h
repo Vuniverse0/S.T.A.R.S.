@@ -29,6 +29,13 @@ typedef float_t cords;
 
 using nlohmann::json;
 
+template<typename T>
+struct Lambda : T{
+    using T::operator();
+};
+
+template<typename T> Lambda(T) -> Lambda<T>;
+
 
 inline const auto binominal_float{
     [](float_t a_start, float_t a_end, float_t a_binominal)->float_t
@@ -85,19 +92,19 @@ const auto center{//for code trigger - anchors
 };
 
 const auto local_center{//for local center
-    [](const sf::Sprite*const sprite)->sf::Vector2f
-    {
-        auto temp = sprite->getGlobalBounds();
-        return{temp.width / 2.0f, temp.height / 2.0f};
-    }
-};
-
-const auto local_center_basic{//for local center
-    [](const sf::Sprite*const sprite)->sf::Vector2f
+    [](const sf::Sprite *const sprite)->sf::Vector2f
     {
         auto temp = sprite->getLocalBounds();
         return{temp.width / 2.0f, temp.height / 2.0f};
     }
+};
+
+const auto global_center{//for local center
+        [](const sf::Sprite *const sprite)->sf::Vector2f
+        {
+            auto temp = sprite->getGlobalBounds();
+            return{temp.width / 2.0f, temp.height / 2.0f};
+        }
 };
 
 const auto window_center{

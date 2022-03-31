@@ -9,12 +9,10 @@
 
 class Orbit : public Entry
 {
-    friend Containers;
 private:
     using Entry::m_visibility;
     sf::ConvexShape m_elips;
     double m_way{0};
-    static std::vector<Orbit*> m_all;
 public:
     Orbit() = delete;
     explicit Orbit(cords radius, frames quality = 1000);
@@ -24,6 +22,8 @@ public:
 
     frames quality();
     sf::Vector2f getWay(double_t speed = 1, bool direction = false);
+    float_t getSize();
+    size_t getPointToPath(int path, int num = 1);
 
     using Entry::hide;
     using Entry::show;
@@ -31,5 +31,5 @@ public:
     void move(cords x, cords y);
     void move(sf::Vector2f vec);
     void handle() override;
-    void draw() final;
+    void draw();//Todo virtual
 };

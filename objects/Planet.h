@@ -20,7 +20,9 @@ public:
     Planet(const Planets& type, Sets sets, const std::string& file, cords radius);
     Planet(const MetaDataObject&, MetaDataBody, cords);
     ~Planet() override;
-
+    void m_handle();
+    void handle(const sf::Int32& time);
+    void m_draw();
     void handle() override ;
-    void draw() override ;
+    void draw()  ;
 };

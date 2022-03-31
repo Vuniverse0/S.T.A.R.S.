@@ -19,7 +19,7 @@ class Star : public Entry  {
 public:
     Star(const uint8_t& stars_offset, MetaDataBody body, const MetaDataObject& object, const Orbit& orbit);
     Star(const Stars& type, Sets sets, const std::string& file, uint8_t stars_count = 1);
-    Star(const MetaDataObject&, MetaDataBody);
+    Star(const MetaDataObject&, const MetaDataBody&);
     ~Star() override;
 
     void addStar(const MetaDataObject& object, const MetaDataBody& body);
@@ -29,5 +29,5 @@ public:
     void handle(const sf::Int32& time) ;
     void m_handle();
     void m_draw();
-    void draw() override ;
+    void draw()  ;
 };

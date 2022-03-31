@@ -53,13 +53,13 @@ sf::Vector2f Corner::RightBottom(const sf::Sprite& sprite)
 
 sf::Vector2f Corner::CenterTop(const sf::Sprite& sprite)
 {
-    return sf::Vector2f(window_center(Handler::window()).x - local_center(&sprite).x,0);
+    return sf::Vector2f(window_center(Handler::window()).x - global_center(&sprite).x,0);
 }
 
 sf::Vector2f Corner::CenterBottom(const sf::Sprite& sprite)
 {
     return sf::Vector2f(
-            window_center(Handler::window()).x - local_center(&sprite).x,
+            window_center(Handler::window()).x - global_center(&sprite).x,
             Handler::window().getSize().y - sprite.getGlobalBounds().height + sprite.getOrigin().y);
 }
 
@@ -67,16 +67,16 @@ sf::Vector2f Corner::CenterRight(const sf::Sprite& sprite)
 {
     return sf::Vector2f(
             Handler::window().getSize().x - sprite.getGlobalBounds().width + sprite.getOrigin().x,
-            window_center(Handler::window()).y - local_center(&sprite).y);
+            window_center(Handler::window()).y - global_center(&sprite).y);
 }
 
 sf::Vector2f Corner::CenterLeft(const sf::Sprite& sprite)
 {
-    return sf::Vector2f(0,window_center(Handler::window()).y - local_center(&sprite).y);
+    return sf::Vector2f(0,window_center(Handler::window()).y - global_center(&sprite).y);
 }
 
 sf::Vector2f Corner::Center(const sf::Sprite& sprite)
 {
-    return sf::Vector2f(window_center(Handler::window()).x - local_center(&sprite).x,
-                        window_center(Handler::window()).y - local_center(&sprite).y);
+    return sf::Vector2f(window_center(Handler::window()).x - global_center(&sprite).x,
+                        window_center(Handler::window()).y - global_center(&sprite).y);
 }

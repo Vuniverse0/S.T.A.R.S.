@@ -1,49 +1,17 @@
-//
-// Created by vuniverse on 11/2/21.
-//
-
 #pragma once
 
-#include "../utility/typedefs_and_globals.h"
-#include "../primitives/Animation.h"
-#include "../core/overloaded.h"
 #include "Gui.h"
 
 
-
-class Button : public Gui {
-    friend Containers;
-private:
-    using Entry::m_normal_scale;
-    using Entry::m_sprite;
-    using Entry::m_animation;
-    using Entry::m_visibility;
-    union {
-        struct {
-            uint8_t m_current: 1;
-            uint8_t m_mouse: 1;
-            uint8_t f2: 1;
-            uint8_t f3: 1;
-            uint8_t f4: 1;
-            uint8_t f5: 1;
-            uint8_t f6: 1;
-            uint8_t f7: 1;
-        } m_flags;
-        uint8_t null = 0;
-    };
-    void(*m_callback)();
-    static std::vector<Button*> m_all;
+class Button : public Gui, Clickable, Suggestive, Shorten {
+    friend Traceable<>;
+    Traceable<>::List_Funct<Button> m_list;
+    Changer_I* m_changer;
+    sf::Vector2f m_normal_scale{};
+    void m_handle();
 public:
-    Button(const std::string& a_string, void(*callback)());
-    ~Button() override;
-
-    void checkClick (sf::Vector2i);
-    void checkMouse (sf::Vector2i);
-
-    void draw() override ;
-    void handle() override ;
-    static void handle(sf::Event);
-protected:
-    bool isOnClick ();
-    bool isOnMouse()const;
+    Button(Changer_I& lambd, const std::string& a_string);
+    ~Button() override = default;
+    using Traceable<const sf::Event&>::handle;
+    void handle() override;
 };

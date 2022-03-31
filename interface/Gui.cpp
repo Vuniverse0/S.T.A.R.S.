@@ -1,36 +1,41 @@
-//
-// Created by vuniverse on 11/3/21.
-//
-
 #include "Gui.h"
 
 
-std::vector<Gui*> Gui::m_all{};
-
-Gui::Gui(const std::string& a_string,
-         frames a_frames, pixels a_pixels) :
-         Entry(a_string,a_frames, a_pixels)
+bool Clickable::isOnClick()
 {
+    if ( m_mouse ) m_mouse = false;
+    else return false;
+    return true;
 }
 
-Gui::Gui(const std::string& a_string,
-         frames a_frames, pixels size_x, pixels size_y) :
-        Entry(a_string,a_frames, size_x, size_y)
+void Clickable::m_handle(const sf::Event& event)
 {
+    if (sf::Event::MouseButtonReleased == event.type)
+        m_mouse = size_regulator(m_p_sprite).contains(event.mouseButton.x, event.mouseButton.y);
 }
 
-Gui::Gui(const std::string& a_string) :
-         Entry(a_string)
-{
-    m_all.push_back(this);
+
+void Suggestive::m_handle(const sf::Event& event) {
+    if ( sf::Event::MouseMoved == event.type )
+        m_mouse = size_regulator(m_p_sprite).contains(event.mouseMove.x, event.mouseMove.y);
 }
 
-sf::Texture *Gui::getAttach()
+bool Suggestive::isMouseOn() const { return m_mouse; }
+
+void Shorten::click(){ m_mouse = true; }
+
+void Shorten::m_handle()
 {
-    return m_texture;
+    if ( m_mouse ) {
+        if ( m_p_sprite->getScale().x > m_normal_scale.x) {
+            scale_by_mouse( m_p_sprite, false );
+            scale_by_mouse( m_p_sprite, false );
+        } else {
+            m_mouse = false;
+        }
+    }
 }
 
-Gui::~Gui()
-{
-    m_all.erase(std::find(m_all.begin(),m_all.end(), this));
-}
+Clickable::Clickable() { Insert(m_list); }
+Suggestive::Suggestive() { Insert(m_list); }
+Shorten::Shorten() { Insert(m_list); }

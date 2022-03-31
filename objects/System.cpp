@@ -16,7 +16,7 @@ System::System(const json& j) :
 
 System::System() :
     Entry(EMPTY),
-    m_star(Stars::Blue, {{},{}}, Loader::load(Stars::Blue), 2)
+    m_star(Stars::Blue, {{},{}}, Loader::load(Stars::Blue), 3)
 {
     //std::cerr<<"System SUCCESSFUL↵\n";
     m_all.push_back(this);

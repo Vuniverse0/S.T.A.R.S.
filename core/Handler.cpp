@@ -4,7 +4,6 @@
 
 #include "Core.h"
 #include "../interface/Interfaces.h"
-#include "../objects/Objects.h"
 
 float_t Handler::x_ratio = //1600 / GAME_MAKER_SCREEN_WIDTH,
        static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH,
@@ -15,6 +14,7 @@ sf::RenderWindow Handler::m_window(//{1600,1000},
         sf::VideoMode::getFullscreenModes()[0],
         "Surviving Try Around Remote Stars",//sf::Style::Default, sf::ContextSettings(0,0,8));
         sf::Style::Fullscreen, sf::ContextSettings(0,0,8));
+float_t Handler::m_alpha{};
 sf::Clock Handler::clock{};
 bool Handler::m_IsPaused = false;
 Handler::Handler() noexcept
@@ -26,12 +26,12 @@ Handler::~Handler()
 {
     //TODO erase all for Containers
 }
-
-void Handler::handle()
+void Handler::handle(LeftCenterPanel& panel)
 {
     sf::Event event{};
     while (m_window.pollEvent(event))
     {
+        panel.handle(event);
         switch (event.type)
         {
             case sf::Event::Closed:
@@ -56,10 +56,10 @@ void Handler::handle()
             case sf::Event::MouseButtonPressed:
                 break;
             case sf::Event::MouseButtonReleased:
-                Containers::handle<Button>(event);
+                //panel.handle(event);
                 break;
             case sf::Event::MouseMoved:
-                Containers::handle<Button>(event);
+                //(LeftCenterPanel::button0).Suggestive::handle(event);
                 break;
             case sf::Event::MouseEntered:
                 break;
@@ -92,12 +92,8 @@ void Handler::handle()
 
 void Handler::event()
 {
-    Containers::handleAll<Entry>();
 }
-void callback()
-{
-    std::cout<<"CALLBACK BABY"<<std::endl;
-}
+
 void Handler::update()
 {
     static sf::Time last_update_time = sf::Time::Zero;
@@ -105,14 +101,10 @@ void Handler::update()
     static sf::Time update_time_fix = sf::milliseconds(1000/60);
     static sf::Sprite sprite;
     //static Animation animation("/home/vuniverse/Downloads/358540927.png",sprite,100,100,600);
-    static Animation animation(
-            "/home/vuniverse/CLionProjects/space/resources/celestial_bodies/stars/blue/1871631401.png",
-            sprite,200,200,600);
-   // m_star.setAnimation(animation);
+    //static Animation animation("/home/vuniverse/CLionProjects/space/resources/celestial_bodies/stars/blue/1871631401.png",sprite,200,200,600);
+    //m_star.setAnimation(animation);
     //static Orbit orbit(200);
-    static LeftCenterPanel panel{};
-    static System system1{};
-    sprite.setOrigin(local_center_basic(&sprite));
+    sprite.setOrigin(local_center(&sprite));
     sprite.setScale(0.9,0.9);
     //orbit.move(window_center(window()));
     update_time += clock.getElapsedTime();
@@ -120,17 +112,20 @@ void Handler::update()
     {
         last_update_time -= m_time_per_frame;
         m_window.clear();
-        handle();
+        handle(LeftCenterPanel::panel);
         if (update_time >= update_time_fix) {
+            //Containers::handleAll<System>((update_time.asMilliseconds()));
             update_time = sf::Time::Zero;
             event();
             //sprite.setPosition(orbit.getWay(1));
-            Containers::handleAll<System>((m_time_per_frame.asMilliseconds()));
+            LeftCenterPanel::panel.handle();
             //Containers::handleAll<Entry>();
-            animation.play(0.1f * update_time_fix.asMilliseconds(), true);
+            //m_alpha = 0.1f * update_time_fix.asMilliseconds();
+            //animation.play(0.1f * update_time_fix.asMilliseconds(), true);
         }
-        Containers::drawAll<Entry>();
-        m_window.draw(sprite);
+        //Containers::drawAll<Entry>();
+        LeftCenterPanel::panel.draw();
+
         m_window.display();
     }
     last_update_time += clock.restart();

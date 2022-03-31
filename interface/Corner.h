@@ -7,7 +7,8 @@
 
 
 enum class Anchor{
-    LeftTop, RightTop, LeftBottom, RightBottom,
+    LeftTop, RightTop,
+    LeftBottom, RightBottom,
     CenterTop, CenterBottom,
     CenterRight, CenterLeft,
     Center

@@ -6,5 +6,4 @@
 
 #include "Button.h"
 #include "LeftCenterPanel.h"
-#include "RigthBottomMesenger.h"
 #include "Message.h"
