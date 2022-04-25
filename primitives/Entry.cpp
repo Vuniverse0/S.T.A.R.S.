@@ -31,3 +31,5 @@ bool Entry::show()//return true if state was changed
 }
 sf::Sprite& Entry::sprite() { return m_sprite; }
 void Entry::draw() const { if(m_visibility) Handler::window().draw( m_sprite );}
+
+void Entry::handle(Event event) { };

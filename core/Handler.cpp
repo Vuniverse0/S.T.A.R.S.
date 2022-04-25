@@ -10,14 +10,15 @@ float_t Handler::x_ratio = //1600 / GAME_MAKER_SCREEN_WIDTH,
 Handler::y_ratio = //1000 / GAME_MAKER_SCREEN_HEIGHT;
         static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].height) / GAME_MAKER_SCREEN_HEIGHT;
 Handler Handler::gHandler{};
-sf::RenderWindow Handler::m_window(//{1600,1000},
-        sf::VideoMode::getFullscreenModes()[0],
-        "Surviving Try Around Remote Stars",//sf::Style::Default, sf::ContextSettings(0,0,8));
-        sf::Style::Fullscreen, sf::ContextSettings(0,0,8));
 float_t Handler::m_alpha{};
 sf::Clock Handler::clock{};
 bool Handler::m_IsPaused = false;
-Handler::Handler() noexcept
+Handler::Handler() noexcept :
+        m_window(//{1600,1000},
+                sf::VideoMode::getFullscreenModes()[0],
+                "Surviving Try Around Remote Stars",//sf::Style::Default, sf::ContextSettings(0,0,8));
+                sf::Style::Fullscreen, sf::ContextSettings(0,0,8)
+                )
 {
     set_fps(DEFAULT_FPS);
 }
@@ -26,7 +27,9 @@ Handler::~Handler()
 {
     //TODO erase all for Containers
 }
-void Handler::handle(LeftCenterPanel& panel)
+
+
+void Handler::handle(Entry& panel)
 {
     sf::Event event{};
     while (m_window.pollEvent(event))
@@ -148,8 +151,8 @@ void Handler::pause_switch()
     std::cout<<"pause"<<std::endl;
 }
 
-sf::RenderWindow& Handler::window()
+const sf::RenderWindow& Handler::window()
 {
-    return m_window;
+    return gHandler.m_window;
 }
 

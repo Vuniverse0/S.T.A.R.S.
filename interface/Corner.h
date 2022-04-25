@@ -1,7 +1,3 @@
-//
-// Created by vuniverse on 11/26/21.
-//
-
 #pragma once
 #include "../utility/typedefs_and_globals.h"
 

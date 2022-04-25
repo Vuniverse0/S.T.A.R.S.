@@ -1,6 +1,10 @@
 #pragma once
 
 #include "../primitives/Entry.h"
+#include "Place.h"
+#include "../primitives/Group.h"
+
+using Event = const sf::Event&;
 
 
 struct Gui : Entry{
@@ -10,27 +14,27 @@ protected:
 };
 
 struct Changer_I {virtual void call() = 0;};
-template<typename T>
-struct Changer : Lambda<T>, Changer_I {
-    Changer(T lambd) : Lambda<T>{lambd}{}
-    using Lambda<T>::operator();
-    void call() override { operator()(); }
-};
-template<typename T> Changer(T) -> Changer<T>;
-
-
 struct Changeble_I {virtual void call() = 0;};
+
+
 template<typename T>
-struct Changeable : Lambda<T>, Changeble_I {
-    Changeable(T lambd) : Lambda<T>{lambd}{}
-    using Lambda<T>::operator();
-    void call() override { operator()( this ); }
+struct Changer : protected Lambda<T>, Changer_I {
+    Changer(T arg){}
+    void call() override { Lambda<T>::operator()(); }
 };
+
+template<typename T>
+struct Changeable : protected Lambda<T>, Changeble_I {
+    Changeable(T){}
+    void call() override { Lambda<T>::operator()( this ); }
+};
+
 template<typename T> Changeable(T) -> Changeable<T>;
 
 template<typename ...Args>
-struct Traceable {
+class Traceable {
 protected:
+
     struct List_Funct_I{ List_Funct_I* m_next = nullptr; virtual void handle( Args... ) = 0; };
     template<typename T>
     struct List_Funct : List_Funct_I{
@@ -39,7 +43,10 @@ protected:
         List_Funct(T* these, void ( T:: * pointer ) ( Args... )): m_these(these), m_pointer(pointer){}
         void handle(Args... args) override { (m_these->*m_pointer)(args...); }
     };
+
+    sf::Sprite* m_p_sprite = nullptr;
     List_Funct_I* m_list = nullptr;
+
     void Insert( List_Funct_I& list )
     {
         if ( !m_list ) {
@@ -51,8 +58,7 @@ protected:
             tmp->m_next = &list;
         }
     }
-protected:
-    sf::Sprite* m_p_sprite = nullptr;
+
     void handle(Args... args)
     {
         List_Funct_I* tmp = m_list;
@@ -63,10 +69,11 @@ protected:
             tmp = tmp->m_next;
         }
     }
+
 };
 
-struct Clickable : virtual Traceable<const sf::Event&>{
-    void m_handle(const sf::Event& event);
+struct Clickable : virtual Traceable<Event> {
+    void m_handle(Event event);
     [[nodiscard]] bool isOnClick();
 protected:
     Clickable();
@@ -75,8 +82,8 @@ private:
     List_Funct<Clickable> m_list{ this, &Clickable::m_handle };
 };
 
-struct Suggestive : virtual Traceable<const sf::Event&>{
-    void m_handle(const sf::Event& event);
+struct Suggestive : virtual Traceable<Event> {
+    void m_handle(Event event);
     [[nodiscard]] bool isMouseOn() const;
 protected:
     Suggestive();
@@ -85,7 +92,7 @@ private:
     List_Funct<Suggestive> m_list{ this, &Suggestive::m_handle };
 };
 
-struct Shorten : virtual Traceable<>{
+struct Shorten : virtual Traceable<> {
     void m_handle();
     void click();
 protected:
@@ -94,4 +101,14 @@ protected:
 private:
     bool m_mouse{false};
     List_Funct<Shorten> m_list{ this, &Shorten::m_handle };
+};
+
+struct Unfold : protected Suggestive{
+    void handle();
+    void handle( Event event );
+    Unfold(Direction direction, Entry& base, Group_I& a_group, float_t separator);
+private:
+    Direction m_direction{None};
+    Group_I& m_group;
+    float_t sum_a, m_separator;
 };

@@ -14,6 +14,7 @@ public:
     explicit Entry(const std::string& a_string, float_t x_ratio = 1, float_t y_ratio = 1);
     bool hide(), show();
     virtual void handle() = 0;
+    virtual void handle(const sf::Event& event);
     void draw() const;
 };
 

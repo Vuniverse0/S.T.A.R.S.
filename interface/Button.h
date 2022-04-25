@@ -12,6 +12,6 @@ class Button : public Gui, Clickable, Suggestive, Shorten {
 public:
     Button(Changer_I& lambd, const std::string& a_string);
     ~Button() override = default;
-    using Traceable<const sf::Event&>::handle;
     void handle() override;
+    void handle( Event ) override;
 };
