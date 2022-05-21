@@ -12,7 +12,7 @@ Entry::Entry(const std::string& a_string, float_t x_ratio, float_t y_ratio)
         m_object_texture.loadFromFile( a_string );
         m_object_texture.setSmooth( true );
         m_sprite.setTexture( m_object_texture );
-        m_sprite.scale( Handler::x_ratio * x_ratio, Handler::y_ratio * y_ratio );
+        m_sprite.scale( Handler::gHandler->x_ratio * x_ratio, Handler::gHandler->y_ratio * y_ratio );
     }
 }
 
@@ -30,6 +30,26 @@ bool Entry::show()//return true if state was changed
     return true;
 }
 sf::Sprite& Entry::sprite() { return m_sprite; }
-void Entry::draw() const { if(m_visibility) Handler::window().draw( m_sprite );}
 
-void Entry::handle(Event event) { };
+void Entry::handle(Event event) { }
+
+sf::RenderWindow& Entry::defaultRenderWindow(){return Handler::gHandler->window();}
+
+void Entry::draw(sf::RenderWindow &window)
+{
+    if(m_visibility) window.draw( m_sprite );
+}
+
+Entry::Entry(Entry &&ent)  noexcept
+: m_object_texture{ent.m_object_texture}, m_sprite{std::move(ent.m_sprite)}
+{
+    m_visibility = ent.m_visibility;
+    m_sprite.setTexture( m_object_texture );
+}
+
+Entry::Entry(const Entry& ent)
+:m_object_texture{ent.m_object_texture}, m_sprite{ent.m_sprite}
+{
+    m_visibility = ent.m_visibility;
+    m_sprite.setTexture( m_object_texture );
+};

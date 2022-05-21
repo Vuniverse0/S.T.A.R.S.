@@ -7,15 +7,18 @@ protected:
     sf::Sprite m_sprite{};
     bool m_visibility{true};
     sf::Texture m_object_texture{};
-    virtual ~Entry() = default;
+    static sf::RenderWindow& defaultRenderWindow();
 public:
     Entry() = delete;
-    sf::Sprite& sprite();
     explicit Entry(const std::string& a_string, float_t x_ratio = 1, float_t y_ratio = 1);
+    Entry(const Entry& ent);
+    Entry(Entry&& ent) noexcept ;
+    virtual ~Entry() = default;
+    sf::Sprite& sprite();
     bool hide(), show();
     virtual void handle() = 0;
     virtual void handle(const sf::Event& event);
-    void draw() const;
+    virtual void draw(sf::RenderWindow& window = defaultRenderWindow());
 };
 
 

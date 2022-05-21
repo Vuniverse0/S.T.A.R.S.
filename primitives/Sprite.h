@@ -2,7 +2,7 @@
 #include "Entry.h"
 
 struct Sprite : Entry {
-    void handle() override;
     using Entry::Entry;
+    void handle() override;
     ~Sprite() override = default;
 };

@@ -12,7 +12,7 @@ Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
     //std::cerr<<"Orbit SUCCESSFUL↵\n";
     m_elips.setPointCount(quality);
     for (unsigned short i = 0; i < quality; ++i) {
-        float rad = (360.0f/quality * i) / (360.0f / F_PI / 2.0f);
+        float rad = (360.0f/quality * i) / (360.0f / M_PI / 2.0f);
         float x = std::cos(rad - 0.1f) * radius;
         float y = std::sin(rad + 0.3f) * radius * 0.6f;
         m_elips.setPoint(i, sf::Vector2f(x, y));
@@ -31,10 +31,9 @@ Orbit::~Orbit()
 {
 }
 
-void Orbit::draw()//draw shape on window
+void Orbit::draw(sf::RenderWindow& window)//draw shape on window
 {
-    if(m_visibility)
-        Handler::window().draw(m_elips);
+    if(m_visibility) window.draw(m_elips);
 }
 
 void Orbit::move(cords a_x, cords a_y)//move for sprite

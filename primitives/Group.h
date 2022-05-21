@@ -35,13 +35,6 @@ struct IGroup{
             functor(tmp);
         return *this;
     }
-    template<typename F, typename ...Args>
-    IGroup<T>& operator () (F functor, Args... args)
-    {
-        for (auto tmp : *this)
-            functor(tmp, args...);
-        return *this;
-    }
     template<typename O, std::enable_if_t<std::is_base_of<O, T>::value, bool> = true>
     operator IGroup<O, iterator::group_iterator<O*, T**>>()
     {

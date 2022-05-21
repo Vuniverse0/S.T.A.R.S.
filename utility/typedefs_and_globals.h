@@ -4,7 +4,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <nlohmann/json.hpp>
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -16,17 +15,15 @@
 
 #define GAME_MAKER_SCREEN_WIDTH 1366.0f //TODO remake these
 #define GAME_MAKER_SCREEN_HEIGHT 768.0f //or not))) Any actor view like he want
-#define VALUABLE_RATIO ((Handler::y_ratio > Handler::x_ratio) ?  Handler::x_ratio : Handler::y_ratio)
-#define RANDOM(min, max) (std::rand() % (max - min) + min)
-#define RANDOM_N_AFTER_POINT(min, max, point) (RANDOM(min, max) / point)
+#define VALUABLE_RATIO ((Handler::gHandler->y_ratio > Handler::gHandler->x_ratio) ?  Handler::gHandler->x_ratio : Handler::gHandler->y_ratio)
 #define DEFAULT_FPS 60 // keep))
-#define F_PI 3.14159265358979323846f
 #define EMPTY "null.png"
 
 typedef uint16_t  frames;
 typedef uint16_t pixels;
 typedef float_t cords;
 
+#include <nlohmann/json.hpp>
 using nlohmann::json;
 
 template<typename T>

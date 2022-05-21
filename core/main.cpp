@@ -4,8 +4,9 @@
 
 int main()
 {
-    while (Handler::window().isOpen()) {
-        Handler::gHandler.update();
+    Handler handler;
+    while (handler.window().isOpen()) {
+        handler.update();
     }
     return 0;
 }

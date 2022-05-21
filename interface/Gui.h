@@ -13,24 +13,6 @@ protected:
     ~Gui() override = default;
 };
 
-struct Changer_I {virtual void call() = 0;};
-struct Changeble_I {virtual void call() = 0;};
-
-
-template<typename T>
-struct Changer : protected Lambda<T>, Changer_I {
-    Changer(T arg){}
-    void call() override { Lambda<T>::operator()(); }
-};
-
-template<typename T>
-struct Changeable : protected Lambda<T>, Changeble_I {
-    Changeable(T){}
-    void call() override { Lambda<T>::operator()( this ); }
-};
-
-template<typename T> Changeable(T) -> Changeable<T>;
-
 template<typename ...Args>
 class Traceable {
 protected:

@@ -1,5 +1,5 @@
 #include "Gui.h"
-
+#include <cassert>
 
 bool Clickable::isOnClick()
 {

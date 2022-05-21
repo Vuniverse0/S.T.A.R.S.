@@ -4,27 +4,30 @@
 
 #include "Core.h"
 #include "../interface/Interfaces.h"
+#include "Handler.h"
 
-float_t Handler::x_ratio = //1600 / GAME_MAKER_SCREEN_WIDTH,
-       static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH,
-Handler::y_ratio = //1000 / GAME_MAKER_SCREEN_HEIGHT;
-        static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].height) / GAME_MAKER_SCREEN_HEIGHT;
-Handler Handler::gHandler{};
-float_t Handler::m_alpha{};
-sf::Clock Handler::clock{};
-bool Handler::m_IsPaused = false;
-Handler::Handler() noexcept :
+
+Handler* Handler::gHandler { nullptr };
+
+Handler::Handler() noexcept(noexcept(sf::RenderWindow())) :
         m_window(//{1600,1000},
                 sf::VideoMode::getFullscreenModes()[0],
                 "Surviving Try Around Remote Stars",//sf::Style::Default, sf::ContextSettings(0,0,8));
                 sf::Style::Fullscreen, sf::ContextSettings(0,0,8)
-                )
+                ),
+        x_ratio { static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].width) / GAME_MAKER_SCREEN_WIDTH},
+        y_ratio {static_cast<float_t>(sf::VideoMode::getFullscreenModes()[0].height) / GAME_MAKER_SCREEN_HEIGHT}
 {
+    if(gHandler){
+        throw std::runtime_error("Second Handler");
+    }
+    gHandler = this;
     set_fps(DEFAULT_FPS);
 }
 
 Handler::~Handler()
 {
+    gHandler = nullptr;
     //TODO erase all for Containers
 }
 
@@ -103,6 +106,8 @@ void Handler::update()
     static sf::Time update_time = sf::Time::Zero;
     static sf::Time update_time_fix = sf::milliseconds(1000/60);
     static sf::Sprite sprite;
+    static LeftCenterPanel panel{};
+
     //static Animation animation("/home/vuniverse/Downloads/358540927.png",sprite,100,100,600);
     //static Animation animation("/home/vuniverse/CLionProjects/space/resources/celestial_bodies/stars/blue/1871631401.png",sprite,200,200,600);
     //m_star.setAnimation(animation);
@@ -110,24 +115,25 @@ void Handler::update()
     sprite.setOrigin(local_center(&sprite));
     sprite.setScale(0.9,0.9);
     //orbit.move(window_center(window()));
-    update_time += clock.getElapsedTime();
+    m_alpha = clock.getElapsedTime();
+    update_time += m_alpha;
     while (last_update_time > m_time_per_frame)
     {
         last_update_time -= m_time_per_frame;
         m_window.clear();
-        handle(LeftCenterPanel::panel);
+        handle(panel);
         if (update_time >= update_time_fix) {
             //Containers::handleAll<System>((update_time.asMilliseconds()));
             update_time = sf::Time::Zero;
             event();
             //sprite.setPosition(orbit.getWay(1));
-            LeftCenterPanel::panel.handle();
+            panel.handle();
             //Containers::handleAll<Entry>();
             //m_alpha = 0.1f * update_time_fix.asMilliseconds();
             //animation.play(0.1f * update_time_fix.asMilliseconds(), true);
         }
         //Containers::drawAll<Entry>();
-        LeftCenterPanel::panel.draw();
+        panel.draw();
 
         m_window.display();
     }
@@ -140,19 +146,19 @@ void Handler::set_fps(const frames& a_fps)
     m_time_per_frame = sf::milliseconds(1000 / a_fps);
 }
 
-void Handler::input(const sf::Keyboard::Key& key, const bool& isPressed)
-{
-
-}
 
 void Handler::pause_switch()
 {
     m_IsPaused = !m_IsPaused;
-    std::cout<<"pause"<<std::endl;
+    //std::cout<<"pause"<<std::endl;
 }
 
-const sf::RenderWindow& Handler::window()
+sf::RenderWindow& Handler::window()
 {
-    return gHandler.m_window;
+    return gHandler->m_window;
+}
+
+float_t Handler::alpha() {
+    return static_cast<float>(m_alpha.asMilliseconds())/(1000.f/60.f);
 }
 

@@ -31,5 +31,5 @@ public:
     void move(cords x, cords y);
     void move(sf::Vector2f vec);
     void handle() override;
-    void draw();//Todo virtual
+    void draw(sf::RenderWindow& window = defaultRenderWindow());//Todo virtual
 };
