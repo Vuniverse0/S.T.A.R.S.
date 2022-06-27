@@ -1,7 +1,3 @@
-//
-// Created by vuniverse on 11/5/21.
-//
-
 #include "Orbit.h"
 #include "../core/Handler.h"
 
@@ -9,7 +5,7 @@
 
 Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
 {
-    //std::cerr<<"Orbit SUCCESSFUL↵\n";
+    //std::cerr<<"Orbit SUCCESSFUL↵\n"; //TODO REWRITE ORBIT
     m_elips.setPointCount(quality);
     for (unsigned short i = 0; i < quality; ++i) {
         float rad = (360.0f/quality * i) / (360.0f / M_PI / 2.0f);
@@ -22,7 +18,8 @@ Orbit::Orbit(cords radius, frames quality) : Entry(EMPTY)
     m_elips.setFillColor(sf::Color(0, 0, 0, 0));
 }
 
-Orbit::Orbit(cords radius, sf::Vector2f cord, frames quality) : Orbit(radius, quality)
+Orbit::Orbit(cords radius, sf::Vector2f cord, frames quality)
+    :Orbit(radius, quality)
 {
     m_elips.move(cord);
 }
@@ -31,9 +28,9 @@ Orbit::~Orbit()
 {
 }
 
-void Orbit::draw(sf::RenderWindow& window)//draw shape on window
+void Orbit::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 {
-    if(m_visibility) window.draw(m_elips);
+    if(m_visibility) target.draw(m_elips, states);
 }
 
 void Orbit::move(cords a_x, cords a_y)//move for sprite

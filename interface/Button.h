@@ -2,19 +2,19 @@
 
 #include "Gui.h"
 
-#define MAGIC_RATIO_BUTTONS 0.5f //TODO delete this shit, or no)))
 
-
-class Button : public Gui, Clickable, Suggestive, Shorten {
-    using lamblaT = decltype(+[]{});
-    friend Traceable<>;
-    Traceable<>::List_Funct<Button> m_list;
-    lamblaT m_changer;
+class Button : public Gui{
     sf::Vector2f m_normal_scale{};
-    void m_handle();
+    Shorten m_onClick;
+    Clickable m_clickable;
+    Suggestive m_suggestive;
+    Activable m_activable;
+    decltype(+[]{}) m_changer;
 public:
     explicit Button(void (*const&lambd)(), const std::string& a_string);
     ~Button() override = default;
     void handle() override;
-    void handle( Event ) override;
+    void handle(const sf::Event& event) override; //MouseMoved || MouseButtonReleased || MouseButtonPresed
+    void enable();
+    void disable();
 };

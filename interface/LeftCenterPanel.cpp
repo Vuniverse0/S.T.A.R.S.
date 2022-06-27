@@ -1,7 +1,7 @@
 #include "LeftCenterPanel.h"
 #include "../core/Handler.h"
 
-
+#if 0
 
 void LeftCenterPanel::draw()
 {
@@ -32,14 +32,13 @@ void LeftCenterPanel::handle(Event event)
     fold.handle(event);
 }
 
-LeftCenterPanel::LeftCenterPanel() : Entry(EMPTY),
-                   dashboard{"../resources/interface/PNG/MainPanel04.png",
-            0.7f * Handler::gHandler->x_ratio, 1.75f * Handler::gHandler->y_ratio}
+LeftCenterPanel::LeftCenterPanel() : Panel(EMPTY)
 {
     static Group m_group{button0, button1, button2, button3, button4, button5, button6};
-    dashboard.sprite().setPosition(Corner::ship(Anchor::CenterLeft, dashboard.sprite()));
-    Place::group<Vertical>(
+    sprite().setPosition(Corner::ship(Anchor::CenterLeft, dashboard.sprite()));
+    Place::group<Vertical, 7>(
             {dashboard.sprite().getGlobalBounds().left + dashboard.sprite().getGlobalBounds().width / 2.f,
                 dashboard.sprite().getGlobalBounds().top+dashboard.sprite().getGlobalBounds().height/2.f},
                 15.f * VALUABLE_RATIO, m_group);
 }
+#endif

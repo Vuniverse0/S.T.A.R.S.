@@ -1,78 +1,75 @@
 #pragma once
 
-#include "../utility/typedefs_and_globals.h"
-#include "../primitives/Entry.h"
 #include "Directions.h"
 #include "../primitives/Group.h"
 
 
-class Place {
-    Place() = default;
-public:
-    template<Orientation O, int N>
-    static void group(const sf::Vector2f& v, const float_t& separator, Group<N>& args)//[x, c] =  v | [c, y] =  v
+namespace Place{
+    template<Orientation O, typename T>
+    static void group(const sf::Vector2f& v, const float_t& separator, IGroup<T>& args)//[x, c] =  v | [c, y] =  v
     {
-        float_t sum_a;
+        float_t sum_a{};
         if constexpr(O == Vertical){
-            for ( auto arg : args )
-                sum_a += ( ( arg->sprite().getGlobalBounds().height + separator ) );
-            sum_a /= 2;
-            for ( auto arg : args ) {
-                auto& tmp = arg->sprite();
-                tmp.setPosition(
+            for ( auto& item : args )
+                sum_a += ((item->getGlobalBounds().height + separator));
+            sum_a /= 2.f;
+            for ( auto& item : args ) {
+                item->setPosition(
                         v.x,
                         v.y - sum_a + (
-                                tmp.getScale().y * tmp.getOrigin().y
+                                item->getScale().y * item->getOrigin().y
                         )
-                        + separator / 2
+                        + separator / 2.f
                 );
-                sum_a -= (tmp.getGlobalBounds().height + separator);
+                sum_a -= (item->getGlobalBounds().height + separator);
             }
         } else if constexpr (O == Horizontal){
-            for ( auto arg : args )
-                sum_a += ( ( arg->sprite().getGlobalBounds().width + separator ) );
+            for ( auto& item : args )
+                sum_a += ( ( item->getGlobalBounds().width + separator ) );
             sum_a /= 2;
-            for ( auto arg : args ) {
-                auto& tmp = arg->sprite();
-                tmp.setPosition(
+            for ( auto& item : args ) {
+                item->setPosition(
                         v.x - sum_a + (
-                                tmp.getScale().x * tmp.getOrigin().x
+                                item->getScale().x * item->getOrigin().x
                         )
                         + separator / 2,
                         v.y
                 );
-                sum_a -= (tmp.getGlobalBounds().height + separator);
+                sum_a -= (item->getGlobalBounds().height + separator);
             }
         }
     }
 
-    template<Orientation O, typename ...Args>
+    template<Orientation O, typename ...Args, std::enable_if_t<
+            ( sizeof...( Args ) > 1 ),
+            bool
+    > = true>
     static void group(const sf::Vector2f& v, const float_t& separator, Args& ...args)//[x, c] =  v | [c, y] =  v
     {
-        float_t sum_a;
+        float_t sum_a{};
         if constexpr(O == Vertical){
-            sum_a = ((args.sprite().getGlobalBounds().height + separator) + ... ) / 2.f;
+            sum_a = ((args.getGlobalBounds().height + separator) + ... ) / 2.f;
             ( [&](auto& ent) {
-                ent.sprite().setPosition(
+                ent.setPosition(
                         v.x,
                         v.y - sum_a + (
-                                args.sprite().getScale().y * args.sprite().getOrigin().y
+                                args.getScale().y * args.getOrigin().y
                         )
                         + separator / 2
                 );
-                sum_a -= ( args.sprite().getGlobalBounds().height + separator );
+                sum_a -= ( args.getGlobalBounds().height + separator );
             }(args),...);
         } else if constexpr (O == Horizontal){
-            sum_a = ((args.sprite().getGlobalBounds().width + separator) + ... ) / 2.f;
+            sum_a = ((args.getGlobalBounds().width + separator) + ... ) / 2.f;
             ( [&](auto& ent) {
-                ent.sprite().setPosition(
+                ent.setPosition(
                         v.x - sum_a + (
-                                args.sprite().getScale().x * args.sprite().getOrigin().x
+                                args.getScale().x * args.getOrigin().x
                         )
                         + separator / 2,
                         v.y
                 );
-                sum_a -= ( args.sprite().getGlobalBounds().width + separator );
+                sum_a -= ( args.getGlobalBounds().width + separator );
             }(args),...);
         }
     }

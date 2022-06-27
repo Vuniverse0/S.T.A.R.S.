@@ -1,10 +1,5 @@
-//
-// Created by vuniverse on 11/24/21.
-//
-
 #include "Moon.h"
-#include "../core/Handler.h"
-#include "../core/Containers.h"
+#include "../primitives/Entry.h"
 #include "../utility/random_body.h"
 
 

@@ -4,7 +4,6 @@
 
 #include "Planet.h"
 #include "../core/Handler.h"
-#include "../core/Containers.h"
 #include "../utility/random_body.h"
 #include "../utility/typedefs_and_globals.h"
 

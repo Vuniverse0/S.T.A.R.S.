@@ -28,8 +28,8 @@ public:
     using Entry::hide;
     using Entry::show;
 
-    void move(cords x, cords y);
+    void move(cords x, cords y) override;
     void move(sf::Vector2f vec);
     void handle() override;
-    void draw(sf::RenderWindow& window = defaultRenderWindow());//Todo virtual
+    void draw(sf::RenderTarget& target, const sf::RenderStates& states = sf::RenderStates::Default) const override;
 };

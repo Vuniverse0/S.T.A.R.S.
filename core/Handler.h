@@ -1,30 +1,35 @@
 #pragma once
 
 #include "../utility/typedefs_and_globals.h"
-#include "../primitives/Entry.h"
-#include "../interface/LeftCenterPanel.h"
+#include "../primitives/Group.h"
 
+
+struct Entry;
+struct Gui;
 
 struct Handler {//singleton
 private:
     sf::RenderWindow m_window;
-    sf::Time m_time_per_frame{}, m_alpha{};
+    sf::RenderTexture m_ui;
+    sf::Time m_time_per_frame{};
     bool m_IsPaused{false};
-
 public:
     static Handler* gHandler;
     Handler();
-
-    sf::RenderWindow& window();
-
-    sf::Clock clock{};
+    void draw (const Entry* drawable, const sf::RenderStates& states = sf::RenderStates::Default);
+    void draw_ui (const Gui* drawable, const sf::RenderStates& states = sf::RenderStates::Default);
+    void draw (const IGroup<Entry>& drawable, const sf::RenderStates& states = sf::RenderStates::Default);
+    void draw_ui (const IGroup<Gui>& drawable, const sf::RenderStates& states = sf::RenderStates::Default);
     float_t x_ratio, y_ratio;
-    float_t alpha();
-
-    void pause_switch();
-    void handle(Entry& panel);
-    void update();
-    void event();
+    static sf::Vector2u getSize();
+    static sf::Time TimePerFrame();
+    void resume();
+    void pause();
+    void render();
+    void update(sf::Time deltaTime);
+    void process_events();
     void set_fps(const frames&);
+    static bool isOpen();
+    bool exit();
     ~Handler();
 };

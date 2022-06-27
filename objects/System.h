@@ -14,7 +14,7 @@ class System : public Entry {
     static System* m_current;
 public:
     System();
-    explicit System(const json&);
+    //explicit System(const json&);
     ~System() override ;
 
     void handle(const sf::Int32& time);

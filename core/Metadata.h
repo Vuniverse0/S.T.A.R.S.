@@ -1,7 +1,3 @@
-//
-// Created by vuniverse on 11/22/21.
-//
-
 #pragma once
 
 #include "../utility/typedefs_and_globals.h"
@@ -43,6 +39,8 @@ struct Sets{
     Set second;
 };
 
+
+
 struct MetaDataBody{
     float_t speed;
     float_t bsize;
@@ -53,10 +51,12 @@ struct MetaDataBody{
     typedef const float_t& f;
     MetaDataBody() = default;
     MetaDataBody(f a_speed, f a_bsize, f a_spin, const bool& a_direction, const bool& a_spin_direction);
+#if 0
     explicit MetaDataBody(const json& j);
     static MetaDataBody from_json(const json& j);
 
     void to_json(json& j);
+#endif
 };
 
 struct MetaDataObject{
@@ -70,10 +70,13 @@ struct MetaDataObject{
     typedef const std::string& s;
     MetaDataObject() = default;
     MetaDataObject(const Body& a_body, const Type& a_type, const Sets& a_sets, s a_file, const uint16_t& a_id, s a_name);
-    explicit MetaDataObject(const json& j);
+#if 0
+
+explicit MetaDataObject(const json& j);
     static MetaDataObject from_json(const json& j);
 
     void to_json(json& j);
+#endif
 };
 
 
@@ -86,3 +89,4 @@ struct MetaDataObject{
  * type: suns count
  * Planet & asteroids count: other objects
  */
+

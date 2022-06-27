@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Button.h"
+#include "Panel.h"
 #include "../primitives/Sprite.h"
 #include "../primitives/Group.h"
 #include "Corner.h"
 
 
-class LeftCenterPanel : public Entry {
+class LeftCenterPanel : public Panel {
     Sprite dashboard;
 public:
     Button button0{+[](){std::cout<<"button0";}, "../resources/icons/main/research.png"};
@@ -16,6 +16,7 @@ public:
     Button button4{+[](){std::cout<<"button5";}, "../resources/icons/main/radar-dish.png"};
     Button button5{+[](){std::cout<<"button6";}, "../resources/icons/main/vortex.png"};
     Button button6{+[](){std::cout<<"button7";}, "../resources/icons/main/pause.png"};
+    //Group m_group{button0, button1, button2, button3, button4, button5, button6};
     void draw();
     void handle() override;
     void handle( Event ) override;

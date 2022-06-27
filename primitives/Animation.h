@@ -7,22 +7,19 @@
 
 struct Animation{
 private:
-    sf::Sprite& m_sprite;
+    sf::Sprite* m_sprite;
     sf::Texture m_texture{};
-    sf::Image m_image{};
+    const sf::Texture* m_alt_texture{nullptr};
     frames m_i{0}, m_count;
-    pixels m_size_x{}, m_size_y{};
-    bool m_xy{};
+    pixels m_size_x, m_size_y;
     float_t counter = 1.0f;
 public:
-    Animation();
-    Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p, pixels a_size_x, pixels a_size_y, frames a_count);
-    Animation(Animation const& other);
+    //Animation();
+    Animation(const std::string& a_sheet, sf::Sprite& a_sprite_p, pixels a_size_x, pixels a_size_y, frames a_count = 0);
+    Animation(Animation const& other) = default;
     Animation& operator=(Animation&& other) = delete;
     Animation& operator=(const Animation& other);
     ~Animation() = default;
     bool play(float_t speed = 1, bool direction = false);//return true when m_animation finish
-private:
-    sf::Texture& generateTextureX(const pixels& offset = 0);
-    sf::Texture& generateTextureXY(const pixels& offset_x = 0, const pixels& offset_y = 0);
+    bool stop( bool setAlt );
 };
